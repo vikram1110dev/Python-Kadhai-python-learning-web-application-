@@ -34,6 +34,9 @@ class Quiz(models.Model):
     incorrect_text = models.TextField()
     incorrect_svg = models.TextField(help_text="SVG HTML code for incorrect reaction")
 
+    class Meta:
+        verbose_name_plural = "Quizzes"
+
     def __str__(self):
         return f"Quiz for {self.lesson.title}"
 
@@ -42,6 +45,9 @@ class ChatbotResponse(models.Model):
     keywords = models.JSONField(default=list, blank=True, help_text="List of trigger keywords")
     response_text = models.TextField()
     is_default_fallback = models.BooleanField(default=False, help_text="Check if this is a random fallback response")
+
+    class Meta:
+        verbose_name_plural = "Chatbot Responses"
 
     def __str__(self):
         if self.is_default_fallback:
