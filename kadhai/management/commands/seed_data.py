@@ -234,4 +234,10 @@ class Command(BaseCommand):
                 is_default_fallback=True
             )
 
+        # Create default superuser if not exists
+        from django.contrib.auth.models import User
+        if not User.objects.filter(username='admin').exists():
+            User.objects.create_superuser('admin', 'admin@example.com', 'admin123')
+            self.stdout.write(self.style.SUCCESS("Created admin superuser: admin / admin123"))
+
         self.stdout.write(self.style.SUCCESS("Successfully seeded all database items!"))
