@@ -1,0 +1,173 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python Kadhai - Learn Python easily with Tamil Memes!</title>
+  <meta name="description"
+    content="Learn Python basics (variables, conditionals, loops, functions, lists) using Tamil memes, Tanglish explanations, and interactive quizzes.">
+  <link rel="stylesheet" href="{% static 'index.css' %}">
+</head>
+
+<body>
+
+  <!-- Navigation Header -->
+  <header>
+    <div class="logo-container">
+      <div class="logo-text">Python Kadhai</div>
+      <span class="logo-tag">Tanglish Edition 🐍</span>
+    </div>
+    <div class="nav-links">
+      <button class="nav-btn active" id="nav-home">Home / Dashboard</button>
+      <button class="nav-btn" id="nav-learn">Start Learning</button>
+      <button class="theme-toggle-btn" id="theme-toggle-btn" aria-label="Toggle Theme">🌙</button>
+    </div>
+  </header>
+
+  <!-- Main Grid Layout -->
+  <div class="app-container">
+
+    <!-- Sidebar Progress Tracker (Visible on Learn screen) -->
+    <aside class="sidebar" id="sidebar-tracker" style="display: none;">
+      <div class="card">
+        <div class="progress-header">
+          <span class="progress-title">Your Progress</span>
+          <span class="progress-percentage" id="overall-progress-text">0%</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="overall-progress-bar"></div>
+        </div>
+        <div class="topic-list" id="topic-navigation-list">
+          <!-- Populated dynamically via app.js -->
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Stream -->
+    <main>
+
+      <!-- View Section: Home / Dashboard -->
+      <section class="view-section active" id="view-home">
+        <div class="card hero-card">
+          <div class="hero-content">
+            <div class="badge-row">
+              <span class="badge hot">🔥 100% Fun guaranteed</span>
+              <span class="badge">Vadivelu Approved</span>
+            </div>
+            <h1 class="hero-title">Python Kadhai</h1>
+            <p class="hero-subtitle">Learn Python with Tanglish, English, and epic Tamil Memes. No boring lectures, only
+              memes & code!</p>
+            <button class="btn-primary" id="btn-start-now">Arambikalaama? (Let's Start!)</button>
+          </div>
+        </div>
+
+        <div class="features-grid">
+          <div class="card feature-card">
+            <div class="feature-icon-wrapper">🤪</div>
+            <h3 class="feature-title">Tanglish + Memes</h3>
+            <p class="feature-desc">Read explanations that match how you speak with your friends. Code concepts mapped
+              directly to classic comedy scenes.</p>
+          </div>
+          <div class="card feature-card">
+            <div class="feature-icon-wrapper">💻</div>
+            <h3 class="feature-title">Simple Lessons</h3>
+            <p class="feature-desc">Simple Python concepts illustrated visually. No complex environments to setup,
+              straight-to-the-point examples.</p>
+          </div>
+          <div class="card feature-card">
+            <div class="feature-icon-wrapper">🏆</div>
+            <h3 class="feature-title">Interactive Quizzes</h3>
+            <p class="feature-desc">Solve checkpoints to unlock meme reactions. Laugh while you learn, retry until you
+              get it perfect!</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- View Section: Interactive Learning -->
+      <section class="view-section" id="view-learn">
+
+        <!-- Lesson Content Card -->
+        <div class="card lesson-card" id="lesson-content-card">
+          <!-- Populated dynamically via app.js -->
+        </div>
+
+        <!-- Static Example Code snippet -->
+        <div class="card code-snippet-card">
+          <div class="sandbox-header">
+            <h3 class="sandbox-title">🐍 Example Code Snippet</h3>
+            <span class="editor-lang" id="sandbox-filename">main.py</span>
+          </div>
+          <div class="code-editor-container">
+            <div class="editor-titlebar">
+              <div class="window-dots">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+              </div>
+              <span class="editor-lang">Python 3.x</span>
+            </div>
+            <pre class="code-display" id="lesson-code-display"></pre>
+          </div>
+        </div>
+
+        <!-- Quiz Panel -->
+        <div class="card quiz-card" id="quiz-panel">
+          <!-- Populated dynamically via app.js -->
+        </div>
+
+        <!-- Meme Feedback Panel -->
+        <div class="meme-feedback-box" id="meme-feedback-container">
+          <!-- Populated dynamically via app.js -->
+        </div>
+
+        <!-- Navigation Next/Prev -->
+        <div class="navigation-row">
+          <button class="btn-secondary" id="btn-prev-lesson">← Previous Lesson</button>
+          <button class="btn-primary" id="btn-next-lesson">Next Lesson →</button>
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- Completed/Leveled Up Toast Notification -->
+  <div class="toast" id="toast-notif">Kaila kaasu, vaaila dhosa! Lesson Complete! 🎉</div>
+
+  <!-- Floating Chatbot Widget (Chitti) -->
+  <div class="chatbot-container" id="chatbot-container">
+    <button class="chatbot-toggle-btn" id="chatbot-toggle-btn">
+      💬 Chitti
+    </button>
+    <div class="chatbot-window" id="chatbot-window">
+      <div class="chatbot-header">
+        <span class="chatbot-title">🤖 Chitti 2.0 (Meme Helper)</span>
+        <button class="chatbot-close-btn" id="chatbot-close-btn">&times;</button>
+      </div>
+      <div class="chatbot-messages" id="chatbot-messages">
+        <div class="chat-message bot">
+          <div class="message-bubble">Vanakkam! Naan thaan <b>Chitti, Speed 1 Terahertz!</b> 🐍 Python ezhuthurathula
+            enna doubt-nalum kelunga, memes vechi solidaren!</div>
+        </div>
+      </div>
+      <div class="chatbot-input-row">
+        <input type="text" class="chatbot-input" id="chatbot-input" placeholder="Ask Chitti something..."
+          autocomplete="off">
+        <button class="chatbot-send-btn" id="chatbot-send-btn">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    &copy; vikram B
+  </footer>
+
+  <!-- Include App Logic -->
+  <script src="{% static 'app.js' %}"></script>
+</body>
+
+</html>
