@@ -829,6 +829,7 @@ function logTodayActivity() {
 
 function renderMonthlyAnalytics() {
   loadActivityLog();
+  loadStreakData();
   const now = new Date();
   const year = now.getFullYear();
   const month = now.getMonth(); // 0..11
@@ -1061,12 +1062,20 @@ function updateUserRank() {
   `;
 }
 
-// Log activity on initial load
-logTodayActivity();
+// Safe Dashboard Widgets Initialization
+function initDashboardWidgets() {
+  loadStreakData();
+  logTodayActivity();
+  renderStreakWidget();
+  renderMonthlyAnalytics();
+  updateUserRank();
+}
 
-// Initialize Monthly Analytics & User Rank on startup
-renderMonthlyAnalytics();
-updateUserRank();
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initDashboardWidgets);
+} else {
+  initDashboardWidgets();
+}
 
 
 
