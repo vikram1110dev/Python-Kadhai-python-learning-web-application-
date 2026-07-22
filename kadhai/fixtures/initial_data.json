@@ -95,7 +95,7 @@
     },
     {
       "topic_id": "lists",
-      "title": "Lists & Dictionaries",
+      "title": "Lists & Indexing",
       "subtitle": "Tea Shop Menu Card (Goundamani & Senthil)",
       "indicator": "Topic 5",
       "tanglish_exp": "Lists allow storing multiple items in a single variable. Menu card logic: <code>menu = [\"tea\", \"vadai\", \"bun\"]</code>. Items-a access panna Index range 0-la irundhu start aagum. So <code>menu[0]</code>-na tea, <code>menu[1]</code>-na vadai!",
@@ -114,20 +114,130 @@
         "incorrect_text": "Senthil: \"Tea-nu solreenga, illana vadai-nu solreenga. Index correct-a parkalaye anna!\"",
         "incorrect_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor senthil\"><div class=\"actor-face\">🥺</div></div><div class=\"meme-dialog dialog-bottom\">Bun thaanga index 2!</div></div>"
       }
+    },
+    {
+      "topic_id": "strings",
+      "title": "Strings & Slice Operations",
+      "subtitle": "Enna Vechu Comedy Pannalaye (Vadivelu)",
+      "indicator": "Topic 6",
+      "tanglish_exp": "Strings-na text characters combination box! Python-la strings sliced operations and reversal mega easy: <code>text[::-1]</code> potta text thalaigeezhaga reverse aayidum! <code>text.upper()</code> potta Vadivelu kuthu shouting text maadhiri ALL CAPS-la maarum!",
+      "english_exp": "Strings in Python are arrays of bytes representing unicode characters. Python supports powerful slicing using <code>string[start:stop:step]</code> syntax. For instance, <code>text[::-1]</code> reverses a string.",
+      "initial_code": "hero = \"Vadivelu\"\nprint(\"Original name:\", hero)\nprint(\"Uppercase shout:\", hero.upper())\nprint(\"Reversed string:\", hero[::-1])",
+      "expected_output": "Original name: Vadivelu\nUppercase shout: VADIVELU\nReversed string: ulevidaV",
+      "order": 6,
+      "quiz": {
+        "question": "What does <code>'python'[::-1]</code> output in Python?",
+        "options": ["python", "nohtyp", "p", "SyntaxError"],
+        "correct_index": 1,
+        "correct_headline": "Correct! Reversal King!",
+        "correct_text": "Vadivelu: \"Ahaaa! Reverse slicing-la thalaigeezhaga correct-a solidiye pa! nohtyp!\"",
+        "correct_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor vadivelu\"><div class=\"actor-face\">😎</div></div><div class=\"meme-dialog dialog-right\">nohtyp! Super slicing!</div></div>",
+        "incorrect_headline": "Wrong slice direction!",
+        "incorrect_text": "Vadivelu: \"Enna vechu comedy pannalaye! Slicing step -1 thalaigeezha poga sonna, straight-a padikiraye da!\"",
+        "incorrect_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor vadivelu\"><div class=\"actor-face\">😵</div></div><div class=\"meme-dialog dialog-bottom\">Step -1 reversed string boss!</div></div>"
+      }
+    },
+    {
+      "topic_id": "dictionaries",
+      "title": "Dictionaries & Key-Value Pairs",
+      "subtitle": "Anniyan Split Persona (Kamal & Vikram)",
+      "indicator": "Topic 7",
+      "tanglish_exp": "List-la Index 0, 1, 2 thaan irukum. Aana <b>Dictionaries</b>-la key-value mapping irukum! Like: <code>actor = {\"name\": \"Vadivelu\", \"role\": \"Rowdy\"}</code>. Key-va kudutha direct value unlock aagum: <code>actor[\"role\"]</code> ➔ Rowdy!",
+      "english_exp": "Dictionaries are used to store data values in key:value pairs. A dictionary is a collection which is ordered, changeable, and does not allow duplicates. Retrieve values using `dict[key]`.",
+      "initial_code": "# Character dictionary\nactor = {\n    \"name\": \"Vadivelu\",\n    \"dialogue\": \"Naanum Rowdy Thaan!\",\n    \"rank\": 1\n}\nprint(actor[\"name\"])\nprint(actor[\"dialogue\"])",
+      "expected_output": "Vadivelu\nNaanum Rowdy Thaan!",
+      "order": 7,
+      "quiz": {
+        "question": "How do you access the value of key 'role' in <code>hero = {'name': 'Rajini', 'role': 'Chitti'}</code>?",
+        "options": ["hero[0]", "hero['role']", "hero.role()", "hero.get_value('role')"],
+        "correct_index": 1,
+        "correct_headline": "Correct! Key-Value Master!",
+        "correct_text": "Chitti: \"Speed 1 Terahertz! Key 'role' access panni 'Chitti' get pannitiye!\"",
+        "correct_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor rajini\"><div class=\"actor-face\">🤖</div></div><div class=\"meme-dialog dialog-right\">Speed 1 Terahertz correct!</div></div>",
+        "incorrect_headline": "KeyError Crash!",
+        "incorrect_text": "Senthil: \"Anna, List Indexing maadhiri Dictionary key access panraare anna! KeyError vandhudume!\"",
+        "incorrect_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor senthil\"><div class=\"actor-face\">🥺</div></div><div class=\"meme-dialog dialog-bottom\">dict['key'] nu format-la thaan tharanum!</div></div>"
+      }
+    },
+    {
+      "topic_id": "file_handling",
+      "title": "File Handling (Open & Read)",
+      "subtitle": "Secret Document Reader (Vadivelu & Vivek)",
+      "indicator": "Topic 8",
+      "tanglish_exp": "Files-a Python script valiya open panni read/write panna <code>open()</code> or <code>with open() as f:</code> use aagum. `with` statement use panna task mudinjadhum file automatically close aayidum! Memory leak escape!",
+      "english_exp": "File handling in Python is performed using the built-in <code>open()</code> function. Using <code>with open('file.txt', 'r') as f:</code> ensures the file is automatically closed after operations.",
+      "initial_code": "# Simulating writing and reading a secret file\nsecret_content = \"Vadivelu Attack Plan: Step 1 Escape!\"\nprint(\"File Data:\")\nprint(secret_content)",
+      "expected_output": "File Data:\nVadivelu Attack Plan: Step 1 Escape!",
+      "order": 8,
+      "quiz": {
+        "question": "Which Python keyword ensures a file is automatically closed after reading?",
+        "options": ["close", "with", "open", "file"],
+        "correct_index": 1,
+        "correct_headline": "Correct! 'with' statement king!",
+        "correct_text": "Vivekh: \"'with' block potta file close aagum, memory leaks escape aagum! Professional coding!\"",
+        "correct_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor vivek\"><div class=\"actor-face\">😂</div></div><div class=\"meme-dialog dialog-right\">Memory leaks clean escape!</div></div>",
+        "incorrect_headline": "File Open Leak Error!",
+        "incorrect_text": "Vadivelu: \"File open panni vachutu close panna marandhuteenga-na resource lock aayidum boss!\"",
+        "incorrect_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor vadivelu\"><div class=\"actor-face\">😰</div></div><div class=\"meme-dialog dialog-bottom\">'with open()' keyword try pannunga!</div></div>"
+      }
+    },
+    {
+      "topic_id": "exceptions",
+      "title": "Exception Handling (Try-Except)",
+      "subtitle": "Enna Kodumai Sir Idhu! (Prabhu & Vadivelu)",
+      "indicator": "Topic 9",
+      "tanglish_exp": "Code-la error vandha app crash aagaama handle panna <code>try</code> and <code>except</code> use aagum! Divide by Zero (`10 / 0`) pannina <code>ZeroDivisionError</code> varum. <code>except ZeroDivisionError:</code> potta Vadivelu safe-a escape aayiruvaaru!",
+      "english_exp": "Exception handling allows a program to deal with runtime errors gracefully using <code>try</code>, <code>except</code>, <code>else</code>, and <code>finally</code> blocks without crashing the application.",
+      "initial_code": "try:\n    result = 10 / 0\nexcept ZeroDivisionError:\n    print(\"Enna Kodumai Sir Idhu! Cannot divide by zero!\")",
+      "expected_output": "Enna Kodumai Sir Idhu! Cannot divide by zero!",
+      "order": 9,
+      "quiz": {
+        "question": "What block runs when an exception occurs inside a <code>try</code> block?",
+        "options": ["finally", "except", "catch", "else"],
+        "correct_index": 1,
+        "correct_headline": "Correct! Exception caught safely!",
+        "correct_text": "Vadivelu: \"Sanda nu vandha valikka thaan seiyum, try-except potta error escape aagum!\"",
+        "correct_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor vadivelu\"><div class=\"actor-face\">😎</div></div><div class=\"meme-dialog dialog-right\">Exception handled safely!</div></div>",
+        "incorrect_headline": "Uncaught Exception Crash!",
+        "incorrect_text": "Goundamani: \"Javascript-la 'catch' use panreengala? Python-la 'except' dhaan da use pannanum!\"",
+        "incorrect_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor goundamani\"><div class=\"actor-face\">😠</div></div><div class=\"meme-dialog dialog-bottom\">Python uses 'except' block!</div></div>"
+      }
+    },
+    {
+      "topic_id": "oop",
+      "title": "Object-Oriented Programming (OOP)",
+      "subtitle": "Superstar Rajini Class & Object (Chitti 2.0)",
+      "indicator": "Topic 10",
+      "tanglish_exp": "OOP-na Blueprint and Real Object! <code>class Robot:</code> nguradhu Blueprint template. <code>chitti = Robot(\"Chitti\", 1)</code> nguradhu Real Object instance! <code>__init__()</code> method dhaan object create aagum podhu initial values set panra Constructor!",
+      "english_exp": "Object-Oriented Programming (OOP) uses Classes as blueprints to instantiate Objects. The <code>__init__()</code> method initializes object properties upon creation.",
+      "initial_code": "class Robot:\n    def __init__(self, name, version):\n        self.name = name\n        self.version = version\n\nchitti = Robot(\"Chitti\", 2.0)\nprint(\"Robot Name:\", chitti.name)\nprint(\"Version:\", chitti.version)",
+      "expected_output": "Robot Name: Chitti\nVersion: 2.0",
+      "order": 10,
+      "quiz": {
+        "question": "Which special method is the constructor in Python classes?",
+        "options": ["__construct__", "__init__", "create()", "Robot()"],
+        "correct_index": 1,
+        "correct_headline": "Correct! Constructor Master!",
+        "correct_text": "Rajini: \"Naan solradhaiyum seiven, __init__ constructor-a correct-a call panniyum seiven!\"",
+        "correct_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor rajini\"><div class=\"actor-face\">🤖</div></div><div class=\"meme-dialog dialog-right\">__init__ is the constructor king!</div></div>",
+        "incorrect_headline": "Wrong constructor method!",
+        "incorrect_text": "Chitti: \"ERROR: Invalid constructor call! Python classes use __init__ for initialization!\"",
+        "incorrect_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor rajini\"><div class=\"actor-face\">😵</div></div><div class=\"meme-dialog dialog-bottom\">Use __init__(self) method!</div></div>"
+      }
     }
   ],
   "chatbot_meme_responses": [
     {
       "keywords": ["hi", "hello", "vanakkam", "hey", "chitti", "robot", "yaru", "who", "name"],
-      "response": "Vanakkam! Naan thaan <b>Chitti, Speed 1 Terahertz, Memory 1 Zettabyte!</b> 🤖 Python code ezhuthuradhula ungalukku enna doubt-nalum kelunga, memes mood-la instant-a clear panna naan ready! Enna topic pathi padikalaam?"
+      "response": "Vanakkam! Naan thaan <b>Chitti RAG 3.0, Speed 1 Terahertz, Memory 1 Zettabyte!</b> 🤖 Python code ezhuthuradhula ungalukku enna doubt-nalum kelunga, RAG engine-la database search panni memes mood-la instant-a clear panren!"
     },
     {
       "keywords": ["variable", "var", "store", "datatype", "data type", "integer", "string", "float", "bool", "boolean", "pocket", "senthil", "goundamani", "banana"],
-      "response": "<b>Variables</b> matrum <b>Data Types</b> pathi ketrukeenga! Namma Goundamani & Senthil Banana comedy-ya vechiye dynamic-a solidaren paaru. Variable-nguradhu namma pocket maadhiri values store panni vechira box. E.g., <code>banana_count = 2</code>. Inga <code>banana_count</code> dhaan Variable Name, adhkulla store aagira <code>2</code> dhaan Value. Integer (int), Float, String (str), matrum Boolean category check panna easy! 🍌"
+      "response": "<b>Variables & Data Types</b> pathi ketrukeenga! Namma Goundamani & Senthil Banana comedy-ya vechiye dynamic-a solidaren. Variable-nguradhu namma pocket maadhiri values store panni vechira box. E.g., <code>banana_count = 2</code>. Integer, Float, String, and Boolean values easily stored! 🍌"
     },
     {
       "keywords": ["if", "else", "elif", "conditional", "decision", "rowdy", "weapon", "branch"],
-      "response": "<b>Conditionals (If-Else)</b> pathi puriya veikuren! Vadivelu <b>'Naanum Rowdy Thaan'</b> templates control flow match panni easy-a purinjiklaam. Condition elements check panni branch logic selection panna conditionals use aagum. Python-la indentation space (4 spaces) miss panna error varum! 👮‍♂️"
+      "response": "<b>Conditionals (If-Else)</b> pathi puriya veikuren! Vadivelu <b>'Naanum Rowdy Thaan'</b> templates control flow match panni easy-a purinjiklaam. Condition true-na if block execute aagum, false-na else block! Indentation space (4 spaces) miss panna <code>IndentationError</code> varum! 👮‍♂️"
     },
     {
       "keywords": ["loop", "for", "while", "repeat", "range", "iteration", "vivek", "thirumba"],
@@ -135,15 +245,83 @@
     },
     {
       "keywords": ["function", "def", "call", "plan", "sidekick", "parameter", "argument"],
-      "response": "<b>Functions</b> matrum <code>def</code> logic templates parse pannalaam! Functions-nguradhu single definitions code block custom templates. Vadivelu attack plan create panna <code>def attack_plan():</code> define panni call pannanum! 📢"
+      "response": "<b>Functions</b> matrum <code>def</code> logic templates parse pannalaam! Functions-nguradhu reusable code block template. Vadivelu attack plan create panna <code>def attack_plan():</code> define panni call pannanum! 📢"
     },
     {
       "keywords": ["list", "dict", "dictionary", "array", "menu", "index", "key"],
-      "response": "<b>Lists</b> matrum <b>Dictionaries</b> collections pathi easy-a details parse pannalam! List elements index numbers start from 0: <code>menu[0]</code> = tea! ☕"
+      "response": "<b>Lists & Dictionaries</b> collections pathi easy-a details parse pannalam! List elements index numbers start from 0: <code>menu[0]</code> = tea! Dictionary key-value format: <code>user[\"role\"]</code> = Rowdy! ☕"
     },
     {
-      "keywords": ["bug", "error", "debug", "issue", "help", "problem", "wrong", "syntax"],
-      "response": "<b>Bugs matrum syntax errors</b> pathi ketrukeenga! Vadivelu code lines logic debugging guidelines: <i>'Sanda nu vandha valikka thaan seiyum, code nu ezhudhuna error vara thaan seiyum!'</i>. Check your colons (:) and indentation! 🍌"
+      "keywords": ["slice", "slicing", "reverse", "upper", "lower", "strip", "split", "join", "text"],
+      "response": "<b>Strings & Slicing</b> pathi ketrukeenga! Vadivelu comedy style-la text reversal <code>text[::-1]</code> potta string reverse aayidum! <code>text.upper()</code> potta Vadivelu shouting text ALL CAPS-la maarum! 🧵"
+    },
+    {
+      "keywords": ["file", "open", "read", "write", "close", "with open"],
+      "response": "<b>File Handling</b> pathi solidaren! Vadivelu secret document reader logic: <code>with open('file.txt', 'r') as f:</code>. `with` statement use panna operation mudinjadhum file automatically close aayidum! 📁"
+    },
+    {
+      "keywords": ["try", "except", "exception", "error", "catch", "zero", "division"],
+      "response": "<b>Exception Handling (Try-Except)</b> pathi ketrukeenga! Prabhu: <i>'Enna kodumai sir idhu!'</i> Code crash aagaama handle panna <code>try</code> & <code>except</code> block use aagum. Divide by zero error-a handle panna <code>except ZeroDivisionError:</code>! 🛡️"
+    },
+    {
+      "keywords": ["class", "object", "oop", "init", "constructor", "self", "instance"],
+      "response": "<b>Object-Oriented Programming (OOP)</b> pathi ketrukeenga! Superstar Rajini / Chitti style-la: <code>class Robot:</code> nguradhu Blueprint, <code>chitti = Robot(\"Chitti\")</code> nguradhu Real Object! <code>__init__()</code> dhaan Constructor method! 🤖"
+    },
+    {
+      "keywords": ["indentationerror", "indentation", "space", "tab", "block"],
+      "response": "<b>🐛 Debugger Helper: IndentationError!</b>\nVadivelu space master says: <i>'Space poduradhulaye gavanama irukanum boss!'</i>. Python-la <code>if</code>, <code>for</code>, or <code>def</code>-ku kela 4 spaces (Tab) exact-a align pannanum!"
+    },
+    {
+      "keywords": ["nameerror", "not defined", "undefined", "name"],
+      "response": "<b>🐛 Debugger Helper: NameError!</b>\nSenthil: <i>'Variable name-a create-e pannama access panreengala anna?!'</i>. Check spelling or define variable before calling it: <code>x = 10</code>!"
+    },
+    {
+      "keywords": ["typeerror", "concatenate", "str", "int", "datatype"],
+      "response": "<b>🐛 Debugger Helper: TypeError!</b>\nVadivelu: <i>'String-aiyum Integer-aiyum direct-a sethu add panna mudiyaadhu da!'</i>. Convert number to string first using <code>str(number)</code>!"
+    },
+    {
+      "keywords": ["zerodivisionerror", "divide by zero", "zero"],
+      "response": "<b>🐛 Debugger Helper: ZeroDivisionError!</b>\nGoundamani: <i>'Enna da 0-vaala divide panra? Math-la idhu illegal!'</i>. Use <code>try...except ZeroDivisionError:</code> block to catch it!"
+    },
+    {
+      "keywords": ["indexerror", "out of range", "index"],
+      "response": "<b>🐛 Debugger Helper: IndexError!</b>\nSenthil: <i>'List length 3 thaan anna! Neenga 5th index ketta bun varuma?!'</i>. Remember list index starts at 0 up to len(list)-1!"
+    },
+    {
+      "keywords": ["keyerror", "dictionary key"],
+      "response": "<b>🐛 Debugger Helper: KeyError!</b>\nVadivelu: <i>'Dictionary-la illadha key-a request panreengale pa!'</i>. Use <code>dict.get('key')</code> to safely handle missing keys!"
+    },
+    {
+      "keywords": ["syntaxerror", "invalid syntax", "colon"],
+      "response": "<b>🐛 Debugger Helper: SyntaxError!</b>\nVivekh: <i>'Colon (:) podala, illana bracket close panna marandhuteenga!'</i>. Check your colons at the end of `if`, `for`, `def` lines!"
+    },
+    {
+      "keywords": ["attributeerror", "has no attribute"],
+      "response": "<b>🐛 Debugger Helper: AttributeError!</b>\nSanthanam: <i>'Integer-ku split() method call panra paaru! Enna puthisaalithanam!'</i>. Verify methods belong to the correct object data type!"
+    },
+    {
+      "keywords": ["modulenotfounderror", "importerror", "import"],
+      "response": "<b>🐛 Debugger Helper: ModuleNotFoundError!</b>\nChitti: <i>'Module not installed or spelling wrong!'</i>. Run <code>pip install package_name</code> in terminal!"
+    },
+    {
+      "keywords": ["valueerror", "invalid literal"],
+      "response": "<b>🐛 Debugger Helper: ValueError!</b>\nVadivelu: <i>'Text \"abc\"-ya `int(\"abc\")`-nu integer-a convert panna mudiyuma?!'</i>. Convert string numbers only (e.g. `int(\"123\")`)!"
+    },
+    {
+      "keywords": ["vadivelu", "rowdy", "sanda", "comedy", "dialogue"],
+      "response": "<b>Vadivelu Meme Classic:</b> <i>'Sanda nu vandha valikka thaan seiyum, code nu ezhudhuna error vara thaan seiyum!'</i> 🤪 Keep debugging, mass pannaam!"
+    },
+    {
+      "keywords": ["goundamani", "senthil", "banana", "calculation"],
+      "response": "<b>Goundamani & Senthil Classic:</b> <i>'Rendu banana-la onna saptutu mathadhu enga nu ketta logic illa nu solra?!'</i> 🍌 Master Python variable logic first!"
+    },
+    {
+      "keywords": ["rajini", "superstar", "robot", "speed", "terahertz"],
+      "response": "<b>Superstar Rajini / Chitti Classic:</b> <i>'Naan solradhaiyum seiven, solladhadhaiyum seiven! Speed 1 Terahertz, Memory 1 Zettabyte!'</i> 🤖 Red chip activated!"
+    },
+    {
+      "keywords": ["vivek", "aanandam", "social", "tea"],
+      "response": "<b>Vivekh Comedy Classic:</b> <i>'Aanandam... vilaiyaadum veedu! Innuma indha ooru loop-a nambitu iruku?'</i> 🌀 Write clean Python code!"
     },
     {
       "keywords": ["sana", "love", "girlfriend", "marriage", "wife"],
@@ -155,7 +333,7 @@
     }
   ],
   "chatbot_default_responses": [
-    "Building-u strong-u, basement-u weak-u! Kelvi thappu nu nenaikaren. Python variables, datatype, conditionals, loops, functions or list pathi kelunga boss! 😅",
+    "Building-u strong-u, basement-u weak-u! Kelvi thappu nu nenaikaren. Python variables, datatype, conditionals, loops, functions, lists, OOP or exceptions pathi kelunga boss! 😅",
     "Ennama ipdi panringalema! Konjam Python topics pathi structured keywords-la kelunga, Chitti speed-la response solli tharen! 🤖",
     "Vadivelu style-la: 'Naan eppo sonnen?'. En database query list-la matching logic illaye. Python variables or loop keywords try panni check pannunga!",
     "Ahaaa, oru ruba kooda kuraiyama nalla question! Aana en database memory-la matching details illa. Let's study basic datatypes or loops first! 🐍"
