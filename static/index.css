@@ -2280,24 +2280,57 @@ kbd {
   border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
+.rank-badge-img-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.rank-badge-img {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--accent-primary);
+  box-shadow: 0 0 12px rgba(139, 92, 246, 0.5);
+}
+
+.rank-status-icon {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  font-size: 0.75rem;
+  background: rgba(11, 15, 25, 0.9);
+  border: 1px solid var(--accent-primary);
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .rank-milestone-item {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0.35;
-  filter: grayscale(100%);
+  position: relative;
   transition: var(--transition-smooth);
+}
+
+.rank-milestone-item.locked {
+  opacity: 0.45;
+  filter: grayscale(100%);
 }
 
 .rank-milestone-item.unlocked {
   opacity: 1;
   filter: grayscale(0%);
   border-color: #10b981;
-  box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
 }
 
 .milestone-img {
@@ -2305,6 +2338,33 @@ kbd {
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
+}
+
+.milestone-badge {
+  position: absolute;
+  bottom: -3px;
+  right: -3px;
+  font-size: 0.65rem;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+
+.rank-milestone-item.locked .milestone-badge {
+  background: rgba(239, 68, 68, 0.85);
+  color: #ffffff;
+  border: 1px solid rgba(239, 68, 68, 0.5);
+}
+
+.rank-milestone-item.unlocked .milestone-badge {
+  background: #10b981;
+  color: #ffffff;
+  border: 1px solid #059669;
 }
 
 

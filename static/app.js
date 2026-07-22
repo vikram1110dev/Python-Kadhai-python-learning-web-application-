@@ -761,6 +761,8 @@ function renderStreakWidget() {
       <div class="streak-meme-text">${text}</div>
     </div>
   `;
+
+  updateUserRank();
 }
 
 function handleClaimStreak() {
@@ -1019,7 +1021,10 @@ function updateUserRank() {
   rankingBox.innerHTML = `
     <div class="rank-header">
       <div class="rank-badge-info">
-        <img src="${currentRank.img}" alt="${currentRank.title}" class="rank-badge-img" />
+        <div class="rank-badge-img-wrapper">
+          <img src="${currentRank.img}" alt="${currentRank.title}" class="rank-badge-img" />
+          <span class="rank-status-icon">🏆</span>
+        </div>
         <div>
           <div class="rank-level-label">Level ${currentRank.level} Rank</div>
           <h4 class="rank-title">${currentRank.title}</h4>
@@ -1030,8 +1035,8 @@ function updateUserRank() {
     
     <div class="rank-progress-wrapper">
       <div class="rank-progress-labels">
-        <span class="rank-progress-sub">XP Progress (${progressPercent}%)</span>
-        <span class="rank-next-sub">${currentRank === nextRank ? 'MAX RANK UNLOCKED!' : 'Next: ' + nextRank.title}</span>
+        <span class="rank-progress-sub">XP Progress: ${totalXP} / ${currentRank === nextRank ? totalXP : nextRank.minXP} XP (${progressPercent}%)</span>
+        <span class="rank-next-sub">${currentRank === nextRank ? '👑 MAX RANK UNLOCKED!' : 'Next: ' + nextRank.title}</span>
       </div>
       <div class="rank-progress-bg">
         <div class="rank-progress-fill" style="width: ${progressPercent}%;"></div>
@@ -1043,11 +1048,15 @@ function updateUserRank() {
     </div>
 
     <div class="rank-milestones">
-      ${ranks.map(r => `
-        <div class="rank-milestone-item ${totalXP >= r.minXP ? 'unlocked' : ''}" title="${r.title} (${r.minXP} XP)">
-          <img src="${r.img}" alt="${r.title}" class="milestone-img" />
-        </div>
-      `).join('')}
+      ${ranks.map(r => {
+        const isUnlocked = totalXP >= r.minXP;
+        return `
+          <div class="rank-milestone-item ${isUnlocked ? 'unlocked' : 'locked'}" title="${r.title} (${r.minXP} XP)">
+            <img src="${r.img}" alt="${r.title}" class="milestone-img" />
+            <span class="milestone-badge">${isUnlocked ? '✓' : '🔒'}</span>
+          </div>
+        `;
+      }).join('')}
     </div>
   `;
 }
