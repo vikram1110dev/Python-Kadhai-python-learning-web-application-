@@ -224,12 +224,232 @@
         "incorrect_text": "Chitti: \"ERROR: Invalid constructor call! Python classes use __init__ for initialization!\"",
         "incorrect_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor rajini\"><div class=\"actor-face\">😵</div></div><div class=\"meme-dialog dialog-bottom\">Use __init__(self) method!</div></div>"
       }
+    },
+    {
+      "topic_id": "list_comprehensions",
+      "title": "List Comprehensions",
+      "subtitle": "Fast-Track Banana Counter (Senthil & Goundamani)",
+      "indicator": "Topic 11",
+      "tanglish_exp": "For loop-a 4 lines ezhuthaama, single line-la list create panradhu thaan <b>List Comprehension</b>! Syntax: <code>[x * 2 for x in range(5)]</code>. Goundamani: <i>'Oru ruba kooda line waste pannaama single line-la super loop execution!'</i>",
+      "english_exp": "List comprehension offers a shorter syntax when you want to create a new list based on the values of an existing list or sequence. Syntax: <code>[expression for item in iterable if condition]</code>.",
+      "initial_code": "# Single line list comprehension!\nsquares = [x ** 2 for x in range(1, 6)]\nprint(\"Squared numbers list:\")\nprint(squares)",
+      "expected_output": "Squared numbers list:\n[1, 4, 9, 16, 25]",
+      "order": 11,
+      "quiz": {
+        "question": "What is the output of <code>[x for x in range(3)]</code>?",
+        "options": ["[1, 2, 3]", "[0, 1, 2]", "[0, 1, 2, 3]", "SyntaxError"],
+        "correct_index": 1,
+        "correct_headline": "Correct! Single Line Master!",
+        "correct_text": "Goundamani: \"Single line-la loop execution fast-a mudichitiye pa! [0, 1, 2]!\"",
+        "correct_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor goundamani\"><div class=\"actor-face\">😎</div></div><div class=\"meme-dialog dialog-right\">Single line comprehension super!</div></div>",
+        "incorrect_headline": "Wrong Range Bound!",
+        "incorrect_text": "Senthil: \"range(3) 0-la irundhu 2 varai thaan pogaum anna! 3 வராது!\"",
+        "incorrect_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor senthil\"><div class=\"actor-face\">😅</div></div><div class=\"meme-dialog dialog-bottom\">range(3) generates 0, 1, 2!</div></div>"
+      }
+    },
+    {
+      "topic_id": "lambda_functions",
+      "title": "Lambda & Anonymous Functions",
+      "subtitle": "Vadivelu Quick One-Liner Plan",
+      "indicator": "Topic 12",
+      "tanglish_exp": "Name-e illadha small one-line functions thaan <b>Lambda Functions</b>! Syntax: <code>add = lambda a, b: a + b</code>. <code>def</code> build-up illama spot-la quick function operation perform panna Lambda king!",
+      "english_exp": "A lambda function is a small anonymous function. A lambda function can take any number of arguments, but can only have one expression. Syntax: <code>lambda arguments : expression</code>.",
+      "initial_code": "# Quick lambda one-liner!\ndouble = lambda x: x * 2\nprint(\"Double of 15 is:\")\nprint(double(15))",
+      "expected_output": "Double of 15 is:\n30",
+      "order": 12,
+      "quiz": {
+        "question": "Which keyword creates an anonymous one-line function in Python?",
+        "options": ["def", "function", "lambda", "inline"],
+        "correct_index": 2,
+        "correct_headline": "Correct! Lambda King!",
+        "correct_text": "Vadivelu: \"Def build-up illama spot-la lambda potu 30 calculation get pannitiye!\"",
+        "correct_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor vadivelu\"><div class=\"actor-face\">😏</div></div><div class=\"meme-dialog dialog-right\">Lambda power! Fast calculation!</div></div>",
+        "incorrect_headline": "Wrong Function Keyword!",
+        "incorrect_text": "Santhanam: \"Lambda-nu ezhuthaama inline-nu ezhuthurane paaru! Inga anonymous function error!\"",
+        "incorrect_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor vivek\"><div class=\"actor-face\">🤦‍♂️</div></div><div class=\"meme-dialog dialog-bottom\">Use 'lambda' keyword!</div></div>"
+      }
+    },
+    {
+      "topic_id": "map_filter",
+      "title": "Map & Filter Functions",
+      "subtitle": "Vivek Filter Scheme (Cleaning Bad Elements)",
+      "indicator": "Topic 13",
+      "tanglish_exp": "List-la irukra values-a transform panna <code>map()</code>, condition check panni clean-a separate panna <code>filter()</code> use aagum! Vivek: <i>'Bad elements-a filter panni, positive energy-a map panrom!'</i>",
+      "english_exp": "The <code>map()</code> function applies a function to all items in an input list, while <code>filter()</code> creates an iterator of elements for which a function returns True.",
+      "initial_code": "numbers = [1, 2, 3, 4, 5, 6]\n# Filter even numbers!\nevens = list(filter(lambda x: x % 2 == 0, numbers))\nprint(\"Filtered Even Numbers:\")\nprint(evens)",
+      "expected_output": "Filtered Even Numbers:\n[2, 4, 6]",
+      "order": 13,
+      "quiz": {
+        "question": "What does <code>filter()</code> do in Python?",
+        "options": ["Transforms all items", "Keeps items where condition is True", "Deletes the list", "Sorts items"],
+        "correct_index": 1,
+        "correct_headline": "Correct! Filter Scheme Success!",
+        "correct_text": "Vivekh: \"Even numbers-a exact-a filter panni clean-a output eduthutae pa! [2, 4, 6]!\"",
+        "correct_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor vivek\"><div class=\"actor-face\">😂</div></div><div class=\"meme-dialog dialog-right\">Filtered elements clean output!</div></div>",
+        "incorrect_headline": "Wrong Filter Operation!",
+        "incorrect_text": "Vadivelu: \"Filter-nguradhu check condition True-va irukra items-a thaan kootitu varum!\"",
+        "incorrect_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor vadivelu\"><div class=\"actor-face\">😵</div></div><div class=\"meme-dialog dialog-bottom\">filter() checks boolean condition!</div></div>"
+      }
+    },
+    {
+      "topic_id": "modules",
+      "title": "Modules & Importing Libraries",
+      "subtitle": "Importing Heavy Weapons (Chitti & Rajini)",
+      "indicator": "Topic 14",
+      "tanglish_exp": "Python-la pre-built power-packed modules iruku! <code>import math</code>, <code>import random</code>, <code>import json</code>. External weapons-a import panni heavy calculations-a single line-la compute pannalaam. Chitti: <i>'Red chip import activated!'</i>",
+      "english_exp": "Modules are Python files containing code definitions and statements. Use the <code>import</code> keyword to include built-in or third-party packages like <code>math</code> or <code>random</code>.",
+      "initial_code": "import math\n\nnumber = 16\nprint(\"Square root of 16 is:\")\nprint(int(math.sqrt(number)))",
+      "expected_output": "Square root of 16 is:\n4",
+      "order": 14,
+      "quiz": {
+        "question": "Which keyword includes an external module in your Python script?",
+        "options": ["include", "require", "import", "using"],
+        "correct_index": 2,
+        "correct_headline": "Correct! Import Master!",
+        "correct_text": "Chitti: \"Speed 1 Terahertz! Math module-a import panni square root 4 calculated!\"",
+        "correct_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor rajini\"><div class=\"actor-face\">🤖</div></div><div class=\"meme-dialog dialog-right\">import math success!</div></div>",
+        "incorrect_headline": "C++/JS Style Import Error!",
+        "incorrect_text": "Goundamani: \"C++ include / JS require-naa Inga potu thakkanumnu illa! Python uses 'import'!\"",
+        "incorrect_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor goundamani\"><div class=\"actor-face\">😠</div></div><div class=\"meme-dialog dialog-bottom\">Python uses 'import' keyword!</div></div>"
+      }
+    },
+    {
+      "topic_id": "sets",
+      "title": "Sets & Unique Collections",
+      "subtitle": "Duplicate Item Remover (Santhanam)",
+      "indicator": "Topic 15",
+      "tanglish_exp": "List-la duplicate items irukum. Aana <b>Set</b>-la duplicates irukkaadhu! <code>numbers = set([1, 2, 2, 3, 3])</code> potta automatic-a duplicates clean aayi unique values <code>{1, 2, 3}</code> thaan nikkum!",
+      "english_exp": "Sets are unordered collections of unique elements. Sets automatically eliminate duplicate entries and support mathematical set operations like union and intersection.",
+      "initial_code": "raw_list = [1, 2, 2, 3, 4, 4, 5]\nunique_set = set(raw_list)\nprint(\"Unique items:\")\nprint(sorted(list(unique_set)))",
+      "expected_output": "Unique items:\n[1, 2, 3, 4, 5]",
+      "order": 15,
+      "quiz": {
+        "question": "What happens when you pass a list with duplicate elements to <code>set()</code>?",
+        "options": ["It throws ValueError", "Duplicates are automatically removed", "Duplicates are doubled", "List is reversed"],
+        "correct_index": 1,
+        "correct_headline": "Correct! Duplicate Free Zone!",
+        "correct_text": "Santhanam: \"Duplicate items-a set() clean-a தூக்கிடுச்சு! Unique items only!\"",
+        "correct_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor vivek\"><div class=\"actor-face\">😂</div></div><div class=\"meme-dialog dialog-right\">Duplicates removed automatically!</div></div>",
+        "incorrect_headline": "Duplicate Confusion Error!",
+        "incorrect_text": "Senthil: \"Set-la duplicate items allow aagum-nu nenaikureengala anna? Set contains ONLY unique items!\"",
+        "incorrect_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor senthil\"><div class=\"actor-face\">🥺</div></div><div class=\"meme-dialog dialog-bottom\">set() eliminates duplicate entries!</div></div>"
+      }
+    },
+    {
+      "topic_id": "decorators",
+      "title": "Decorators (@wrapper)",
+      "subtitle": "Vadivelu Build-up Wrapper",
+      "indicator": "Topic 16",
+      "tanglish_exp": "Existing function-a modify pannaama surrounding build-up / timing add panradhuthaan <b>Decorator</b> (<code>@my_decorator</code>)! Vadivelu entry-ku munnadi audio build-up podura maadhiri wrapper function execute aagum!",
+      "english_exp": "A decorator takes in a function, adds some functionality, and returns it. Syntax uses the <code>@decorator_name</code> annotation above function declarations.",
+      "initial_code": "def buildup_decorator(func):\n    def wrapper():\n        print(\"Build-up jaasthi!\")\n        func()\n    return wrapper\n\n@buildup_decorator\ndef attack():\n    print(\"Performance Zero!\")\n\nattack()",
+      "expected_output": "Build-up jaasthi!\nPerformance Zero!",
+      "order": 16,
+      "quiz": {
+        "question": "Which symbol is used to apply a decorator to a function in Python?",
+        "options": ["#", "@", "$", "&"],
+        "correct_index": 1,
+        "correct_headline": "Correct! @ Decorator King!",
+        "correct_text": "Vadivelu: \"@ symbol-a correct-a select panni build-up wrapper execute pannitiye pa!\"",
+        "correct_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor vadivelu\"><div class=\"actor-face\">😎</div></div><div class=\"meme-dialog dialog-right\">@ decorator syntax correct!</div></div>",
+        "incorrect_headline": "Wrong Decorator Symbol!",
+        "incorrect_text": "Goundamani: \"@ symbol podala-na decorator function recognize aagaadhu da!\"",
+        "incorrect_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor goundamani\"><div class=\"actor-face\">😠</div></div><div class=\"meme-dialog dialog-bottom\">Use '@decorator_name' syntax!</div></div>"
+      }
+    },
+    {
+      "topic_id": "generators",
+      "title": "Generators & Yield Keyword",
+      "subtitle": "Endless Tea Track Producer (Goundamani & Senthil)",
+      "indicator": "Topic 17",
+      "tanglish_exp": "Whole list-a RAM memory-la store pannaama, onnoonaa values-a stream panna <code>yield</code> keyword use aagum! Memory efficient tea track generator! Senthil single tea as requested!",
+      "english_exp": "Generators are functions that return an iterator using the <code>yield</code> keyword, generating items one at a time on-demand without loading the entire sequence into memory.",
+      "initial_code": "def tea_generator():\n    yield \"Tea 1 ready!\"\n    yield \"Tea 2 ready!\"\n\nfor tea in tea_generator():\n    print(tea)",
+      "expected_output": "Tea 1 ready!\nTea 2 ready!",
+      "order": 17,
+      "quiz": {
+        "question": "Which keyword is used inside a generator function to yield values one at a time?",
+        "options": ["return", "yield", "output", "send"],
+        "correct_index": 1,
+        "correct_headline": "Correct! Yield Generator Master!",
+        "correct_text": "Goundamani: \"yield keyword-a use panni memory-ya save panni tea count-a stream pannitiye!\"",
+        "correct_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor goundamani\"><div class=\"actor-face\">😛</div></div><div class=\"meme-dialog dialog-right\">yield keyword streams data lazily!</div></div>",
+        "incorrect_headline": "Return vs Yield Error!",
+        "incorrect_text": "Senthil: \"'return' potta function stop aayidum anna! Generator-ku 'yield' thaan pannanum!\"",
+        "incorrect_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor senthil\"><div class=\"actor-face\">🥺</div></div><div class=\"meme-dialog dialog-bottom\">Generators use 'yield' keyword!</div></div>"
+      }
+    },
+    {
+      "topic_id": "json_handling",
+      "title": "Working with JSON Data",
+      "subtitle": "API Payload Parser (Chitti Memory Unit)",
+      "indicator": "Topic 18",
+      "tanglish_exp": "Web APIs & Databases data-va <b>JSON</b> format-la exchange panraanga! Python-la JSON String-a Python Dictionary-a convert panna <code>json.loads()</code>, Python Dictionary-a JSON String-a convert panna <code>json.dumps()</code>!",
+      "english_exp": "JSON (JavaScript Object Notation) is a standard data interchange format. Python provides the built-in <code>json</code> module with <code>json.loads()</code> (parse JSON string) and <code>json.dumps()</code> (encode to JSON string).",
+      "initial_code": "import json\n\njson_str = '{\"bot\": \"Chitti\", \"speed\": \"1 Terahertz\"}'\ndata = json.loads(json_str)\nprint(\"Bot Name:\", data[\"bot\"])\nprint(\"Speed:\", data[\"speed\"])",
+      "expected_output": "Bot Name: Chitti\nSpeed: 1 Terahertz",
+      "order": 18,
+      "quiz": {
+        "question": "Which function converts a JSON formatted string into a Python dictionary?",
+        "options": ["json.dumps()", "json.loads()", "json.parse()", "json.convert()"],
+        "correct_index": 1,
+        "correct_headline": "Correct! JSON Parser Master!",
+        "correct_text": "Chitti: \"json.loads() call panni JSON string-a Python dictionary-a exact-a parse pannitiye!\"",
+        "correct_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor rajini\"><div class=\"actor-face\">🤖</div></div><div class=\"meme-dialog dialog-right\">json.loads() success!</div></div>",
+        "incorrect_headline": "dumps vs loads Error!",
+        "incorrect_text": "Senthil: \"json.dumps() string output kudukum anna! Parsing-ku json.loads() thaan use pannanum!\"",
+        "incorrect_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor senthil\"><div class=\"actor-face\">🥺</div></div><div class=\"meme-dialog dialog-bottom\">Use json.loads() for parsing JSON string!</div></div>"
+      }
+    },
+    {
+      "topic_id": "regex",
+      "title": "Regular Expressions (RegEx)",
+      "subtitle": "Detective Vivek Pattern Finder",
+      "indicator": "Topic 19",
+      "tanglish_exp": "Text-kulla specific patterns (e.g. Email, Phone numbers, Keywords) detect panna <b>RegEx (`import re`)</b> use aagum! Detective Vivek: <i>'Pattern matching-la namma sothukkulle meen adikira maadhiri exact-a match edupom!'</i>",
+      "english_exp": "Regular Expressions (RegEx) are sequence of characters that form a search pattern. The <code>re</code> module provides methods like <code>re.search()</code> and <code>re.findall()</code> for text pattern matching.",
+      "initial_code": "import re\n\ntext = \"Python Kadhai Topic 19\"\nmatch = re.search(r\"Topic \\d+\", text)\nif match:\n    print(\"Found Pattern:\", match.group())",
+      "expected_output": "Found Pattern: Topic 19",
+      "order": 19,
+      "quiz": {
+        "question": "Which Python module is used for Regular Expressions?",
+        "options": ["regex", "re", "pattern", "match"],
+        "correct_index": 1,
+        "correct_headline": "Correct! RegEx Detective!",
+        "correct_text": "Vivekh: \"import re potu pattern 'Topic 19'-a detective maadhiri kandu pudichutae!\"",
+        "correct_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor vivek\"><div class=\"actor-face\">😂</div></div><div class=\"meme-dialog dialog-right\">RegEx pattern match success!</div></div>",
+        "incorrect_headline": "Wrong RegEx Module!",
+        "incorrect_text": "Vadivelu: \"Python built-in RegEx module name 're' boss! import re-nu type pannunga!\"",
+        "incorrect_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor vadivelu\"><div class=\"actor-face\">😵</div></div><div class=\"meme-dialog dialog-bottom\">Python built-in module is 're'!</div></div>"
+      }
+    },
+    {
+      "topic_id": "multithreading",
+      "title": "Multithreading & Parallel Execution",
+      "subtitle": "Speed 1 Terahertz Parallel Tasks (Chitti 2.0)",
+      "indicator": "Topic 20",
+      "tanglish_exp": "Multiple tasks-a simultaneous-a perform panna <b>Multithreading (`import threading`)</b> use aagum! Chitti: <i>'Naan oru kayyile robot fight, innoru kayyile Python compilation parallel-a panren!'</i>",
+      "english_exp": "Multithreading allows a program to run multiple operations concurrently within the same process space using the <code>threading</code> or <code>asyncio</code> modules.",
+      "initial_code": "import threading\nimport time\n\ndef task1():\n    print(\"Task 1: Speed 1 Terahertz Running!\")\n\nt = threading.Thread(target=task1)\nt.start()\nt.join()",
+      "expected_output": "Task 1: Speed 1 Terahertz Running!",
+      "order": 20,
+      "quiz": {
+        "question": "Which module allows thread creation for parallel execution in standard Python?",
+        "options": ["threader", "threading", "parallel", "multitask"],
+        "correct_index": 1,
+        "correct_headline": "Correct! Parallel Execution Master!",
+        "correct_text": "Rajini: \"threading module-a correct-a use panni parallel task execution start pannitiye!\"",
+        "correct_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor rajini\"><div class=\"actor-face\">🤖</div></div><div class=\"meme-dialog dialog-right\">threading module execution success!</div></div>",
+        "incorrect_headline": "Wrong Threading Module!",
+        "incorrect_text": "Chitti: \"ERROR: Module name is 'threading'! Use `import threading` for multithreading!\"",
+        "incorrect_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor rajini\"><div class=\"actor-face\">😵</div></div><div class=\"meme-dialog dialog-bottom\">Standard module name is 'threading'!</div></div>"
+      }
     }
   ],
   "chatbot_meme_responses": [
     {
       "keywords": ["hi", "hello", "vanakkam", "hey", "chitti", "robot", "yaru", "who", "name"],
-      "response": "Vanakkam! Naan thaan <b>Chitti RAG 3.0, Speed 1 Terahertz, Memory 1 Zettabyte!</b> 🤖 Python code ezhuthuradhula ungalukku enna doubt-nalum kelunga, RAG engine-la database search panni memes mood-la instant-a clear panren!"
+      "response": "Vanakkam! Naan thaan <b>Chitti RAG 3.0, Speed 1 Terahertz, Memory 1 Zettabyte!</b> 🤖 Python 20 curriculum topics documents-a RAG retrieval model-la search panni, memes mood-la instant-a response solidaren!"
     },
     {
       "keywords": ["variable", "var", "store", "datatype", "data type", "integer", "string", "float", "bool", "boolean", "pocket", "senthil", "goundamani", "banana"],
@@ -266,6 +486,46 @@
     {
       "keywords": ["class", "object", "oop", "init", "constructor", "self", "instance"],
       "response": "<b>Object-Oriented Programming (OOP)</b> pathi ketrukeenga! Superstar Rajini / Chitti style-la: <code>class Robot:</code> nguradhu Blueprint, <code>chitti = Robot(\"Chitti\")</code> nguradhu Real Object! <code>__init__()</code> dhaan Constructor method! 🤖"
+    },
+    {
+      "keywords": ["comprehension", "list comprehension", "one line loop"],
+      "response": "<b>List Comprehensions (Topic 11)</b> pathi ketrukeenga! For loop-a single line-la ezhuthalaam: <code>[x * 2 for x in range(5)]</code>. Goundamani fast-track loop execution! ⚡"
+    },
+    {
+      "keywords": ["lambda", "anonymous function", "one liner"],
+      "response": "<b>Lambda Functions (Topic 12)</b> pathi ketrukeenga! Name-e illadha small one-line functions: <code>add = lambda a, b: a + b</code>. Spot-la quick function execution! 🎯"
+    },
+    {
+      "keywords": ["map", "filter", "reduce"],
+      "response": "<b>Map & Filter Functions (Topic 13)</b> pathi solidaren! Vivek filter scheme style-la list elements-a condition check panni clean-a separate panna <code>filter(lambda x: x > 5, list)</code>! 🧹"
+    },
+    {
+      "keywords": ["module", "import", "package", "library", "math", "random"],
+      "response": "<b>Modules & Importing (Topic 14)</b> pathi ketrukeenga! External heavy weapons import: <code>import math</code>, <code>import random</code>, <code>import json</code>. Chitti red chip import activated! 📦"
+    },
+    {
+      "keywords": ["set", "sets", "unique", "duplicate"],
+      "response": "<b>Sets & Unique Collections (Topic 15)</b> pathi solidaren! List-la duplicates remove panna <code>set(list)</code> potta Santhanam automatic duplicate item remover maadhiri unique values thaan nirkum! 💎"
+    },
+    {
+      "keywords": ["decorator", "@", "wrapper"],
+      "response": "<b>Decorators (@wrapper) (Topic 16)</b> pathi ketrukeenga! Existing function-ku Vadivelu audio entry build-up wrapper add panradhu thaan Decorator (<code>@buildup_decorator</code>)! 🎭"
+    },
+    {
+      "keywords": ["generator", "yield", "iterator", "stream"],
+      "response": "<b>Generators & Yield (Topic 17)</b> pathi solidaren! RAM memory-la whole list load pannaama, values-a <code>yield</code> keyword valiya lazy-a stream panna Generators king! 🌀"
+    },
+    {
+      "keywords": ["json", "loads", "dumps", "parse", "api payload"],
+      "response": "<b>JSON Handling (Topic 18)</b> pathi ketrukeenga! JSON String-a Python Dictionary-a convert panna <code>json.loads()</code>, Python Dictionary-a JSON String-a convert panna <code>json.dumps()</code>! 📄"
+    },
+    {
+      "keywords": ["regex", "re", "pattern", "regular expression", "search"],
+      "response": "<b>Regular Expressions (RegEx) (Topic 19)</b> pathi solidaren! Detective Vivek pattern finder style-la text-kulla patterns search panna <code>import re</code> matrum <code>re.search(r'pattern', text)</code>! 🔍"
+    },
+    {
+      "keywords": ["threading", "multithreading", "parallel", "async", "asyncio"],
+      "response": "<b>Multithreading & Async (Topic 20)</b> pathi ketrukeenga! Multiple operations-a parallel-a run panna <code>import threading</code>. Chitti Speed 1 Terahertz parallel tasks running! ⚡"
     },
     {
       "keywords": ["indentationerror", "indentation", "space", "tab", "block"],
