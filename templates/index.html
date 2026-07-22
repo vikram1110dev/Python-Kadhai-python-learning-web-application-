@@ -22,6 +22,7 @@
     <div class="nav-links">
       <button class="nav-btn active" id="nav-home">Home / Dashboard</button>
       <button class="nav-btn" id="nav-learn">Start Learning</button>
+      <button class="nav-btn menu-btn" id="btn-open-menu">⚙️ Options</button>
       <button class="theme-toggle-btn" id="theme-toggle-btn" aria-label="Toggle Theme">🌙</button>
     </div>
   </header>
@@ -174,6 +175,57 @@
         <input type="text" class="chatbot-input" id="chatbot-input" placeholder="Ask Chitti something..."
           autocomplete="off">
         <button class="chatbot-send-btn" id="chatbot-send-btn">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Options & Settings Drawer Modal -->
+  <div class="options-modal-overlay" id="options-modal-overlay">
+    <div class="options-modal-card">
+      <div class="options-modal-header">
+        <h3 class="options-modal-title">⚙️ App Settings & Menu</h3>
+        <button class="options-modal-close" id="options-modal-close">&times;</button>
+      </div>
+
+      <div class="options-modal-body">
+        <!-- Quick Jump Section -->
+        <div class="options-group">
+          <label class="options-label" for="quick-topic-select">📚 Quick Topic Jump</label>
+          <select class="options-select" id="quick-topic-select">
+            <!-- Populated dynamically via app.js -->
+          </select>
+        </div>
+
+        <!-- Sound FX Toggle Section -->
+        <div class="options-group row-group">
+          <div>
+            <div class="options-label">🔊 Meme Audio & Sound FX</div>
+            <div class="options-desc">Play audio effects for quiz answers & code completion</div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="toggle-sound-fx" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <!-- Keyboard Shortcuts Help -->
+        <div class="options-group">
+          <div class="options-label">⌨️ Keyboard Shortcuts</div>
+          <div class="shortcuts-list">
+            <div class="shortcut-item"><kbd>Tab</kbd> <span>Indent 4 spaces in Code Editor</span></div>
+            <div class="shortcut-item"><kbd>Ctrl</kbd> + <kbd>Enter</kbd> <span>Run Python Playground Code</span></div>
+            <div class="shortcut-item"><kbd>Esc</kbd> <span>Close Options Menu</span></div>
+          </div>
+        </div>
+
+        <!-- System & Admin Links -->
+        <div class="options-group">
+          <div class="options-label">🔗 System Actions</div>
+          <div class="actions-row">
+            <a href="/admin" target="_blank" class="btn-option-link">🔑 Django Admin Panel</a>
+            <button class="btn-option-danger" id="btn-reset-progress">🗑️ Reset Progress Data</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>

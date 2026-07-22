@@ -200,10 +200,13 @@ function handleQuizSubmission(selectedIndex) {
   `;
 
   if (isCorrect) {
+    playSoundEffect("correct");
     userProgress[lesson.id] = true;
     saveProgress();
     renderSidebar();
     showToast();
+  } else {
+    playSoundEffect("incorrect");
   }
 }
 
@@ -441,6 +444,7 @@ sys.stderr = io.StringIO()
       const cleanActual = stdout.trim();
       const cleanExpected = currentLesson.expectedOutput.trim();
       if (cleanActual === cleanExpected) {
+        playSoundEffect("success");
         resultHTML += `\n\n<span class="terminal-output-success">🎉 Vadivelu Praise: "Ahaaa! Correct output get pannitiye pa!"</span>`;
         showToast("Mass-u boss! Live execution match aayiduchu! 🎉");
       }
@@ -517,4 +521,132 @@ showView = function(viewId) {
     initPyodideEngine();
   }
 };
+
+/* ==========================================================================
+   Sound Effects Synthesizer (Web Audio API)
+   ========================================================================== */
+
+function playSoundEffect(type) {
+  const soundToggle = document.getElementById("toggle-sound-fx");
+  if (soundToggle && !soundToggle.checked) return;
+
+  try {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtx) return;
+    const ctx = new AudioCtx();
+
+    if (type === "correct" || type === "success") {
+      const notes = [523.25, 659.25, 783.99, 1046.50];
+      notes.forEach((freq, idx) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "sine";
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.12, ctx.currentTime + idx * 0.08);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + idx * 0.08 + 0.22);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(ctx.currentTime + idx * 0.08);
+        osc.stop(ctx.currentTime + idx * 0.08 + 0.22);
+      });
+    } else if (type === "incorrect") {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "sawtooth";
+      osc.frequency.setValueAtTime(160, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(80, ctx.currentTime + 0.28);
+      gain.gain.setValueAtTime(0.18, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.28);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.28);
+    }
+  } catch (e) {
+    // Audio context allowed after user interaction
+  }
+}
+
+/* ==========================================================================
+   Options & Settings Modal Logic
+   ========================================================================== */
+
+function populateQuickTopicSelect() {
+  const select = document.getElementById("quick-topic-select");
+  if (!select) return;
+  select.innerHTML = "";
+  lessons.forEach((l, idx) => {
+    const opt = document.createElement("option");
+    opt.value = idx;
+    opt.textContent = `${l.indicator}: ${l.title}`;
+    select.appendChild(opt);
+  });
+}
+
+const optionsOverlay = document.getElementById("options-modal-overlay");
+const btnOpenMenu = document.getElementById("btn-open-menu");
+const btnCloseMenu = document.getElementById("options-modal-close");
+
+function openOptionsModal() {
+  populateQuickTopicSelect();
+  const select = document.getElementById("quick-topic-select");
+  if (select) select.value = currentLessonIndex;
+  if (optionsOverlay) optionsOverlay.classList.add("active");
+}
+
+function closeOptionsModal() {
+  if (optionsOverlay) optionsOverlay.classList.remove("active");
+}
+
+if (btnOpenMenu) btnOpenMenu.addEventListener("click", openOptionsModal);
+if (btnCloseMenu) btnCloseMenu.addEventListener("click", closeOptionsModal);
+
+if (optionsOverlay) {
+  optionsOverlay.addEventListener("click", (e) => {
+    if (e.target === optionsOverlay) closeOptionsModal();
+  });
+}
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && optionsOverlay && optionsOverlay.classList.contains("active")) {
+    closeOptionsModal();
+  }
+});
+
+const quickSelect = document.getElementById("quick-topic-select");
+if (quickSelect) {
+  quickSelect.addEventListener("change", (e) => {
+    const idx = parseInt(e.target.value, 10);
+    if (!isNaN(idx) && idx >= 0 && idx < lessons.length) {
+      currentLessonIndex = idx;
+      renderLesson();
+      showView("view-learn");
+      closeOptionsModal();
+    }
+  });
+}
+
+const btnResetProgress = document.getElementById("btn-reset-progress");
+if (btnResetProgress) {
+  btnResetProgress.addEventListener("click", () => {
+    if (confirm("Reset all your learning progress? This will clear completion checkmarks for all topics.")) {
+      userProgress = {};
+      saveProgress();
+      renderSidebar();
+      showToast("Progress reset cleanly! Start fresh! 🔄");
+      closeOptionsModal();
+    }
+  });
+}
+
+// Add Ctrl + Enter shortcut to Code Editor
+if (codeEditorInput) {
+  codeEditorInput.addEventListener("keydown", (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
+      e.preventDefault();
+      runPythonCode();
+    }
+  });
+}
+
 
