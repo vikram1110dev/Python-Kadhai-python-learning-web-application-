@@ -1809,7 +1809,7 @@ kbd {
   grid-template-columns: 1fr 1fr;
   gap: 1.25rem;
   margin-top: 1.25rem;
-  align-items: stretch;
+  align-items: start;
 }
 
 @media (max-width: 992px) {
@@ -1820,15 +1820,12 @@ kbd {
 
 .streak-hero-card {
   margin-top: 0;
-  height: 100%;
+  height: auto;
   box-sizing: border-box;
   background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(239, 68, 68, 0.06) 100%);
   border: 1px solid rgba(245, 158, 11, 0.3);
   box-shadow: 0 8px 30px rgba(245, 158, 11, 0.12);
   transition: var(--transition-smooth);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 }
 
 .streak-card-header {
@@ -1935,15 +1932,12 @@ kbd {
 /* Monthly Streak Analytics Card */
 .monthly-analytics-card {
   margin-top: 0;
-  height: 100%;
+  height: auto;
   box-sizing: border-box;
   background: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(59, 130, 246, 0.06) 100%);
   border: 1px solid rgba(139, 92, 246, 0.3);
   box-shadow: 0 8px 30px rgba(139, 92, 246, 0.12);
   transition: var(--transition-smooth);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 }
 
 .monthly-header {
