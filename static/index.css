@@ -443,7 +443,7 @@ header {
   height: 8px;
   border-radius: 4px;
   overflow: hidden;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .progress-bar-fill {
@@ -454,10 +454,133 @@ header {
   transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.sidebar {
+  width: 320px;
+  position: sticky;
+  top: 90px;
+  max-height: calc(100vh - 110px);
+}
+
+.sidebar .card {
+  max-height: calc(100vh - 110px);
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
 .topic-list {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.6rem;
+  overflow-y: auto;
+  flex: 1;
+  max-height: calc(100vh - 220px);
+  padding-right: 6px;
+  margin-top: 0.5rem;
+}
+
+/* Custom Scrollbar for Topic List */
+.topic-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.topic-list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 4px;
+}
+
+.topic-list::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.4);
+  border-radius: 4px;
+}
+
+.topic-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.7);
+}
+
+/* Horizontal Scrollable Topic Tabs Bar */
+.topic-tabs-wrapper {
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.topic-scroll-tabs {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  overflow-x: auto;
+  padding: 0.4rem 0.2rem 0.6rem 0.2rem;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.topic-scroll-tabs::-webkit-scrollbar {
+  height: 5px;
+}
+
+.topic-scroll-tabs::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 4px;
+}
+
+.topic-scroll-tabs::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.35);
+  border-radius: 4px;
+}
+
+.topic-tab-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.95rem;
+  border-radius: 20px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--border-light);
+  color: var(--text-muted);
+  font-family: var(--font-title);
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: var(--transition-smooth);
+}
+
+.topic-tab-pill:hover {
+  background: rgba(139, 92, 246, 0.12);
+  border-color: rgba(139, 92, 246, 0.3);
+  color: var(--text-main);
+  transform: translateY(-1px);
+}
+
+.topic-tab-pill.active {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.35) 0%, rgba(59, 130, 246, 0.25) 100%);
+  border: 1px solid var(--accent-primary);
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(139, 92, 246, 0.25);
+  font-weight: 700;
+}
+
+.topic-tab-pill.completed {
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+.topic-tab-pill.completed .tab-pill-icon {
+  background: #10b981;
+  color: #ffffff;
+}
+
+.tab-pill-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
 }
 
 .topic-item {
