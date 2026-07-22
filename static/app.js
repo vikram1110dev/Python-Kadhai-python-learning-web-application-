@@ -123,9 +123,21 @@ function renderLesson() {
     </div>
   `;
 
-  // Set Code Display values
-  document.getElementById("lesson-code-display").textContent = lesson.initialCode;
-  document.getElementById("sandbox-filename").textContent = lesson.id + ".py";
+  // Set Code Editor values
+  const codeEditor = document.getElementById("lesson-code-editor");
+  if (codeEditor) {
+    codeEditor.value = lesson.initialCode;
+  }
+  const filenameEl = document.getElementById("sandbox-filename");
+  if (filenameEl) {
+    filenameEl.textContent = lesson.id + ".py (Python WASM)";
+  }
+
+  // Clear Terminal Output
+  const terminalOutput = document.getElementById("terminal-output");
+  if (terminalOutput) {
+    terminalOutput.innerHTML = `<span class="terminal-placeholder">Click "▶️ Run Code" to execute Python code and view output here...</span>`;
+  }
 
   // Hide feedback container
   const feedbackContainer = document.getElementById("meme-feedback-container");
@@ -326,3 +338,183 @@ themeToggleBtn.addEventListener("click", () => {
 
 // Initialize Theme on startup
 initTheme();
+
+/* ==========================================================================
+   Pyodide WASM Python Engine & Interactive Playground Logic
+   ========================================================================== */
+
+let pyodideInstance = null;
+let isPyodideLoading = false;
+
+function escapeHtml(text) {
+  return String(text)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+async function initPyodideEngine() {
+  if (pyodideInstance || isPyodideLoading) return;
+  const statusBadge = document.getElementById("pyodide-status");
+  if (!statusBadge) return;
+
+  isPyodideLoading = true;
+  statusBadge.className = "pyodide-status-badge";
+  statusBadge.textContent = "⏳ Loading Python WASM...";
+
+  try {
+    if (typeof loadPyodide === "function") {
+      pyodideInstance = await loadPyodide({
+        indexURL: "https://cdn.jsdelivr.net/pyodide/v0.26.1/full/"
+      });
+      statusBadge.className = "pyodide-status-badge ready";
+      statusBadge.textContent = "⚡ Engine Ready";
+    } else {
+      statusBadge.className = "pyodide-status-badge error";
+      statusBadge.textContent = "⚠️ Offline Mode";
+    }
+  } catch (err) {
+    console.error("Pyodide loading error:", err);
+    statusBadge.className = "pyodide-status-badge error";
+    statusBadge.textContent = "❌ WASM Load Error";
+  } finally {
+    isPyodideLoading = false;
+  }
+}
+
+async function runPythonCode() {
+  const codeEditor = document.getElementById("lesson-code-editor");
+  const terminalOutput = document.getElementById("terminal-output");
+  const runBtn = document.getElementById("btn-run-code");
+  if (!codeEditor || !terminalOutput) return;
+
+  const code = codeEditor.value;
+  if (!code.trim()) {
+    terminalOutput.innerHTML = `<span class="terminal-output-error">Aiyo! Code area empty-a iruku boss! Type something first! 😅</span>`;
+    return;
+  }
+
+  if (!pyodideInstance) {
+    terminalOutput.innerHTML = `<span class="terminal-placeholder">⏳ Initializing Python WASM engine... First load takes a few seconds...</span>`;
+    await initPyodideEngine();
+    if (!pyodideInstance) {
+      terminalOutput.innerHTML = `<span class="terminal-output-error">❌ Could not load Pyodide engine. Check network connection!</span>`;
+      return;
+    }
+  }
+
+  runBtn.disabled = true;
+  runBtn.textContent = "⏳ Running...";
+
+  try {
+    // Setup stdout / stderr capture streams inside Python runtime
+    await pyodideInstance.runPythonAsync(`
+import sys
+import io
+sys.stdout = io.StringIO()
+sys.stderr = io.StringIO()
+`);
+
+    // Execute user code in WASM sandbox
+    await pyodideInstance.runPythonAsync(code);
+
+    // Retrieve printed outputs
+    const stdout = await pyodideInstance.runPythonAsync(`sys.stdout.getvalue()`);
+    const stderr = await pyodideInstance.runPythonAsync(`sys.stderr.getvalue()`);
+
+    let resultHTML = "";
+    if (stdout) {
+      resultHTML += `<span class="terminal-output-text">${escapeHtml(stdout)}</span>`;
+    }
+    if (stderr) {
+      resultHTML += `${stdout ? "\n" : ""}<span class="terminal-output-error">${escapeHtml(stderr)}</span>`;
+    }
+    if (!stdout && !stderr) {
+      resultHTML = `<span class="terminal-placeholder">Code executed cleanly with no output. (Tip: Use print() to display values!)</span>`;
+    }
+
+    // Output check against expectedOutput
+    const currentLesson = lessons[currentLessonIndex];
+    if (currentLesson && currentLesson.expectedOutput && stdout) {
+      const cleanActual = stdout.trim();
+      const cleanExpected = currentLesson.expectedOutput.trim();
+      if (cleanActual === cleanExpected) {
+        resultHTML += `\n\n<span class="terminal-output-success">🎉 Vadivelu Praise: "Ahaaa! Correct output get pannitiye pa!"</span>`;
+        showToast("Mass-u boss! Live execution match aayiduchu! 🎉");
+      }
+    }
+
+    terminalOutput.innerHTML = resultHTML;
+  } catch (err) {
+    let cleanErr = err.message || String(err);
+    if (cleanErr.includes("PythonError:")) {
+      cleanErr = cleanErr.split("PythonError:")[1].trim();
+    }
+    terminalOutput.innerHTML = `<span class="terminal-output-error">🐍 Python Error Traceback:\n${escapeHtml(cleanErr)}</span>`;
+  } finally {
+    runBtn.disabled = false;
+    runBtn.textContent = "▶️ Run Code";
+  }
+}
+
+function resetPythonCode() {
+  const currentLesson = lessons[currentLessonIndex];
+  if (!currentLesson) return;
+
+  const codeEditor = document.getElementById("lesson-code-editor");
+  if (codeEditor) {
+    codeEditor.value = currentLesson.initialCode;
+  }
+
+  const terminalOutput = document.getElementById("terminal-output");
+  if (terminalOutput) {
+    terminalOutput.innerHTML = `<span class="terminal-placeholder">Code reset to original snippet. Click "▶️ Run Code" to execute.</span>`;
+  }
+}
+
+// Enable Tab Key indents in Code Editor
+const codeEditorInput = document.getElementById("lesson-code-editor");
+if (codeEditorInput) {
+  codeEditorInput.addEventListener("keydown", (e) => {
+    if (e.key === "Tab") {
+      e.preventDefault();
+      const start = codeEditorInput.selectionStart;
+      const end = codeEditorInput.selectionEnd;
+      codeEditorInput.value = codeEditorInput.value.substring(0, start) + "    " + codeEditorInput.value.substring(end);
+      codeEditorInput.selectionStart = codeEditorInput.selectionEnd = start + 4;
+    }
+  });
+}
+
+// Bind Code Runner controls
+const runCodeBtn = document.getElementById("btn-run-code");
+if (runCodeBtn) {
+  runCodeBtn.addEventListener("click", runPythonCode);
+}
+
+const resetCodeBtn = document.getElementById("btn-reset-code");
+if (resetCodeBtn) {
+  resetCodeBtn.addEventListener("click", resetPythonCode);
+}
+
+const clearTerminalBtn = document.getElementById("btn-clear-terminal");
+if (clearTerminalBtn) {
+  clearTerminalBtn.addEventListener("click", () => {
+    const terminalOutput = document.getElementById("terminal-output");
+    if (terminalOutput) {
+      terminalOutput.innerHTML = `<span class="terminal-placeholder">Terminal output cleared. Click "▶️ Run Code" to execute.</span>`;
+    }
+  });
+}
+
+// Pre-load Pyodide lazily when opening Learn view
+const originalShowView = showView;
+showView = function(viewId) {
+  originalShowView(viewId);
+  if (viewId === "view-learn") {
+    initPyodideEngine();
+  }
+};
+

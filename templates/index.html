@@ -93,11 +93,17 @@
           <!-- Populated dynamically via app.js -->
         </div>
 
-        <!-- Static Example Code snippet -->
+        <!-- Interactive Pyodide Code Sandbox -->
         <div class="card code-snippet-card">
           <div class="sandbox-header">
-            <h3 class="sandbox-title">🐍 Example Code Snippet</h3>
-            <span class="editor-lang" id="sandbox-filename">main.py</span>
+            <div class="sandbox-title-group">
+              <h3 class="sandbox-title">⚡ Interactive Python Playground</h3>
+              <span class="pyodide-status-badge" id="pyodide-status">⏳ Loading Python Engine...</span>
+            </div>
+            <div class="sandbox-actions">
+              <button class="btn-editor reset-btn" id="btn-reset-code" title="Reset to initial lesson code">🔄 Reset</button>
+              <button class="btn-editor run-btn" id="btn-run-code" title="Execute Python code live">▶️ Run Code</button>
+            </div>
           </div>
           <div class="code-editor-container">
             <div class="editor-titlebar">
@@ -106,9 +112,20 @@
                 <span class="dot yellow"></span>
                 <span class="dot green"></span>
               </div>
-              <span class="editor-lang">Python 3.x</span>
+              <span class="editor-lang" id="sandbox-filename">main.py (Python 3.11 WASM)</span>
             </div>
-            <pre class="code-display" id="lesson-code-display"></pre>
+            <textarea class="code-editor-input" id="lesson-code-editor" spellcheck="false" placeholder="Write Python code here..."></textarea>
+          </div>
+
+          <!-- Live Terminal Output Window -->
+          <div class="terminal-container">
+            <div class="terminal-header">
+              <span class="terminal-title">🖥️ Live Terminal Output</span>
+              <button class="btn-clear-terminal" id="btn-clear-terminal">Clear</button>
+            </div>
+            <div class="terminal-body" id="terminal-output">
+              <span class="terminal-placeholder">Click "▶️ Run Code" to execute Python code and view output here...</span>
+            </div>
           </div>
         </div>
 
@@ -165,6 +182,9 @@
   <footer class="app-footer">
     &copy; vikram B
   </footer>
+
+  <!-- Pyodide WebAssembly Python Engine -->
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
 
   <!-- Include App Logic -->
   <script src="{% static 'app.js' %}"></script>
