@@ -785,6 +785,7 @@ function handleClaimStreak() {
   showToast("🔥 Daily Streak Claimed! Keep Coding!");
   renderStreakWidget();
   renderMonthlyAnalytics();
+  updateUserRank();
 }
 
 // Bind Claim Streak button
@@ -923,7 +924,7 @@ function renderMonthlyAnalytics() {
       text = "\"Aahaa, monthly frequency konjam kammi-a irukaye da swami! Next month-la irundhu full form-ku vaa!\"";
     }
 
-    memeBox.innerHTML = `
+  memeBox.innerHTML = `
       <div class="monthly-meme-actor">${actorEmoji}</div>
       <div class="monthly-meme-content">
         <div class="monthly-meme-headline">${headline}</div>
@@ -933,11 +934,130 @@ function renderMonthlyAnalytics() {
   }
 }
 
+// User Ranking & Level System Logic (6 Custom Ranks & Images)
+function updateUserRank() {
+  const rankingBox = document.getElementById("user-ranking-box");
+  if (!rankingBox) return;
+
+  const streakData = getStreakData();
+  const streakCount = streakData.count || 1;
+  
+  let completedCount = 0;
+  if (typeof userProgress === 'object') {
+    completedCount = Object.keys(userProgress).filter(k => userProgress[k] === true).length;
+  }
+
+  // Calculate User XP: 50 XP per streak day + 100 XP per completed lesson topic
+  const totalXP = (streakCount * 50) + (completedCount * 100);
+
+  // 6 Custom Ranks Configuration
+  const ranks = [
+    {
+      level: 1,
+      title: "Code Kutty",
+      img: "/static/ranks/code%20kutty.jpeg",
+      minXP: 0,
+      actor: "Vadivelu",
+      quote: "\"Arambichutanya Arambichutan! Code-a thoda arambichutaen!\""
+    },
+    {
+      level: 2,
+      title: "Python Poochi",
+      img: "/static/ranks/python%20poochi.jpeg",
+      minXP: 300,
+      actor: "Senthil",
+      quote: "\"Poochi maadhiri nalla creep aayi code ezhuthuren anna!\""
+    },
+    {
+      level: 3,
+      title: "Bug Vettaikaran",
+      img: "/static/ranks/bug%20vettaikaran.jpeg",
+      minXP: 800,
+      actor: "Vadivelu",
+      quote: "\"Single bug-a kooda thapikka vidama vettai aaduraen!\""
+    },
+    {
+      level: 4,
+      title: "Logic Legend",
+      img: "/static/ranks/logic%20legend.jpeg",
+      minXP: 1600,
+      actor: "Vivekh",
+      quote: "\"Logic-la namma eduthadhu thaan mudivu! Top mind performance!\""
+    },
+    {
+      level: 5,
+      title: "Python Puli",
+      img: "/static/ranks/python%20puli.jpeg",
+      minXP: 2500,
+      actor: "Chitti 2.0",
+      quote: "\"Puli paaiyuradhu maadhiri Python-la mass kaatureom!\""
+    },
+    {
+      level: 6,
+      title: "Code Chakravarthy",
+      img: "/static/ranks/code%20chakravarthi.jpeg",
+      minXP: 3500,
+      actor: "Superstar Rajini",
+      quote: "\"Chakravarthy da! Absolute Supreme Python Ruler! All 30 topics conquered!\""
+    }
+  ];
+
+  let currentRank = ranks[0];
+  for (let i = ranks.length - 1; i >= 0; i--) {
+    if (totalXP >= ranks[i].minXP) {
+      currentRank = ranks[i];
+      break;
+    }
+  }
+
+  const currentIndex = ranks.indexOf(currentRank);
+  const nextRank = ranks[currentIndex + 1] || currentRank;
+  const xpInLevel = totalXP - currentRank.minXP;
+  const xpNeeded = (nextRank.minXP - currentRank.minXP) || 1;
+  const progressPercent = currentRank === nextRank ? 100 : Math.min(100, Math.round((xpInLevel / xpNeeded) * 100));
+
+  rankingBox.innerHTML = `
+    <div class="rank-header">
+      <div class="rank-badge-info">
+        <img src="${currentRank.img}" alt="${currentRank.title}" class="rank-badge-img" />
+        <div>
+          <div class="rank-level-label">Level ${currentRank.level} Rank</div>
+          <h4 class="rank-title">${currentRank.title}</h4>
+        </div>
+      </div>
+      <span class="rank-xp-badge">${totalXP} XP</span>
+    </div>
+    
+    <div class="rank-progress-wrapper">
+      <div class="rank-progress-labels">
+        <span class="rank-progress-sub">XP Progress (${progressPercent}%)</span>
+        <span class="rank-next-sub">${currentRank === nextRank ? 'MAX RANK UNLOCKED!' : 'Next: ' + nextRank.title}</span>
+      </div>
+      <div class="rank-progress-bg">
+        <div class="rank-progress-fill" style="width: ${progressPercent}%;"></div>
+      </div>
+    </div>
+
+    <div class="rank-meme-quote">
+      <span class="quote-text"><b>${currentRank.actor}:</b> ${currentRank.quote}</span>
+    </div>
+
+    <div class="rank-milestones">
+      ${ranks.map(r => `
+        <div class="rank-milestone-item ${totalXP >= r.minXP ? 'unlocked' : ''}" title="${r.title} (${r.minXP} XP)">
+          <img src="${r.img}" alt="${r.title}" class="milestone-img" />
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
 // Log activity on initial load
 logTodayActivity();
 
-// Initialize Monthly Analytics on startup
+// Initialize Monthly Analytics & User Rank on startup
 renderMonthlyAnalytics();
+updateUserRank();
 
 
 
