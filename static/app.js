@@ -65,10 +65,8 @@ function showView(viewId) {
 // UI Rendering Functions
 function renderSidebar() {
   const listContainer = document.getElementById("topic-navigation-list");
-  if (listContainer) listContainer.innerHTML = "";
-
-  const scrollTabsContainer = document.getElementById("topic-scroll-tabs");
-  if (scrollTabsContainer) scrollTabsContainer.innerHTML = "";
+  if (!listContainer) return;
+  listContainer.innerHTML = "";
 
   let totalCompleted = 0;
   lessons.forEach((lesson, index) => {
@@ -78,54 +76,26 @@ function renderSidebar() {
     const activeClass = index === currentLessonIndex ? "active" : "";
     const completedClass = isCompleted ? "completed" : "";
 
-    // 1. Populate Vertical Sidebar Item
-    if (listContainer) {
-      const item = document.createElement("div");
-      item.className = `topic-item ${activeClass} ${completedClass}`;
-      item.innerHTML = `
-        <div class="topic-icon">${isCompleted ? '✓' : index + 1}</div>
-        <div class="topic-details">
-          <div class="topic-title">${lesson.title}</div>
-          <div class="topic-subtitle">${lesson.indicator}</div>
-        </div>
-      `;
-      item.addEventListener("click", () => {
-        currentLessonIndex = index;
-        renderLesson();
-      });
-      listContainer.appendChild(item);
-    }
-
-    // 2. Populate Top Horizontal Scroll Tab Pill
-    if (scrollTabsContainer) {
-      const tab = document.createElement("button");
-      tab.className = `topic-tab-pill ${activeClass} ${completedClass}`;
-      tab.innerHTML = `
-        <span class="tab-pill-icon">${isCompleted ? '✓' : index + 1}</span>
-        <span class="tab-pill-title">${lesson.title}</span>
-      `;
-      tab.addEventListener("click", () => {
-        currentLessonIndex = index;
-        renderLesson();
-      });
-      scrollTabsContainer.appendChild(tab);
-    }
+    const item = document.createElement("div");
+    item.className = `topic-item ${activeClass} ${completedClass}`;
+    item.innerHTML = `
+      <div class="topic-icon">${isCompleted ? '✓' : index + 1}</div>
+      <div class="topic-details">
+        <div class="topic-title">${lesson.title}</div>
+        <div class="topic-subtitle">${lesson.indicator}</div>
+      </div>
+    `;
+    item.addEventListener("click", () => {
+      currentLessonIndex = index;
+      renderLesson();
+    });
+    listContainer.appendChild(item);
   });
 
-  // Auto scroll active tab pill into view
-  if (scrollTabsContainer) {
-    const activeTab = scrollTabsContainer.querySelector(".topic-tab-pill.active");
-    if (activeTab) {
-      activeTab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-    }
-  }
-
   // Scroll active sidebar item into view
-  if (listContainer) {
-    const activeItem = listContainer.querySelector(".topic-item.active");
-    if (activeItem) {
-      activeItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
+  const activeItem = listContainer.querySelector(".topic-item.active");
+  if (activeItem) {
+    activeItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
   const percent = lessons.length ? Math.round((totalCompleted / lessons.length) * 100) : 0;
