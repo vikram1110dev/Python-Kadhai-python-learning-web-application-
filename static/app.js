@@ -1231,10 +1231,14 @@ function initThemeController() {
 
   function applyTheme(theme) {
     if (theme === "light") {
+      document.documentElement.setAttribute("data-theme", "light");
       document.body.classList.add("light-theme");
+      document.body.classList.remove("dark-theme");
       if (themeToggleBtn) themeToggleBtn.textContent = "☀️";
     } else {
+      document.documentElement.setAttribute("data-theme", "dark");
       document.body.classList.remove("light-theme");
+      document.body.classList.add("dark-theme");
       if (themeToggleBtn) themeToggleBtn.textContent = "🌙";
     }
     localStorage.setItem("python_kadhai_theme", theme);
@@ -1244,8 +1248,9 @@ function initThemeController() {
 
   if (themeToggleBtn) {
     themeToggleBtn.addEventListener("click", () => {
-      const isLight = document.body.classList.contains("light-theme");
-      applyTheme(isLight ? "dark" : "light");
+      const currentTheme = localStorage.getItem("python_kadhai_theme") || "dark";
+      const nextTheme = currentTheme === "dark" ? "light" : "dark";
+      applyTheme(nextTheme);
     });
   }
 }

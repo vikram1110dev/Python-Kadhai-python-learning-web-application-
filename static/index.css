@@ -18,8 +18,21 @@
   --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Light Mode Overrides */
-[data-theme="light"] {
+/* Dark & Light Theme Variables */
+html[data-theme="dark"],
+body.dark-theme,
+body:not(.light-theme) {
+  --bg-primary: #0b0f19;
+  --bg-secondary: #131a2c;
+  --bg-card: rgba(30, 41, 59, 0.7);
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --border-glow: rgba(139, 92, 246, 0.4);
+  --border-light: rgba(255, 255, 255, 0.08);
+}
+
+html[data-theme="light"],
+body.light-theme {
   --bg-primary: #f8fafc;
   --bg-secondary: #ffffff;
   --bg-card: #ffffff;
@@ -27,6 +40,140 @@
   --text-muted: #475569;
   --border-light: rgba(15, 23, 42, 0.06);
   --border-glow: rgba(124, 58, 237, 0.15);
+}
+
+/* Explicit Dark Mode Overrides */
+html[data-theme="dark"],
+body.dark-theme,
+body:not(.light-theme) {
+  background-color: #0b0f19 !important;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.15) 0px, transparent 50%) !important;
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"] header,
+body.dark-theme header,
+body:not(.light-theme) header {
+  background: rgba(19, 26, 44, 0.85) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+html[data-theme="dark"] .logo-text,
+body.dark-theme .logo-text,
+body:not(.light-theme) .logo-text {
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .card,
+body.dark-theme .card,
+body:not(.light-theme) .card {
+  background: rgba(30, 41, 59, 0.7) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37) !important;
+}
+
+html[data-theme="dark"] .hero-card,
+body.dark-theme .hero-card,
+body:not(.light-theme) .hero-card {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%) !important;
+  border: 1px solid rgba(139, 92, 246, 0.3) !important;
+}
+
+html[data-theme="dark"] .streak-hero-card,
+body.dark-theme .streak-hero-card,
+body:not(.light-theme) .streak-hero-card {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%) !important;
+  border: 1px solid rgba(245, 158, 11, 0.35) !important;
+}
+
+html[data-theme="dark"] .hero-title,
+body.dark-theme .hero-title,
+body:not(.light-theme) .hero-title,
+html[data-theme="dark"] .streak-card-title,
+body.dark-theme .streak-card-title,
+body:not(.light-theme) .streak-card-title,
+html[data-theme="dark"] .monthly-title,
+body.dark-theme .monthly-title,
+body:not(.light-theme) .monthly-title {
+  color: #ffffff !important;
+}
+
+html[data-theme="dark"] .hero-subtitle,
+body.dark-theme .hero-subtitle,
+body:not(.light-theme) .hero-subtitle,
+html[data-theme="dark"] .streak-card-sub,
+body.dark-theme .streak-card-sub,
+body:not(.light-theme) .streak-card-sub {
+  color: #94a3b8 !important;
+}
+
+html[data-theme="dark"] #streak-meme-box,
+body.dark-theme #streak-meme-box,
+body:not(.light-theme) #streak-meme-box {
+  background: rgba(11, 15, 25, 0.6) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+html[data-theme="dark"] #user-ranking-box,
+body.dark-theme #user-ranking-box,
+body:not(.light-theme) #user-ranking-box {
+  background: rgba(11, 15, 25, 0.65) !important;
+  border: 1px solid rgba(139, 92, 246, 0.35) !important;
+}
+
+html[data-theme="dark"] .monthly-analytics-card,
+body.dark-theme .monthly-analytics-card,
+body:not(.light-theme) .monthly-analytics-card {
+  background: rgba(30, 41, 59, 0.7) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+html[data-theme="dark"] .monthly-stat-item,
+body.dark-theme .monthly-stat-item,
+body:not(.light-theme) .monthly-stat-item {
+  background: rgba(11, 15, 25, 0.6) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+html[data-theme="dark"] .calendar-wrapper,
+body.dark-theme .calendar-wrapper,
+body:not(.light-theme) .calendar-wrapper {
+  background: rgba(7, 10, 20, 0.7) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+html[data-theme="dark"] .calendar-day-cell,
+body.dark-theme .calendar-day-cell,
+body:not(.light-theme) .calendar-day-cell {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  color: #64748b !important;
+}
+
+html[data-theme="dark"] #monthly-meme-box,
+body.dark-theme #monthly-meme-box,
+body:not(.light-theme) #monthly-meme-box {
+  background: rgba(11, 15, 25, 0.6) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+html[data-theme="dark"] .rank-title,
+body.dark-theme .rank-title,
+body:not(.light-theme) .rank-title,
+html[data-theme="dark"] .stat-value,
+body.dark-theme .stat-value,
+body:not(.light-theme) .stat-value {
+  color: #ffffff !important;
+}
+
+html[data-theme="dark"] .rank-meme-quote,
+body.dark-theme .rank-meme-quote,
+body:not(.light-theme) .rank-meme-quote {
+  background: rgba(255, 255, 255, 0.03) !important;
+  color: #f8fafc !important;
+  border-left-color: #8b5cf6 !important;
 }
 
 /* Light Mode Layout Overrides */
