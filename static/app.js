@@ -1221,8 +1221,38 @@ if (previewRankBtn) {
   });
 }
 
+/* ==========================================================================
+   Theme Switcher Logic (Dark & Light Mode Controller)
+   ========================================================================== */
+
+function initThemeController() {
+  const themeToggleBtn = document.getElementById("theme-toggle-btn");
+  const savedTheme = localStorage.getItem("python_kadhai_theme") || "dark";
+
+  function applyTheme(theme) {
+    if (theme === "light") {
+      document.body.classList.add("light-theme");
+      if (themeToggleBtn) themeToggleBtn.textContent = "☀️";
+    } else {
+      document.body.classList.remove("light-theme");
+      if (themeToggleBtn) themeToggleBtn.textContent = "🌙";
+    }
+    localStorage.setItem("python_kadhai_theme", theme);
+  }
+
+  applyTheme(savedTheme);
+
+  if (themeToggleBtn) {
+    themeToggleBtn.addEventListener("click", () => {
+      const isLight = document.body.classList.contains("light-theme");
+      applyTheme(isLight ? "dark" : "light");
+    });
+  }
+}
+
 // Safe Dashboard Widgets Initialization
 function initDashboardWidgets() {
+  initThemeController();
   loadStreakData();
   logTodayActivity();
   renderStreakWidget();
