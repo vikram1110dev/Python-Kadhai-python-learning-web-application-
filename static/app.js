@@ -272,20 +272,25 @@ async function handleSendMessage() {
     });
     const data = await response.json();
     
-    // Remove typing indicator & show reply
+    // Remove typing indicator & show reply with RAG context badge if present
     chatbotMessages.removeChild(indicator);
-    appendMessage(data.reply, "bot");
+    appendMessage(data.reply, "bot", data.source);
   } catch (err) {
     console.error("Chat API error:", err);
     chatbotMessages.removeChild(indicator);
-    appendMessage("Aiyo! Chitti-ku memory error crash aayiduche! Python backend-a restart panni paarunga! 🤖🔴", "bot");
+    appendMessage("Aiyo! Chitti RAG memory error crash aayiduche! Python backend-a restart panni paarunga! 🤖🔴", "bot");
   }
 }
 
-function appendMessage(text, sender) {
+function appendMessage(text, sender, source = null) {
   const msg = document.createElement("div");
   msg.className = `chat-message ${sender}`;
-  msg.innerHTML = `<div class="message-bubble">${text}</div>`;
+  let content = `<div class="message-bubble">${text}`;
+  if (source) {
+    content += `<div style="font-size: 0.72rem; color: #a78bfa; margin-top: 0.4rem; padding-top: 0.3rem; border-top: 1px solid rgba(255,255,255,0.1); font-weight: 600;">📚 Retrieved Context: ${source}</div>`;
+  }
+  content += `</div>`;
+  msg.innerHTML = content;
   chatbotMessages.appendChild(msg);
   chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
 }

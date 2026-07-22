@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import Lesson, Quiz, ChatbotResponse
+from .rag_engine import RAGEngine
 
 def index_view(request):
     return render(request, 'index.html')
@@ -61,31 +62,8 @@ def chat_api(request):
 
     user_message = data.get('message', '').strip()
     if not user_message:
-        return JsonResponse({"reply": "Kelvi thappu boss! Message empty-a iruku."})
+        return JsonResponse({"reply": "Kelvi thappu boss! Message empty-a iruku.", "source": None})
 
-    clean_message = user_message.lower()
-
-    # Query meme responses from DB
-    meme_responses = ChatbotResponse.objects.filter(is_default_fallback=False)
-
-    for item in meme_responses:
-        keywords = item.keywords if isinstance(item.keywords, list) else []
-        for keyword in keywords:
-            kw = keyword.lower()
-            if ' ' in kw:
-                has_word = kw in clean_message
-            else:
-                has_word = bool(re.search(r'\b' + re.escape(kw) + r'\b', clean_message))
-
-            if has_word:
-                return JsonResponse({"reply": item.response_text})
-
-    # Fallback to default DB responses
-    fallbacks = list(ChatbotResponse.objects.filter(is_default_fallback=True))
-    if fallbacks:
-        chosen = random.choice(fallbacks)
-        reply = chosen.response_text
-    else:
-        reply = "Building-u strong-u, basement-u weak-u! Kelvi thappu nu nenaikaren. Python topics pathi kelunga boss! 😅"
-
-    return JsonResponse({"reply": reply})
+    # Generate RAG (Retrieval-Augmented Generation) response
+    rag_result = RAGEngine.generate_rag_response(user_message)
+    return JsonResponse(rag_result)
