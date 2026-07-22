@@ -1202,6 +1202,25 @@ if (closeUnlockModalBtn) {
   });
 }
 
+// Bind Options Menu Preview Button
+const previewRankBtn = document.getElementById("btn-preview-rank-unlock");
+if (previewRankBtn) {
+  previewRankBtn.addEventListener("click", () => {
+    // Close options modal if open
+    const optionsModal = document.getElementById("options-modal");
+    if (optionsModal) optionsModal.classList.remove("active");
+
+    // Trigger celebration modal with sample rank
+    triggerRankUnlockModal({
+      level: 3,
+      title: "Bug Vettaikaran",
+      img: "/static/ranks/bug%20vettaikaran.jpeg",
+      actor: "Vadivelu",
+      quote: "\"Single bug-a kooda thapikka vidama vettai aaduraen!\""
+    });
+  });
+}
+
 // Safe Dashboard Widgets Initialization
 function initDashboardWidgets() {
   loadStreakData();
