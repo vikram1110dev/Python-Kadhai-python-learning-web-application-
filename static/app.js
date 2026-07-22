@@ -942,11 +942,12 @@ function updateUserRank() {
   const rankingBox = document.getElementById("user-ranking-box");
   if (!rankingBox) return;
 
-  const streakData = getStreakData();
-  const streakCount = streakData.count || 1;
+  loadStreakData();
+  loadProgress();
+  const streakCount = (streakData && streakData.count > 0) ? streakData.count : 1;
   
   let completedCount = 0;
-  if (typeof userProgress === 'object') {
+  if (typeof userProgress === 'object' && userProgress !== null) {
     completedCount = Object.keys(userProgress).filter(k => userProgress[k] === true).length;
   }
 
