@@ -768,9 +768,13 @@ function handleClaimStreak() {
   streakData.lastClaimDate = todayStr;
   saveStreakData();
 
+  // Log activity date for Monthly Heatmap
+  logTodayActivity();
+
   playSoundEffect("correct");
   showToast("🔥 Daily Streak Claimed! Keep Coding!");
   renderStreakWidget();
+  renderMonthlyAnalytics();
 }
 
 // Bind Claim Streak button
@@ -781,6 +785,150 @@ if (claimStreakBtn) {
 
 // Initialize Streak Widget on startup
 renderStreakWidget();
+
+/* ==========================================================================
+   Monthly Activity Log & Heatmap Analytics Renderer
+   ========================================================================== */
+
+let activityLog = {};
+
+function loadActivityLog() {
+  const saved = localStorage.getItem("python_kadhai_activity_log");
+  if (saved) {
+    try {
+      activityLog = JSON.parse(saved);
+    } catch(e) {
+      activityLog = {};
+    }
+  }
+}
+
+function saveActivityLog() {
+  localStorage.setItem("python_kadhai_activity_log", JSON.stringify(activityLog));
+}
+
+function logTodayActivity() {
+  loadActivityLog();
+  const todayStr = getTodayDateString();
+  activityLog[todayStr] = true;
+  saveActivityLog();
+}
+
+function renderMonthlyAnalytics() {
+  loadActivityLog();
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth(); // 0..11
+
+  const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const currentMonthName = monthNames[month] + " " + year;
+
+  // Total days in current month
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const firstDayOfWeek = (new Date(year, month, 1).getDay() + 6) % 7; // Monday=0..Sunday=6
+
+  const monthNameEl = document.getElementById("monthly-month-name");
+  if (monthNameEl) monthNameEl.textContent = currentMonthName;
+
+  const todayDateNum = now.getDate();
+  let activeDaysCount = 0;
+
+  // Count active days in current month
+  for (let day = 1; day <= daysInMonth; day++) {
+    const dayStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    if (activityLog[dayStr]) {
+      activeDaysCount++;
+    }
+  }
+
+  // Always mark today as logged if streak claimed or active
+  const todayStr = getTodayDateString();
+  if (streakData.lastClaimDate === todayStr && !activityLog[todayStr]) {
+    logTodayActivity();
+    activeDaysCount++;
+  }
+
+  const consistencyRate = Math.round((activeDaysCount / daysInMonth) * 100);
+
+  const activeDaysEl = document.getElementById("monthly-active-days");
+  if (activeDaysEl) activeDaysEl.textContent = `${activeDaysCount} / ${daysInMonth}`;
+
+  const scorePercentEl = document.getElementById("monthly-score-percent");
+  if (scorePercentEl) scorePercentEl.textContent = `${consistencyRate}%`;
+
+  const consistencyBadge = document.getElementById("monthly-consistency-badge");
+  if (consistencyBadge) consistencyBadge.textContent = `${consistencyRate}% Consistency`;
+
+  const peakStreakEl = document.getElementById("monthly-peak-streak");
+  if (peakStreakEl) peakStreakEl.textContent = `${Math.max(streakData.count || 1, activeDaysCount)} Days`;
+
+  // Populate Calendar Grid
+  const calendarGrid = document.getElementById("monthly-calendar-grid");
+  if (calendarGrid) {
+    calendarGrid.innerHTML = "";
+
+    // Empty offset padding cells
+    for (let i = 0; i < firstDayOfWeek; i++) {
+      const emptyCell = document.createElement("div");
+      emptyCell.className = "calendar-day-cell empty";
+      calendarGrid.appendChild(emptyCell);
+    }
+
+    // Day cells (1..N)
+    for (let day = 1; day <= daysInMonth; day++) {
+      const dayStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+      const isActive = activityLog[dayStr] === true;
+      const isToday = day === todayDateNum;
+
+      const dayCell = document.createElement("div");
+      dayCell.className = `calendar-day-cell ${isActive ? 'active-day' : ''} ${isToday ? 'today' : ''}`;
+      dayCell.setAttribute("title", `${monthNames[month]} ${day}, ${year} ${isActive ? '(Active 🔥)' : ''}`);
+
+      dayCell.innerHTML = `
+        <span>${day}</span>
+        ${isActive ? '<span class="calendar-day-icon">🔥</span>' : ''}
+      `;
+      calendarGrid.appendChild(dayCell);
+    }
+  }
+
+  // Monthly Tamil Meme Evaluation
+  const memeBox = document.getElementById("monthly-meme-box");
+  if (memeBox) {
+    let actorEmoji = "🤖";
+    let headline = "";
+    let text = "";
+
+    if (consistencyRate >= 70) {
+      actorEmoji = "🤖";
+      headline = "Chitti 2.0: \"Speed 1 Terahertz! Absolute Legend!\"";
+      text = "\"Monthly consistency score top-notch-a iruku! Continuous coding monster-a irukaye pa!\"";
+    } else if (consistencyRate >= 35) {
+      actorEmoji = "😂";
+      headline = "Vivekh: \"Nalla Consistency Pa! Target 100%-ku Polam!\"";
+      text = "\"Monthly active days nalla count-la iruku. Innum konjam focus panna Rajini range-ku polaam!\"";
+    } else {
+      actorEmoji = "😅";
+      headline = "Vadivelu: \"Enna Da Month-la Adikkadi Leave Eduthuruka?\"";
+      text = "\"Aahaa, monthly frequency konjam kammi-a irukaye da swami! Next month-la irundhu full form-ku vaa!\"";
+    }
+
+    memeBox.innerHTML = `
+      <div class="monthly-meme-actor">${actorEmoji}</div>
+      <div class="monthly-meme-content">
+        <div class="monthly-meme-headline">${headline}</div>
+        <div class="monthly-meme-text">${text}</div>
+      </div>
+    `;
+  }
+}
+
+// Log activity on initial load
+logTodayActivity();
+
+// Initialize Monthly Analytics on startup
+renderMonthlyAnalytics();
+
 
 
 
