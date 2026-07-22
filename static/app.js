@@ -649,4 +649,138 @@ if (codeEditorInput) {
   });
 }
 
+/* ==========================================================================
+   Daily Streak Tracker & Tamil Meme Response Logic
+   ========================================================================== */
+
+let streakData = { count: 0, lastClaimDate: "" };
+
+function loadStreakData() {
+  const saved = localStorage.getItem("python_kadhai_streak_data");
+  if (saved) {
+    try {
+      streakData = JSON.parse(saved);
+    } catch(e) {
+      streakData = { count: 0, lastClaimDate: "" };
+    }
+  }
+}
+
+function saveStreakData() {
+  localStorage.setItem("python_kadhai_streak_data", JSON.stringify(streakData));
+}
+
+function getTodayDateString() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
+
+function getYesterdayDateString() {
+  const d = new Date(Date.now() - 86400000);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
+
+function renderStreakWidget() {
+  loadStreakData();
+  const todayStr = getTodayDateString();
+  const yesterdayStr = getYesterdayDateString();
+
+  const countDisplay = document.getElementById("streak-count-display");
+  const claimBtn = document.getElementById("btn-claim-streak");
+  const statusText = document.getElementById("streak-status-text");
+  const memeBox = document.getElementById("streak-meme-box");
+
+  if (!countDisplay || !claimBtn || !memeBox) return;
+
+  const isClaimedToday = streakData.lastClaimDate === todayStr;
+  const isContinuous = streakData.lastClaimDate === yesterdayStr || isClaimedToday;
+
+  let currentStreak = streakData.count;
+  let isBroken = false;
+
+  if (!isClaimedToday && !isContinuous && streakData.lastClaimDate !== "") {
+    // Missed a day!
+    isBroken = true;
+  }
+
+  countDisplay.textContent = currentStreak > 0 ? currentStreak : 1;
+
+  if (isClaimedToday) {
+    claimBtn.textContent = "✓ Streak Claimed Today!";
+    claimBtn.classList.add("claimed");
+    claimBtn.disabled = true;
+    if (statusText) statusText.textContent = "Great job! You maintained your streak for today! Come back tomorrow 🔥";
+  } else {
+    claimBtn.textContent = "🔥 Claim Today's Streak";
+    claimBtn.classList.remove("claimed");
+    claimBtn.disabled = false;
+    if (statusText) statusText.textContent = isBroken ? "Streak reset! Claim today to start your new streak!" : "Claim today's check-in to keep your coding streak alive!";
+  }
+
+  // Generate Tamil Meme Response
+  let actorEmoji = "😎";
+  let headline = "";
+  let text = "";
+
+  if (isBroken) {
+    actorEmoji = "😭";
+    headline = "Vadivelu: \"Aiyo Streak Cut Aayiduchu!\"";
+    text = "\"Oru naal break eduthadhula streak cut aayiduchu da swami! Kavalai padadhe, innaikula irundhu fresh-a arambipom!\"";
+  } else if (currentStreak <= 1) {
+    actorEmoji = "😎";
+    headline = "Vadivelu: \"Arambichutanya Arambichutan!\"";
+    text = "\"Day 1 Python coding streak start panniyaachu! Daily vandhu code panni mass pannu!\"";
+  } else if (currentStreak <= 3) {
+    actorEmoji = "🔥";
+    headline = "Goundamani: \"3 Naal Thodarnthu Code Panriya da!\"";
+    text = "\"Oru ruba kooda kuraiyama " + currentStreak + " days streak maintaining! Singam maadhiri irukaye pa!\"";
+  } else if (currentStreak <= 6) {
+    actorEmoji = "🏆";
+    headline = "Vivekh: \"Aanandam... Vilaiyaadum Veedu!\"";
+    text = "\"Indha " + currentStreak + " days coding streak-a paathaale kannula thanneer varudhu pa! Keep leveling up!\"";
+  } else {
+    actorEmoji = "🤖";
+    headline = "Chitti 2.0: \"Speed 1 Terahertz, Memory 1 Zettabyte!\"";
+    text = "\"Continuous " + currentStreak + " Days Streak! Unna thadukka yaaralum mudiyaadhu! Absolute Legend!\"";
+  }
+
+  memeBox.innerHTML = `
+    <div class="streak-meme-actor">${actorEmoji}</div>
+    <div class="streak-meme-content">
+      <div class="streak-meme-headline">${headline}</div>
+      <div class="streak-meme-text">${text}</div>
+    </div>
+  `;
+}
+
+function handleClaimStreak() {
+  loadStreakData();
+  const todayStr = getTodayDateString();
+  const yesterdayStr = getYesterdayDateString();
+
+  if (streakData.lastClaimDate === todayStr) return;
+
+  if (streakData.lastClaimDate === yesterdayStr) {
+    streakData.count = (streakData.count || 0) + 1;
+  } else {
+    streakData.count = 1;
+  }
+  streakData.lastClaimDate = todayStr;
+  saveStreakData();
+
+  playSoundEffect("correct");
+  showToast("🔥 Daily Streak Claimed! Keep Coding!");
+  renderStreakWidget();
+}
+
+// Bind Claim Streak button
+const claimStreakBtn = document.getElementById("btn-claim-streak");
+if (claimStreakBtn) {
+  claimStreakBtn.addEventListener("click", handleClaimStreak);
+}
+
+// Initialize Streak Widget on startup
+renderStreakWidget();
+
+
 
