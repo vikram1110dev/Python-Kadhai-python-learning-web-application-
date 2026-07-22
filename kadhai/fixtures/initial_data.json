@@ -444,12 +444,232 @@
         "incorrect_text": "Chitti: \"ERROR: Module name is 'threading'! Use `import threading` for multithreading!\"",
         "incorrect_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor rajini\"><div class=\"actor-face\">😵</div></div><div class=\"meme-dialog dialog-bottom\">Standard module name is 'threading'!</div></div>"
       }
+    },
+    {
+      "topic_id": "virtual_env",
+      "title": "Virtual Environments & PIP",
+      "subtitle": "Secret Isolated Room (Vadivelu Sandbox)",
+      "indicator": "Topic 21",
+      "tanglish_exp": "Project dependencies clash aagaama thadukka <b>Virtual Environment (`venv`)</b> create panrom! Isolated room-kulla <code>pip install package</code> potta global Python clean-a irukum! Vadivelu safe room logic!",
+      "english_exp": "A virtual environment (`venv`) is a self-contained directory tree that contains a Python installation for a particular version of Python, plus a number of additional packages.",
+      "initial_code": "# Virtual Environment CLI Simulation\ncmd = \"python -m venv env\"\nprint(\"Created isolated environment:\")\nprint(cmd)",
+      "expected_output": "Created isolated environment:\npython -m venv env",
+      "order": 21,
+      "quiz": {
+        "question": "Which standard module command creates a virtual environment in Python 3?",
+        "options": ["python -m venv env", "pip create env", "python make venv", "env create"],
+        "correct_index": 0,
+        "correct_headline": "Correct! Venv Master!",
+        "correct_text": "Vadivelu: \"Isolated room-a create panni global Python-a crash aagaama safe-a poitiye pa!\"",
+        "correct_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor vadivelu\"><div class=\"actor-face\">😎</div></div><div class=\"meme-dialog dialog-right\">python -m venv env success!</div></div>",
+        "incorrect_headline": "Wrong Venv Command!",
+        "incorrect_text": "Senthil: \"Venv create panna `python -m venv env` thaan command anna!\"",
+        "incorrect_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor senthil\"><div class=\"actor-face\">🥺</div></div><div class=\"meme-dialog dialog-bottom\">Use 'python -m venv env'!</div></div>"
+      }
+    },
+    {
+      "topic_id": "enumerate_zip",
+      "title": "Enumerate & Zip Functions",
+      "subtitle": "Senthil Double Pairing Machine",
+      "indicator": "Topic 22",
+      "tanglish_exp": "List index + value saenthu veonum-na <code>enumerate(list)</code>! Rendu lists-a parallel-a pair panna <code>zip(list1, list2)</code>! Senthil tea & vadai pairing machine maadhiri exact pairs!",
+      "english_exp": "<code>enumerate()</code> adds a counter to an iterable and returns it as an enumerate object. <code>zip()</code> takes iterables, aggregates them in a tuple, and returns it.",
+      "initial_code": "names = [\"Chitti\", \"Vadivelu\"]\nroles = [\"Robot\", \"Rowdy\"]\nfor name, role in zip(names, roles):\n    print(f\"{name} is a {role}\")",
+      "expected_output": "Chitti is a Robot\nVadivelu is a Rowdy",
+      "order": 22,
+      "quiz": {
+        "question": "Which function pairs elements from multiple lists in parallel tuples?",
+        "options": ["pair()", "zip()", "combine()", "merge()"],
+        "correct_index": 1,
+        "correct_headline": "Correct! Pairing Master!",
+        "correct_text": "Goundamani: \"zip() function potu name and role parallel-a pair pannitiye pa!\"",
+        "correct_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor goundamani\"><div class=\"actor-face\">😛</div></div><div class=\"meme-dialog dialog-right\">zip() function super pairing!</div></div>",
+        "incorrect_headline": "Wrong Pairing Function!",
+        "incorrect_text": "Vadivelu: \"Parallel list pairing-ku `zip()` function thaan use pannanum boss!\"",
+        "incorrect_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor vadivelu\"><div class=\"actor-face\">😵</div></div><div class=\"meme-dialog dialog-bottom\">Use zip(list1, list2)!</div></div>"
+      }
+    },
+    {
+      "topic_id": "datetime",
+      "title": "Datetime & Time Operations",
+      "subtitle": "Chitti Time Machine & Alarm (Rajini)",
+      "indicator": "Topic 23",
+      "tanglish_exp": "Dates, timestamps and delays handle panna <code>import datetime</code> & <code>import time</code>! <code>datetime.now()</code> current system time-a tharum. <code>time.sleep(2)</code> potta execution 2 seconds pause aagum!",
+      "english_exp": "The <code>datetime</code> module supplies classes for manipulating dates and times. The <code>time</code> module provides time-related functions like <code>time.sleep()</code> for execution delays.",
+      "initial_code": "from datetime import datetime\nnow = datetime.now()\nprint(\"Current Year:\")\nprint(now.year)",
+      "expected_output": "Current Year:\n2026",
+      "order": 23,
+      "quiz": {
+        "question": "Which function pauses program execution for N seconds in Python?",
+        "options": ["delay(N)", "time.sleep(N)", "pause(N)", "wait(N)"],
+        "correct_index": 1,
+        "correct_headline": "Correct! Time Machine Master!",
+        "correct_text": "Rajini: \"time.sleep() potu execution delay-a exact-a handle pannitiye!\"",
+        "correct_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor rajini\"><div class=\"actor-face\">🤖</div></div><div class=\"meme-dialog dialog-right\">time.sleep(N) delay success!</div></div>",
+        "incorrect_headline": "Wrong Delay Function!",
+        "incorrect_text": "Chitti: \"Python uses `time.sleep(seconds)` to delay execution!\"",
+        "incorrect_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor rajini\"><div class=\"actor-face\">😵</div></div><div class=\"meme-dialog dialog-bottom\">Use time.sleep(N)!</div></div>"
+      }
+    },
+    {
+      "topic_id": "args_kwargs",
+      "title": "Variable Arguments (*args & **kwargs)",
+      "subtitle": "Goundamani Unlimited Order Request",
+      "indicator": "Topic 24",
+      "tanglish_exp": "Function-ku evlo parameters varum-nu fix panna mudiyaadha podhu <code>*args</code> (tuple of arguments) and <code>**kwargs</code> (dictionary of key-value arguments) use panrom! Goundamani unlimited tea order request handle panra template!",
+      "english_exp": "<code>*args</code> allows a function to accept any number of positional arguments. <code>**kwargs</code> allows a function to accept any number of keyword arguments as a dictionary.",
+      "initial_code": "def order_items(*items):\n    for item in items:\n        print(\"Order:\", item)\n\norder_items(\"Tea\", \"Vadai\", \"Bun\")",
+      "expected_output": "Order: Tea\nOrder: Vadai\nOrder: Bun",
+      "order": 24,
+      "quiz": {
+        "question": "Which parameter syntax accepts unlimited keyword arguments into a dictionary?",
+        "options": ["*args", "**kwargs", "args[]", "kwargs..."],
+        "correct_index": 1,
+        "correct_headline": "Correct! Kwargs Master!",
+        "correct_text": "Goundamani: \"**kwargs potu key-value arguments-a dictionary-a catch pannitiye!\"",
+        "correct_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor goundamani\"><div class=\"actor-face\">😎</div></div><div class=\"meme-dialog dialog-right\">**kwargs dictionary arguments!</div></div>",
+        "incorrect_headline": "Args vs Kwargs Error!",
+        "incorrect_text": "Senthil: \"*args positional tuple-ku, **kwargs dictionary key-values-ku anna!\"",
+        "incorrect_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor senthil\"><div class=\"actor-face\">🥺</div></div><div class=\"meme-dialog dialog-bottom\">Use **kwargs for keyword args!</div></div>"
+      }
+    },
+    {
+      "topic_id": "copy_operations",
+      "title": "Shallow vs Deep Copy",
+      "subtitle": "Anniyan Identity Duplicate (Vikram)",
+      "indicator": "Topic 25",
+      "tanglish_exp": "Direct assignment <code>b = a</code> potta reference copy dhaan aagum. Outer copy-ku <code>copy.copy()</code> (Shallow), nested list deep copy-ku <code>copy.deepcopy()</code>! Anniyan identity duplicate modification safety!",
+      "english_exp": "A shallow copy constructs a new compound object and inserts references into it. A deep copy constructs a new object and recursively inserts copies of objects found in the original.",
+      "initial_code": "import copy\noriginal = [[1, 2], [3, 4]]\ndeep = copy.deepcopy(original)\ndeep[0][0] = 99\nprint(\"Original stays untouched:\", original[0][0])\nprint(\"Deep copy modified:\", deep[0][0])",
+      "expected_output": "Original stays untouched: 1\nDeep copy modified: 99",
+      "order": 25,
+      "quiz": {
+        "question": "Which function recursively duplicates nested objects independently?",
+        "options": ["copy.copy()", "copy.deepcopy()", "list.clone()", "object.duplicate()"],
+        "correct_index": 1,
+        "correct_headline": "Correct! Deep Copy Master!",
+        "correct_text": "Vivekh: \"copy.deepcopy() pota original list untouched-a iruku! Perfect isolation!\"",
+        "correct_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor vivek\"><div class=\"actor-face\">😂</div></div><div class=\"meme-dialog dialog-right\">copy.deepcopy() recursive isolation!</div></div>",
+        "incorrect_headline": "Shallow Copy Leak!",
+        "incorrect_text": "Vadivelu: \"Shallow copy potta nested list reference inner change original-aiyum maathidum boss!\"",
+        "incorrect_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor vadivelu\"><div class=\"actor-face\">😰</div></div><div class=\"meme-dialog dialog-bottom\">Use copy.deepcopy() for nested objects!</div></div>"
+      }
+    },
+    {
+      "topic_id": "packing_unpacking",
+      "title": "Packing & Unpacking",
+      "subtitle": "Vadivelu Luggage Bag Unpacker",
+      "indicator": "Topic 26",
+      "tanglish_exp": "Multiple values-a single line-la variables-ku distribute panradhu <b>Unpacking</b>! Syntax: <code>a, b, *rest = [1, 2, 3, 4, 5]</code>. Vadivelu luggage bag unpack panra maadhiri clean variable distribution!",
+      "english_exp": "Unpacking allows extracting elements of an iterable into multiple variables in a single line. Use `*var` to capture remaining elements into a list.",
+      "initial_code": "numbers = [10, 20, 30, 40, 50]\nfirst, second, *rest = numbers\nprint(\"First:\", first)\nprint(\"Second:\", second)\nprint(\"Rest list:\", rest)",
+      "expected_output": "First: 10\nSecond: 20\nRest list: [30, 40, 50]",
+      "order": 26,
+      "quiz": {
+        "question": "What is stored in 'rest' after <code>a, *rest = [1, 2, 3]</code>?",
+        "options": ["[2, 3]", "[1, 2]", "3", "SyntaxError"],
+        "correct_index": 0,
+        "correct_headline": "Correct! Unpacking Master!",
+        "correct_text": "Vadivelu: \"*rest potu remaining values [2, 3]-a list-a catch pannitiye pa!\"",
+        "correct_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor vadivelu\"><div class=\"actor-face\">😎</div></div><div class=\"meme-dialog dialog-right\">*rest captures remaining list!</div></div>",
+        "incorrect_headline": "Unpacking Syntax Error!",
+        "incorrect_text": "Senthil: \"* symbol potta dhaan remaining items list-a collect aagum anna!\"",
+        "incorrect_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor senthil\"><div class=\"actor-face\">🥺</div></div><div class=\"meme-dialog dialog-bottom\">Use *variable for remaining items!</div></div>"
+      }
+    },
+    {
+      "topic_id": "web_requests",
+      "title": "Web Scraping & Requests",
+      "subtitle": "Detective Vivek Web Spy",
+      "indicator": "Topic 27",
+      "tanglish_exp": "Internet web pages & APIs-la irundhu data fetch panna HTTP requests use panrom (`import urllib.request` or `requests`)! Detective Vivek web spy style-la URL status 200 OK verify panrom!",
+      "english_exp": "Python uses HTTP libraries like <code>urllib.request</code> or <code>requests</code> to communicate with web servers and APIs over HTTP/HTTPS protocols.",
+      "initial_code": "import urllib.parse\nurl = \"https://example.com/api?q=python\"\nparsed = urllib.parse.urlparse(url)\nprint(\"Scheme:\", parsed.scheme)\nprint(\"Domain:\", parsed.netloc)",
+      "expected_output": "Scheme: https\nDomain: example.com",
+      "order": 27,
+      "quiz": {
+        "question": "What HTTP status code indicates a successful web request response?",
+        "options": ["404", "500", "200", "301"],
+        "correct_index": 2,
+        "correct_headline": "Correct! 200 OK Master!",
+        "correct_text": "Vivekh: \"200 OK status get panni request success-a fetch pannitiye pa!\"",
+        "correct_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor vivek\"><div class=\"actor-face\">😂</div></div><div class=\"meme-dialog dialog-right\">HTTP 200 OK success!</div></div>",
+        "incorrect_headline": "HTTP Error Code!",
+        "incorrect_text": "Vadivelu: \"404 Not Found / 500 Server Error da! 200 thaan success status!\"",
+        "incorrect_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor vadivelu\"><div class=\"actor-face\">😵</div></div><div class=\"meme-dialog dialog-bottom\">200 OK represents success!</div></div>"
+      }
+    },
+    {
+      "topic_id": "csv_handling",
+      "title": "CSV File Processing",
+      "subtitle": "Santhanam Excel Data Reader",
+      "indicator": "Topic 28",
+      "tanglish_exp": "Tabular Excel / Sheet data-va read/write panna <code>import csv</code> module use aagum! <code>csv.reader(file)</code> rows-a list-a parse panni fast data inspection panradhu Santhanam style!",
+      "english_exp": "The <code>csv</code> module implements classes to read and write tabular data in CSV (Comma Separated Values) format.",
+      "initial_code": "import csv\n# Simulating CSV row parsing\ncsv_data = [[\"Name\", \"Role\"], [\"Vadivelu\", \"Rowdy\"], [\"Chitti\", \"Robot\"]]\nfor row in csv_data[1:]:\n    print(f\"{row[0]}: {row[1]}\")",
+      "expected_output": "Vadivelu: Rowdy\nChitti: Robot",
+      "order": 28,
+      "quiz": {
+        "question": "Which Python module handles CSV reading and writing?",
+        "options": ["excel", "csv", "sheets", "table"],
+        "correct_index": 1,
+        "correct_headline": "Correct! CSV Reader Master!",
+        "correct_text": "Santhanam: \"import csv module potu rows-a clean-a parse pannitiye!\"",
+        "correct_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor vivek\"><div class=\"actor-face\">😂</div></div><div class=\"meme-dialog dialog-right\">import csv success!</div></div>",
+        "incorrect_headline": "Wrong CSV Module!",
+        "incorrect_text": "Senthil: \"Built-in module name 'csv' thaan anna! import csv nu pannanum!\"",
+        "incorrect_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor senthil\"><div class=\"actor-face\">🥺</div></div><div class=\"meme-dialog dialog-bottom\">Use 'import csv'!</div></div>"
+      }
+    },
+    {
+      "topic_id": "closures",
+      "title": "Closures & Inner Functions",
+      "subtitle": "Nested Secret Plan Generator (Vadivelu)",
+      "indicator": "Topic 29",
+      "tanglish_exp": "Outer function execution mudinjalum inner function outer variables-a memory-la remember panni vechirukum! Idhudhaan <b>Closure</b>! Vadivelu nested secret plan memory!",
+      "english_exp": "A closure is a function object that remembers values in enclosing scopes even if they are not present in memory.",
+      "initial_code": "def outer_plan(msg):\n    def inner():\n        print(\"Secret Plan:\", msg)\n    return inner\n\nplan_func = outer_plan(\"Escape Strategy!\")\nplan_func()",
+      "expected_output": "Secret Plan: Escape Strategy!",
+      "order": 29,
+      "quiz": {
+        "question": "What feature allows an inner function to remember variables from its enclosing outer scope?",
+        "options": ["Recursion", "Closure", "Decorator", "Inheritance"],
+        "correct_index": 1,
+        "correct_headline": "Correct! Closure Master!",
+        "correct_text": "Vadivelu: \"Outer function mudinjum 'Escape Strategy'-a memory-la Remember pannichi! Closure power!\"",
+        "correct_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor vadivelu\"><div class=\"actor-face\">😎</div></div><div class=\"meme-dialog dialog-right\">Closure scope memory success!</div></div>",
+        "incorrect_headline": "Scope Memory Error!",
+        "incorrect_text": "Goundamani: \"Inner function outer scope variable-a retain panradhu Closure da!\"",
+        "incorrect_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor goundamani\"><div class=\"actor-face\">😠</div></div><div class=\"meme-dialog dialog-bottom\">This concept is called Closure!</div></div>"
+      }
+    },
+    {
+      "topic_id": "type_hinting",
+      "title": "Type Hinting & Annotations",
+      "subtitle": "Professional Code Inspector (Chitti 3.0)",
+      "indicator": "Topic 30",
+      "tanglish_exp": "Professional enterprise Python code-la parameters and return types-a clear-a specify panna <b>Type Annotations</b> use panrom: <code>def add(x: int, y: int) -> int:</code>. Chitti 3.0 Code Inspector approved!",
+      "english_exp": "Python type hinting (introduced in PEP 484) allows developers to specify expected data types for function parameters and return values.",
+      "initial_code": "def calculate_total(price: float, tax: float) -> float:\n    return price + tax\n\ntotal = calculate_total(100.0, 18.0)\nprint(\"Total Amount:\", total)",
+      "expected_output": "Total Amount: 118.0",
+      "order": 30,
+      "quiz": {
+        "question": "Which syntax specifies a function return type hint in Python?",
+        "options": ["-> type", ": type", "=> type", "returns type"],
+        "correct_index": 0,
+        "correct_headline": "Correct! Type Annotation Master!",
+        "correct_text": "Chitti: \"Speed 1 Terahertz! `-> float` return type hint potu professional code ezhuthitiye!\"",
+        "correct_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor rajini\"><div class=\"actor-face\">🤖</div></div><div class=\"meme-dialog dialog-right\">-> type annotation success!</div></div>",
+        "incorrect_headline": "Wrong Type Hint Syntax!",
+        "incorrect_text": "Chitti: \"Python function return type hint uses `-> ReturnType` syntax!\"",
+        "incorrect_svg": "<div class=\"meme-graphic\"><div class=\"meme-actor rajini\"><div class=\"actor-face\">😵</div></div><div class=\"meme-dialog dialog-bottom\">Use `def func() -> ReturnType:`!</div></div>"
+      }
     }
   ],
   "chatbot_meme_responses": [
     {
       "keywords": ["hi", "hello", "vanakkam", "hey", "chitti", "robot", "yaru", "who", "name"],
-      "response": "Vanakkam! Naan thaan <b>Chitti RAG 3.0, Speed 1 Terahertz, Memory 1 Zettabyte!</b> 🤖 Python 20 curriculum topics documents-a RAG retrieval model-la search panni, memes mood-la instant-a response solidaren!"
+      "response": "Vanakkam! Naan thaan <b>Chitti RAG 3.0, Speed 1 Terahertz, Memory 1 Zettabyte!</b> 🤖 Python 30 complete curriculum topics documents-a RAG retrieval model-la search panni, memes mood-la instant-a response solidaren!"
     },
     {
       "keywords": ["variable", "var", "store", "datatype", "data type", "integer", "string", "float", "bool", "boolean", "pocket", "senthil", "goundamani", "banana"],
@@ -526,6 +746,46 @@
     {
       "keywords": ["threading", "multithreading", "parallel", "async", "asyncio"],
       "response": "<b>Multithreading & Async (Topic 20)</b> pathi ketrukeenga! Multiple operations-a parallel-a run panna <code>import threading</code>. Chitti Speed 1 Terahertz parallel tasks running! ⚡"
+    },
+    {
+      "keywords": ["venv", "virtualenv", "pip", "package"],
+      "response": "<b>Virtual Environments & PIP (Topic 21)</b> pathi ketrukeenga! Project dependencies clash aagaama isolated sandbox create panna: <code>python -m venv env</code>! 🏰"
+    },
+    {
+      "keywords": ["enumerate", "zip", "pair"],
+      "response": "<b>Enumerate & Zip (Topic 22)</b> pathi solidaren! Index+Value pair-ku <code>enumerate(list)</code>, two lists parallel pair-ku <code>zip(list1, list2)</code>! 🤝"
+    },
+    {
+      "keywords": ["datetime", "time", "sleep", "date"],
+      "response": "<b>Datetime & Time (Topic 23)</b> pathi ketrukeenga! System time-ku <code>datetime.now()</code>, execution delay-ku <code>time.sleep(seconds)</code>! ⏰"
+    },
+    {
+      "keywords": ["args", "kwargs", "variable arguments"],
+      "response": "<b>*args & **kwargs (Topic 24)</b> pathi solidaren! Unlimited positional arguments-ku <code>*args</code>, dictionary keyword args-ku <code>**kwargs</code>! 🎁"
+    },
+    {
+      "keywords": ["copy", "deepcopy", "shallow copy"],
+      "response": "<b>Shallow vs Deep Copy (Topic 25)</b> pathi ketrukeenga! Nested objects-a independent-a duplicate panna <code>copy.deepcopy()</code>! 👥"
+    },
+    {
+      "keywords": ["unpacking", "packing", "unpack"],
+      "response": "<b>Packing & Unpacking (Topic 26)</b> pathi solidaren! List values-a single line variables-ku distribute panna: <code>a, b, *rest = list</code>! 🧳"
+    },
+    {
+      "keywords": ["requests", "urllib", "web scraping", "http"],
+      "response": "<b>Web Requests & Scraping (Topic 27)</b> pathi ketrukeenga! Web pages & APIs communicate panna <code>urllib.request</code>. Status 200 OK means success! 🌐"
+    },
+    {
+      "keywords": ["csv", "excel", "sheet"],
+      "response": "<b>CSV File Processing (Topic 28)</b> pathi solidaren! Excel & tabular sheet rows parse panna <code>import csv</code> and <code>csv.reader()</code>! 📊"
+    },
+    {
+      "keywords": ["closure", "inner function", "scope"],
+      "response": "<b>Closures (Topic 29)</b> pathi ketrukeenga! Outer scope variables-a memory-la remember panra inner function thaan Closure! 🔒"
+    },
+    {
+      "keywords": ["type hint", "annotation", "type annotation"],
+      "response": "<b>Type Hinting (Topic 30)</b> pathi solidaren! Professional code-la parameters and return types specify panna: <code>def func(x: int) -> str:</code>! 🏷️"
     },
     {
       "keywords": ["indentationerror", "indentation", "space", "tab", "block"],
