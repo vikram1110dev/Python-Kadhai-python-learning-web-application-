@@ -1061,6 +1061,145 @@ function updateUserRank() {
       }).join('')}
     </div>
   `;
+
+  // Check for New Rank Level Unlock Celebration
+  const lastLevelSaved = localStorage.getItem("python_kadhai_last_unlocked_level");
+  const lastUnlockedLevel = lastLevelSaved !== null ? parseInt(lastLevelSaved, 10) : null;
+
+  if (lastUnlockedLevel !== null && currentRank.level > lastUnlockedLevel) {
+    triggerRankUnlockModal(currentRank);
+  }
+
+  // Save current unlocked level
+  localStorage.setItem("python_kadhai_last_unlocked_level", currentRank.level.toString());
+}
+
+/* ==========================================================================
+   Full-Screen Rank Unlock Celebration Modal & Confetti FX
+   ========================================================================== */
+
+let confettiAnimationId = null;
+
+function startConfetti() {
+  const canvas = document.getElementById("confetti-canvas");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const particles = [];
+  const colors = ["#f59e0b", "#10b981", "#8b5cf6", "#3b82f6", "#ec4899", "#ffffff"];
+
+  for (let i = 0; i < 120; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height - canvas.height,
+      r: Math.random() * 8 + 4,
+      d: Math.random() * 10 + 2,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      tilt: Math.floor(Math.random() * 10) - 10,
+      tiltAngleIncremental: Math.random() * 0.07 + 0.05,
+      tiltAngle: 0
+    });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach((p, index) => {
+      p.tiltAngle += p.tiltAngleIncremental;
+      p.y += (Math.cos(p.d) + 3 + p.r / 2) / 2;
+      p.tilt = Math.sin(p.tiltAngle) * 15;
+
+      if (p.y > canvas.height) {
+        particles[index] = {
+          x: Math.random() * canvas.width,
+          y: -20,
+          r: p.r,
+          d: p.d,
+          color: p.color,
+          tilt: p.tilt,
+          tiltAngleIncremental: p.tiltAngleIncremental,
+          tiltAngle: p.tiltAngle
+        };
+      }
+
+      ctx.beginPath();
+      ctx.lineWidth = p.r;
+      ctx.strokeStyle = p.color;
+      ctx.moveTo(p.x + p.tilt + p.r / 2, p.y);
+      ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r / 2);
+      ctx.stroke();
+    });
+
+    confettiAnimationId = requestAnimationFrame(draw);
+  }
+
+  if (confettiAnimationId) cancelAnimationFrame(confettiAnimationId);
+  draw();
+}
+
+function stopConfetti() {
+  if (confettiAnimationId) {
+    cancelAnimationFrame(confettiAnimationId);
+    confettiAnimationId = null;
+  }
+  const canvas = document.getElementById("confetti-canvas");
+  if (canvas) {
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+}
+
+function playVictoryFanfare() {
+  try {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) return;
+    const ctx = new AudioContext();
+
+    const notes = [261.63, 329.63, 392.00, 523.25, 659.25, 783.99];
+    notes.forEach((freq, index) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.value = freq;
+      
+      const startTime = ctx.currentTime + (index * 0.12);
+      gain.gain.setValueAtTime(0.3, startTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.35);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(startTime);
+      osc.stop(startTime + 0.35);
+    });
+  } catch(e) {
+    // Audio Context not allowed or unsupported
+  }
+}
+
+function triggerRankUnlockModal(rank) {
+  const modal = document.getElementById("rank-unlock-modal");
+  if (!modal) return;
+
+  document.getElementById("unlock-modal-img").src = rank.img;
+  document.getElementById("unlock-modal-level").textContent = `Level ${rank.level} • Rank Title`;
+  document.getElementById("unlock-modal-title").textContent = rank.title;
+  document.getElementById("unlock-modal-quote").innerHTML = `<b>${rank.actor}:</b> ${rank.quote}`;
+
+  modal.classList.add("active");
+  startConfetti();
+  playVictoryFanfare();
+}
+
+// Bind close button
+const closeUnlockModalBtn = document.getElementById("btn-close-unlock-modal");
+if (closeUnlockModalBtn) {
+  closeUnlockModalBtn.addEventListener("click", () => {
+    const modal = document.getElementById("rank-unlock-modal");
+    if (modal) modal.classList.remove("active");
+    stopConfetti();
+  });
 }
 
 // Safe Dashboard Widgets Initialization
