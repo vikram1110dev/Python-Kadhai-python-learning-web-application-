@@ -16,6 +16,9 @@ venv.bak/
 
 # Environment variables
 .env
+.env.*
+*.env
+
 
 # IDE & OS
 .vscode/
