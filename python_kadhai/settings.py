@@ -114,6 +114,18 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Load local .env file if available
+env_file = BASE_DIR / '.env'
+if env_file.exists():
+    with open(env_file, 'r', encoding='utf-8') as f:
+        for line in f:
+            line = line.strip()
+            if line and not line.startswith('#') and '=' in line:
+                k, v = line.split('=', 1)
+                os.environ.setdefault(k.strip(), v.strip())
+
 # Gemini LLM API Key configuration for Chitti 3.0 RAG Chatbot
 GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY', '')
+
+
 
