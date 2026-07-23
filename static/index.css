@@ -152,6 +152,32 @@ body:not(.light-theme) .calendar-day-cell {
   color: #64748b !important;
 }
 
+html[data-theme="dark"] .calendar-day-cell.empty,
+body.dark-theme .calendar-day-cell.empty,
+body:not(.light-theme) .calendar-day-cell.empty {
+  background: transparent !important;
+  border: none !important;
+}
+
+html[data-theme="dark"] .calendar-day-cell.active-day,
+body.dark-theme .calendar-day-cell.active-day,
+body:not(.light-theme) .calendar-day-cell.active-day {
+  background: #10b981 !important;
+  border: 1px solid #10b981 !important;
+  color: #ffffff !important;
+  font-weight: 800 !important;
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.4) !important;
+}
+
+html[data-theme="dark"] .calendar-day-cell.today.active-day,
+body.dark-theme .calendar-day-cell.today.active-day,
+body:not(.light-theme) .calendar-day-cell.today.active-day {
+  background: #10b981 !important;
+  border: 2px solid #38bdf8 !important;
+  color: #ffffff !important;
+  font-weight: 800 !important;
+}
+
 html[data-theme="dark"] #monthly-meme-box,
 body.dark-theme #monthly-meme-box,
 body:not(.light-theme) #monthly-meme-box {
@@ -2260,11 +2286,11 @@ kbd {
 }
 
 .calendar-day-cell.active-day {
-  background: rgba(16, 185, 129, 0.25);
-  border: 1px solid rgba(16, 185, 129, 0.5);
-  color: #34d399;
+  background: #10b981;
+  border: 1px solid #10b981;
+  color: #ffffff;
   font-weight: 800;
-  box-shadow: 0 0 8px rgba(16, 185, 129, 0.3);
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
 }
 
 .calendar-day-cell.today {
