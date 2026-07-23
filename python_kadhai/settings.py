@@ -113,3 +113,7 @@ STATICFILES_DIRS = [
 ]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Gemini LLM API Key configuration for Chitti 3.0 RAG Chatbot
+GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY', '')
+
