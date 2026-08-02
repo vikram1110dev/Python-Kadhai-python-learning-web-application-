@@ -28,7 +28,8 @@
           <input type="text" class="header-search-input" placeholder="Search lessons..." autocomplete="off">
         </div>
         <nav class="nav-menu">
-          <button class="btn btn-ghost nav-btn active" id="nav-home">Dashboard</button>
+          <button class="btn btn-ghost nav-btn active" id="nav-home">Home</button>
+          <button class="btn btn-ghost nav-btn" id="nav-dashboard">Dashboard</button>
           <button class="btn btn-ghost nav-btn" id="nav-learn">Learn</button>
         </nav>
       </div>
@@ -47,7 +48,8 @@
         <span class="header-search-icon">🔍</span>
         <input type="text" class="header-search-input" placeholder="Search lessons..." autocomplete="off">
       </div>
-      <button class="btn btn-ghost nav-btn w-full active" id="nav-home-mobile">Dashboard</button>
+      <button class="btn btn-ghost nav-btn w-full active" id="nav-home-mobile">Home</button>
+      <button class="btn btn-ghost nav-btn w-full" id="nav-dashboard-mobile">Dashboard</button>
       <button class="btn btn-ghost nav-btn w-full" id="nav-learn-mobile">Learn</button>
       <button class="btn btn-secondary w-full mt-2" id="btn-open-menu-mobile">⚙️ Options</button>
     </div>
@@ -309,6 +311,92 @@
           <button class="btn btn-primary py-3 px-6" id="btn-next-lesson">Next Lesson →</button>
         </div>
 
+      </section>
+
+      <!-- View Section: Premium Dashboard -->
+      <section class="view-section" id="view-dashboard">
+        <div class="dashboard-header mb-8">
+          <h2 class="text-3xl font-bold mb-2">My Learning Dashboard</h2>
+          <p class="text-muted text-lg">Track your progress, claim XP, and view your stats.</p>
+        </div>
+        
+        <!-- Stats Row -->
+        <div class="dashboard-stats-grid mb-12">
+          <div class="stat-card">
+            <div class="stat-icon" style="background: rgba(99, 102, 241, 0.1); color: var(--accent-primary);">⭐</div>
+            <div class="stat-content">
+              <div class="stat-title">Total XP</div>
+              <div class="stat-value" id="dash-xp">0</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background: rgba(245, 158, 11, 0.1); color: var(--accent-warning);">🔥</div>
+            <div class="stat-content">
+              <div class="stat-title">Current Streak</div>
+              <div class="stat-value" id="dash-streak">0 Days</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background: rgba(23, 201, 100, 0.1); color: var(--accent-success);">📚</div>
+            <div class="stat-content">
+              <div class="stat-title">Lessons Done</div>
+              <div class="stat-value" id="dash-lessons">0 / 0</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background: rgba(236, 72, 153, 0.1); color: #ec4899;">🎯</div>
+            <div class="stat-content">
+              <div class="stat-title">Quiz Accuracy</div>
+              <div class="stat-value" id="dash-accuracy">100%</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Middle Row: Charts and Achievements -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+          
+          <!-- Weekly Activity Chart (CSS only) -->
+          <div class="dashboard-card">
+            <h3 class="font-bold text-xl mb-6">Weekly Activity</h3>
+            <div class="weekly-chart">
+              <div class="chart-bar-container"><div class="chart-bar" style="height: 20%;"></div><span class="chart-label">Mon</span></div>
+              <div class="chart-bar-container"><div class="chart-bar" style="height: 50%;"></div><span class="chart-label">Tue</span></div>
+              <div class="chart-bar-container"><div class="chart-bar" style="height: 90%;"></div><span class="chart-label">Wed</span></div>
+              <div class="chart-bar-container"><div class="chart-bar" style="height: 30%;"></div><span class="chart-label">Thu</span></div>
+              <div class="chart-bar-container"><div class="chart-bar active-day" style="height: 100%;"></div><span class="chart-label">Fri</span></div>
+              <div class="chart-bar-container"><div class="chart-bar" style="height: 10%;"></div><span class="chart-label">Sat</span></div>
+              <div class="chart-bar-container"><div class="chart-bar" style="height: 5%;"></div><span class="chart-label">Sun</span></div>
+            </div>
+          </div>
+
+          <!-- Achievements Section -->
+          <div class="dashboard-card">
+            <h3 class="font-bold text-xl mb-6">Recent Achievements</h3>
+            <div class="achievements-grid">
+              <div class="achievement-badge unlocked">
+                <div class="badge-icon">👶</div>
+                <div class="badge-title">First Steps</div>
+                <div class="badge-desc">Complete Lesson 1</div>
+              </div>
+              <div class="achievement-badge unlocked">
+                <div class="badge-icon">🔥</div>
+                <div class="badge-title">On Fire</div>
+                <div class="badge-desc">3 Day Streak</div>
+              </div>
+              <div class="achievement-badge locked">
+                <div class="badge-icon">🤓</div>
+                <div class="badge-title">Nerd Alert</div>
+                <div class="badge-desc">Complete 10 Lessons</div>
+              </div>
+              <div class="achievement-badge locked">
+                <div class="badge-icon">👑</div>
+                <div class="badge-title">Python King</div>
+                <div class="badge-desc">100% Curriculum</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </section>
 
     </main>

@@ -382,10 +382,13 @@ const bindNav = (id, target) => {
     showView(target);
     const mobileNavOverlay = document.getElementById("mobile-nav");
     if (mobileNavOverlay) mobileNavOverlay.classList.remove("active");
+    if (target === "view-dashboard") renderDashboardStats();
   });
 };
 bindNav("nav-home", "view-home");
 bindNav("nav-home-mobile", "view-home");
+bindNav("nav-dashboard", "view-dashboard");
+bindNav("nav-dashboard-mobile", "view-dashboard");
 bindNav("nav-learn", "view-learn");
 bindNav("nav-learn-mobile", "view-learn");
 
@@ -1369,8 +1372,34 @@ function initDashboardWidgets() {
   loadStreakData();
   logTodayActivity();
   renderStreakWidget();
-  renderMonthlyAnalytics();
   updateUserRank();
+  renderDashboardStats();
+}
+
+function renderDashboardStats() {
+  const xpEl = document.getElementById("dash-xp");
+  const streakEl = document.getElementById("dash-streak");
+  const lessonsEl = document.getElementById("dash-lessons");
+  
+  if (!xpEl) return;
+  
+  loadStreakData();
+  const currentStreak = streakData.count || 0;
+  
+  let completedTopics = 0;
+  let totalTopics = 0;
+  for (const t of topicsData) {
+    if (t.type === 'lesson') {
+      totalTopics++;
+      if (userProgress[t.id]) completedTopics++;
+    }
+  }
+  
+  const totalXp = completedTopics * 100 + currentStreak * 50;
+  
+  xpEl.textContent = totalXp;
+  streakEl.textContent = `${currentStreak} Days`;
+  lessonsEl.textContent = `${completedTopics} / ${totalTopics}`;
 }
 
 if (document.readyState === "loading") {
