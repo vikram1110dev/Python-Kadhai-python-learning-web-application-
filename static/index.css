@@ -2115,3 +2115,94 @@ main {
     opacity: 0;
   }
 }
+
+/* ==================================================
+   Mobile Responsive Overrides
+   ================================================== */
+
+@media (max-width: 768px) {
+  /* Navbar & HUD */
+  .gamification-hud {
+    padding: 0.2rem 0.5rem;
+    gap: 0.5rem;
+  }
+  .xp-hud { display: none; }
+  .header-right { gap: 0.5rem; }
+  .user-avatar { width: 32px; height: 32px; font-size: 0.8rem; }
+
+  /* Hero Section */
+  .hero-section {
+    padding: var(--space-8) var(--space-4);
+    min-height: auto;
+    text-align: center;
+  }
+  .hero-content h1 { font-size: 2.5rem; }
+  .hero-content p { font-size: 1rem; }
+  .hero-cta { flex-direction: column; width: 100%; align-items: center; }
+  .hero-cta .btn { width: 100%; justify-content: center; }
+  
+  /* Layout Grids */
+  .dashboard-stats-grid,
+  .missions-grid,
+  .grid,
+  .footer-container {
+    grid-template-columns: 1fr !important;
+  }
+  
+  /* Lesson Experience Stack */
+  .lesson-layout {
+    grid-template-columns: 1fr;
+    height: auto;
+    min-height: 100vh;
+  }
+  .lesson-content {
+    height: 50vh;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+  .lesson-editor-pane {
+    height: 50vh;
+  }
+  
+  /* Quiz Cards */
+  .quiz-card {
+    padding: var(--space-6) var(--space-4);
+  }
+  .quiz-options {
+    grid-template-columns: 1fr;
+  }
+  .quiz-option {
+    padding: var(--space-4);
+  }
+
+  /* Chatbot Full Screen Modal */
+  .chatbot-window {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 100vw;
+    height: 100dvh;
+    max-height: 100dvh;
+    border-radius: 0;
+    margin-bottom: 0;
+    margin-right: 0;
+    z-index: 10000;
+  }
+  .chatbot-messages {
+    max-height: calc(100dvh - 140px);
+  }
+}
+
+@media (max-width: 480px) {
+  /* Smaller screens */
+  .app-container { padding: 0 var(--space-4); }
+  .stat-card, .mission-card, .feature-card, .dashboard-card {
+    padding: var(--space-4);
+  }
+  .hero-content h1 { font-size: 2rem; }
+  .badge-icon { font-size: 2rem; }
+  
+  /* Footer compact */
+  .modern-footer { padding: var(--space-8) var(--space-4) var(--space-4); }
+  .footer-logo .logo-text { font-size: 1.25rem; }
+}
