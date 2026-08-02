@@ -12,15 +12,44 @@
 
 <body>
   <!-- Navigation Header -->
-  <header class="app-header">
-    <div class="flex items-center gap-4">
-      <div class="logo-text">Python Kadhai</div>
-      <span class="badge badge-accent">Tanglish Edition 🐍</span>
+  <header class="app-header" id="main-header">
+    <div class="header-content w-full">
+      <!-- Logo Section -->
+      <div class="logo-group">
+        <div class="logo-icon">🐍</div>
+        <div class="logo-text">Python Kadhai</div>
+        <span class="badge badge-accent hidden md:inline-flex" style="display: none;">Tanglish</span>
+      </div>
+
+      <!-- Center Nav & Search (Desktop) -->
+      <div class="header-center">
+        <div class="header-search">
+          <span class="header-search-icon">🔍</span>
+          <input type="text" class="header-search-input" placeholder="Search lessons..." autocomplete="off">
+        </div>
+        <nav class="nav-menu">
+          <button class="btn btn-ghost nav-btn active" id="nav-home">Dashboard</button>
+          <button class="btn btn-ghost nav-btn" id="nav-learn">Learn</button>
+        </nav>
+      </div>
+
+      <!-- Right Actions -->
+      <div class="header-right">
+        <button class="btn btn-secondary" id="btn-open-menu" style="display: none;">⚙️ Options</button>
+        <div class="user-avatar" title="User Profile">VB</div>
+        <button class="mobile-menu-btn" id="btn-mobile-menu">☰</button>
+      </div>
     </div>
-    <div class="flex items-center gap-6 mt-4 md:mt-0" style="margin-top: 0;">
-      <button class="btn btn-ghost nav-btn active" id="nav-home">Home / Dashboard</button>
-      <button class="btn btn-ghost nav-btn" id="nav-learn">Start Learning</button>
-      <button class="btn btn-secondary" id="btn-open-menu">⚙️ Options</button>
+
+    <!-- Mobile Navigation Overlay -->
+    <div class="mobile-nav-overlay" id="mobile-nav">
+      <div class="header-search mb-4" style="max-width: 100%;">
+        <span class="header-search-icon">🔍</span>
+        <input type="text" class="header-search-input" placeholder="Search lessons..." autocomplete="off">
+      </div>
+      <button class="btn btn-ghost nav-btn w-full active" id="nav-home-mobile">Dashboard</button>
+      <button class="btn btn-ghost nav-btn w-full" id="nav-learn-mobile">Learn</button>
+      <button class="btn btn-secondary w-full mt-2" id="btn-open-menu-mobile">⚙️ Options</button>
     </div>
   </header>
 
@@ -49,15 +78,75 @@
     <main>
       <!-- View Section: Home / Dashboard -->
       <section class="view-section active" id="view-home">
-        
-        <div class="card hero-card flex-col items-center text-center py-12 px-4 mb-8">
-          <div class="flex gap-4 mb-6 justify-center w-full">
-            <span class="badge badge-danger">🔥 100% Fun guaranteed</span>
-            <span class="badge badge-success">Vadivelu Approved</span>
+
+        <div class="hero-wrapper mb-12">
+          <!-- Left Text Content -->
+          <div class="hero-text-content">
+            <div class="flex gap-4 mb-2">
+              <span class="badge badge-danger">🔥 100% Fun Guaranteed</span>
+              <span class="badge badge-success">Vadivelu Approved</span>
+            </div>
+            
+            <h1 class="text-gradient-vibrant mb-4" style="font-size: clamp(2.5rem, 5vw, 4.5rem);">Code like a Pro.<br>Laugh like a Boss.</h1>
+            <p class="text-muted text-lg max-w-2xl mb-6">
+              Learn Python using Tanglish, English, and epic Tamil Memes. 
+              No boring lectures—just pure comedy and real coding skills.
+            </p>
+            
+            <div class="flex flex-col md:flex-row gap-6 items-start md:items-center">
+              <button class="btn btn-accent text-lg py-4 px-8" id="btn-start-now">Arambikalaama? (Start Now)</button>
+              
+              <div class="hero-stats">
+                <div class="hero-avatars">
+                  <div class="hero-avatar">👨‍💻</div>
+                  <div class="hero-avatar">👩‍🎓</div>
+                  <div class="hero-avatar">👨‍🔧</div>
+                  <div class="hero-avatar">🚀</div>
+                </div>
+                <div class="text-xs text-muted">
+                  <span class="font-bold text-primary">10,000+</span><br>
+                  Tamil Developers
+                </div>
+              </div>
+            </div>
+            
+            <div class="scroll-indicator">
+              <span>Scroll to explore</span>
+              <span>↓</span>
+            </div>
           </div>
-          <h1 class="hero-title mb-4">Python Kadhai</h1>
-          <p class="text-muted mt-2 mb-8 text-lg max-w-2xl">Learn Python with Tanglish, English, and epic Tamil Memes. No boring lectures, only memes & code!</p>
-          <button class="btn btn-accent text-lg py-4 px-8" id="btn-start-now">Arambikalaama? (Let's Start!)</button>
+
+          <!-- Right Illustration Area -->
+          <div class="hero-illustration hidden lg:flex" style="display: flex;">
+            <div class="hero-bg-mesh"></div>
+            
+            <div class="floating-shape shape-1"></div>
+            <div class="floating-shape shape-2"></div>
+            <div class="floating-shape shape-3"></div>
+
+            <div class="mock-editor">
+              <div class="mock-header">
+                <div class="window-dots">
+                  <span class="dot red"></span>
+                  <span class="dot yellow"></span>
+                  <span class="dot green"></span>
+                </div>
+                <span class="text-xs text-tertiary font-mono">main.py</span>
+              </div>
+              <div class="mock-body">
+                <div><span class="code-keyword">def</span> <span class="code-func">hello_world</span>():</div>
+                <div class="ml-4"><span class="code-keyword">print</span>(<span class="code-string">"Thalapathy entry da!"</span>)</div>
+                <div class="mt-4"><span class="code-keyword">if</span> __name__ == <span class="code-string">"__main__"</span>:</div>
+                <div class="ml-4"><span class="code-func">hello_world</span>()</div>
+              </div>
+              
+              <!-- Overlapping Meme Mock -->
+              <div class="mock-meme">
+                <div class="mock-meme-img">😎</div>
+                <div class="text-xs text-center font-bold mt-2">Code executed!</div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- Dashboard Analytics & Streak Row -->
@@ -130,21 +219,24 @@
         </div>
 
         <div class="section-divider">
-          <h2 class="text-3xl text-center mb-8 font-bold">Why Learn With Us?</h2>
+          <div class="text-center mb-12">
+            <span class="badge badge-accent mb-2">Platform Features</span>
+            <h2 class="text-3xl md:text-4xl font-bold">Why Learn With Us?</h2>
+          </div>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="card card-hover text-center py-8">
-              <div class="text-5xl mb-4">🤪</div>
-              <h3 class="font-bold text-xl mb-2">Tanglish + Memes</h3>
+            <div class="feature-card">
+              <div class="feature-icon-wrapper">🤪</div>
+              <h3 class="font-bold text-xl mb-3">Tanglish + Memes</h3>
               <p class="text-sm text-muted">Read explanations that match how you speak with your friends. Code concepts mapped directly to classic comedy scenes.</p>
             </div>
-            <div class="card card-hover text-center py-8">
-              <div class="text-5xl mb-4">💻</div>
-              <h3 class="font-bold text-xl mb-2">Simple Lessons</h3>
+            <div class="feature-card">
+              <div class="feature-icon-wrapper">💻</div>
+              <h3 class="font-bold text-xl mb-3">Simple Lessons</h3>
               <p class="text-sm text-muted">Simple Python concepts illustrated visually. No complex environments to setup, straight-to-the-point examples.</p>
             </div>
-            <div class="card card-hover text-center py-8">
-              <div class="text-5xl mb-4">🏆</div>
-              <h3 class="font-bold text-xl mb-2">Interactive Quizzes</h3>
+            <div class="feature-card">
+              <div class="feature-icon-wrapper">🏆</div>
+              <h3 class="font-bold text-xl mb-3">Interactive Quizzes</h3>
               <p class="text-sm text-muted">Solve checkpoints to unlock meme reactions. Laugh while you learn, retry until you get it perfect!</p>
             </div>
           </div>

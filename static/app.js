@@ -49,6 +49,8 @@ function showView(viewId) {
   if (viewId === "view-learn") {
     document.getElementById("sidebar-tracker").style.display = "flex";
     document.getElementById("nav-learn").classList.add("active");
+    const navLearnMobile = document.getElementById("nav-learn-mobile");
+    if(navLearnMobile) navLearnMobile.classList.add("active");
     if (lessons.length === 0) {
       fetchLessons();
     } else {
@@ -58,6 +60,8 @@ function showView(viewId) {
     document.getElementById("sidebar-tracker").style.display = "none";
     if (viewId === "view-home") {
       document.getElementById("nav-home").classList.add("active");
+      const navHomeMobile = document.getElementById("nav-home-mobile");
+      if(navHomeMobile) navHomeMobile.classList.add("active");
     }
   }
 }
@@ -309,9 +313,41 @@ chatbotInput.addEventListener("keypress", (e) => {
 });
 
 // Event Listeners Setup
-document.getElementById("nav-home").addEventListener("click", () => showView("view-home"));
-document.getElementById("nav-learn").addEventListener("click", () => showView("view-learn"));
+const bindNav = (id, target) => {
+  const el = document.getElementById(id);
+  if(el) el.addEventListener("click", () => {
+    showView(target);
+    const mobileNavOverlay = document.getElementById("mobile-nav");
+    if (mobileNavOverlay) mobileNavOverlay.classList.remove("active");
+  });
+};
+bindNav("nav-home", "view-home");
+bindNav("nav-home-mobile", "view-home");
+bindNav("nav-learn", "view-learn");
+bindNav("nav-learn-mobile", "view-learn");
+
 document.getElementById("btn-start-now").addEventListener("click", () => showView("view-learn"));
+
+// Navbar Scroll Effect
+window.addEventListener("scroll", () => {
+  const header = document.getElementById("main-header");
+  if (header) {
+    if (window.scrollY > 20) {
+      header.classList.add("header-scrolled");
+    } else {
+      header.classList.remove("header-scrolled");
+    }
+  }
+});
+
+// Mobile Menu Toggle
+const btnMobileMenu = document.getElementById("btn-mobile-menu");
+const mobileNavOverlay = document.getElementById("mobile-nav");
+if (btnMobileMenu && mobileNavOverlay) {
+  btnMobileMenu.addEventListener("click", () => {
+    mobileNavOverlay.classList.toggle("active");
+  });
+}
 
 document.getElementById("btn-prev-lesson").addEventListener("click", () => {
   if (currentLessonIndex > 0) {
@@ -599,6 +635,7 @@ function populateQuickTopicSelect() {
 
 const optionsOverlay = document.getElementById("options-modal-overlay");
 const btnOpenMenu = document.getElementById("btn-open-menu");
+const btnOpenMenuMobile = document.getElementById("btn-open-menu-mobile");
 const btnCloseMenu = document.getElementById("options-modal-close");
 
 function openOptionsModal() {
@@ -606,6 +643,8 @@ function openOptionsModal() {
   const select = document.getElementById("quick-topic-select");
   if (select) select.value = currentLessonIndex;
   if (optionsOverlay) optionsOverlay.classList.add("active");
+  const mobileNavOverlay = document.getElementById("mobile-nav");
+  if (mobileNavOverlay) mobileNavOverlay.classList.remove("active");
 }
 
 function closeOptionsModal() {
@@ -613,6 +652,7 @@ function closeOptionsModal() {
 }
 
 if (btnOpenMenu) btnOpenMenu.addEventListener("click", openOptionsModal);
+if (btnOpenMenuMobile) btnOpenMenuMobile.addEventListener("click", openOptionsModal);
 if (btnCloseMenu) btnCloseMenu.addEventListener("click", closeOptionsModal);
 
 if (optionsOverlay) {
