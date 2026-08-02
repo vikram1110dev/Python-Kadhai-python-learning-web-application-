@@ -163,11 +163,23 @@ function renderLesson() {
 
   // Render Quiz questions
   const quizPanel = document.getElementById("quiz-panel");
+  quizPanel.className = "quiz-panel-card mb-8";
+  
+  const completedCount = Object.keys(userProgress).length;
+  const progressPercent = Math.min(100, Math.round((completedCount / lessons.length) * 100));
+
   quizPanel.innerHTML = `
+    <div class="quiz-header">
+      <div class="quiz-progress-bar">
+        <div class="quiz-progress-fill" style="width: ${progressPercent}%"></div>
+      </div>
+      <span style="color: var(--text-tertiary); font-weight: 700; font-size: 0.8rem; font-family: var(--font-mono);">${progressPercent}% XP</span>
+    </div>
     <h3 class="quiz-question">${lesson.quiz.question}</h3>
     <div class="quiz-options">
       ${lesson.quiz.options.map((opt, i) => `
-        <div class="quiz-option" data-idx="${i}">
+        <div class="quiz-glass-card" data-idx="${i}">
+          <div class="option-label">${String.fromCharCode(65 + i)}</div>
           <span>${opt}</span>
         </div>
       `).join('')}
@@ -175,8 +187,8 @@ function renderLesson() {
   `;
 
   // Attach Quiz option events
-  quizPanel.querySelectorAll(".quiz-option").forEach(opt => {
-    opt.addEventListener("click", () => handleQuizSubmission(parseInt(opt.getAttribute("data-idx"), 10)));
+  quizPanel.querySelectorAll(".quiz-glass-card").forEach(opt => {
+    opt.addEventListener("click", (e) => handleQuizSubmission(parseInt(opt.getAttribute("data-idx"), 10), e));
   });
 
   // Manage Prev/Next buttons
@@ -186,7 +198,7 @@ function renderLesson() {
   renderSidebar();
 }
 
-function handleQuizSubmission(selectedIndex) {
+function handleQuizSubmission(selectedIndex, event) {
   const lesson = lessons[currentLessonIndex];
   const isCorrect = selectedIndex === lesson.quiz.correctIndex;
 
@@ -194,30 +206,47 @@ function handleQuizSubmission(selectedIndex) {
   feedbackContainer.innerHTML = "";
 
   // Highlight selected, correct, and incorrect options
-  const options = document.querySelectorAll(".quiz-option");
+  const options = document.querySelectorAll(".quiz-glass-card");
   options.forEach((opt, idx) => {
     opt.classList.remove("selected", "correct", "incorrect");
     if (idx === selectedIndex) {
       opt.classList.add(isCorrect ? "correct" : "incorrect");
     }
-    if (idx === lesson.quiz.correctIndex) {
-      opt.classList.add("correct");
+    if (idx === lesson.quiz.correctIndex && isCorrect) {
+      if (idx !== selectedIndex) {
+        opt.style.borderColor = "var(--accent-success)";
+      }
     }
   });
 
   // Setup Feedback container
-  feedbackContainer.className = `meme-feedback-box active ${isCorrect ? 'correct-feedback' : 'incorrect-feedback'}`;
+  feedbackContainer.className = `lesson-complete-screen active ${isCorrect ? '' : 'incorrect-mode'}`;
   
   const memeInfo = isCorrect ? lesson.quiz.correctMeme : lesson.quiz.incorrectMeme;
 
   feedbackContainer.innerHTML = `
-    <div class="feedback-headline">${memeInfo.headline}</div>
-    <div style="margin: 0.5rem 0; font-style: italic; text-align: center;">${memeInfo.text}</div>
-    ${memeInfo.svg}
+    <div class="result-headline ${isCorrect ? 'success' : 'error'}">${memeInfo.headline}</div>
+    <div style="margin: 0.5rem 0 1.5rem 0; font-size: 1.1rem; color: #94a3b8; max-width: 600px;">${memeInfo.text}</div>
+    <div style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: var(--radius-lg); margin-bottom: 1.5rem;">
+      ${memeInfo.svg}
+    </div>
+    ${isCorrect && currentLessonIndex < lessons.length - 1 ? 
+      `<button class="btn-pill btn-pill-next" onclick="document.getElementById('btn-next-lesson').click()">Next Lesson →</button>` : 
+      ''}
   `;
 
   if (isCorrect) {
     playSoundEffect("correct");
+    if (event) {
+      const xpNode = document.createElement("div");
+      xpNode.className = "xp-popup";
+      xpNode.textContent = "+50 XP!";
+      xpNode.style.left = (event.clientX) + "px";
+      xpNode.style.top = (event.clientY - 20) + "px";
+      document.body.appendChild(xpNode);
+      setTimeout(() => { if (xpNode.parentNode) xpNode.parentNode.removeChild(xpNode); }, 1000);
+    }
+    if (typeof fireConfetti === 'function') fireConfetti();
     userProgress[lesson.id] = true;
     saveProgress();
     renderSidebar();
@@ -1400,6 +1429,63 @@ document.addEventListener("DOMContentLoaded", () => {
     updateSandboxHighlight();
   }
 });
+
+// --- Confetti Engine ---
+function fireConfetti() {
+  let canvas = document.getElementById('confetti-canvas');
+  if (!canvas) {
+    canvas = document.createElement('canvas');
+    canvas.id = 'confetti-canvas';
+    document.body.appendChild(canvas);
+  }
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const particles = [];
+  const colors = ['#27c93f', '#ffbd2e', '#ff5f56', '#818cf8', '#f472b6'];
+  for (let i = 0; i < 100; i++) {
+    particles.push({
+      x: canvas.width / 2,
+      y: canvas.height / 2 + 100,
+      r: Math.random() * 6 + 2,
+      dx: Math.random() * 10 - 5,
+      dy: Math.random() * -10 - 5,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      tilt: Math.floor(Math.random() * 10) - 10,
+      tiltAngleIncrement: (Math.random() * 0.07) + 0.05,
+      tiltAngle: 0
+    });
+  }
+
+  let animationFrame;
+  function render() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let active = false;
+    for (let i = 0; i < particles.length; i++) {
+      const p = particles[i];
+      p.tiltAngle += p.tiltAngleIncrement;
+      p.y += (Math.cos(p.tiltAngle) + 1 + p.r / 2) / 2;
+      p.x += Math.sin(p.tiltAngle) * 2 + p.dx;
+      p.dy += 0.1; // gravity
+      p.y += p.dy;
+      if (p.y <= canvas.height) active = true;
+      
+      ctx.beginPath();
+      ctx.lineWidth = p.r;
+      ctx.strokeStyle = p.color;
+      ctx.moveTo(p.x + p.tilt + p.r, p.y);
+      ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r);
+      ctx.stroke();
+    }
+    if (active) {
+      animationFrame = requestAnimationFrame(render);
+    } else {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+  }
+  render();
+}
 
 
 
