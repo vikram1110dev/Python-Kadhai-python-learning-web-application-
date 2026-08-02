@@ -1,29 +1,26 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Python Kadhai - Learn Python easily with Tamil Memes!</title>
   <meta name="description"
     content="Learn Python basics (variables, conditionals, loops, functions, lists) using Tamil memes, Tanglish explanations, and interactive quizzes.">
-  <link rel="stylesheet" href="{% static 'index.css' %}?v=4.0">
+  <link rel="stylesheet" href="{% static 'index.css' %}?v=5.0">
 </head>
 
 <body>
-
   <!-- Navigation Header -->
-  <header>
-    <div class="logo-container">
+  <header class="app-header">
+    <div class="flex items-center gap-2">
       <div class="logo-text">Python Kadhai</div>
-      <span class="logo-tag">Tanglish Edition 🐍</span>
+      <span class="badge badge-accent">Tanglish Edition 🐍</span>
     </div>
-    <div class="nav-links">
-      <button class="nav-btn active" id="nav-home">Home / Dashboard</button>
-      <button class="nav-btn" id="nav-learn">Start Learning</button>
-      <button class="nav-btn menu-btn" id="btn-open-menu">⚙️ Options</button>
-      <button class="theme-toggle-btn" id="theme-toggle-btn" aria-label="Toggle Theme">🌙</button>
+    <div class="flex gap-4">
+      <button class="btn btn-ghost nav-btn active" id="nav-home">Home / Dashboard</button>
+      <button class="btn btn-ghost nav-btn" id="nav-learn">Start Learning</button>
+      <button class="btn btn-secondary" id="btn-open-menu">⚙️ Options</button>
     </div>
   </header>
 
@@ -32,59 +29,56 @@
 
     <!-- Sidebar Progress Tracker (Visible on Learn screen) -->
     <aside class="sidebar" id="sidebar-tracker" style="display: none;">
-      <div class="card">
-        <div class="progress-header">
-          <span class="progress-title">Your Progress</span>
-          <span class="progress-percentage" id="overall-progress-text">0%</span>
-        </div>
-        <div class="progress-bar-bg">
-          <div class="progress-bar-fill" id="overall-progress-bar"></div>
-        </div>
-        <div class="topic-list" id="topic-navigation-list">
-          <!-- Populated dynamically via app.js -->
+      <div class="sidebar-sticky">
+        <div class="card flex-col gap-4">
+          <div class="flex justify-between items-center">
+            <span class="font-bold text-sm">Your Progress</span>
+            <span class="font-mono font-bold text-accent" id="overall-progress-text" style="color: var(--accent-primary);">0%</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="overall-progress-bar"></div>
+          </div>
+          <div class="flex-col gap-2 mt-2" id="topic-navigation-list">
+            <!-- Populated dynamically via app.js -->
+          </div>
         </div>
       </div>
     </aside>
 
     <!-- Main Content Stream -->
     <main>
-
       <!-- View Section: Home / Dashboard -->
       <section class="view-section active" id="view-home">
-        <div class="card hero-card">
-          <div class="hero-content">
-            <div class="badge-row">
-              <span class="badge hot">🔥 100% Fun guaranteed</span>
-              <span class="badge">Vadivelu Approved</span>
-            </div>
-            <h1 class="hero-title">Python Kadhai</h1>
-            <p class="hero-subtitle">Learn Python with Tanglish, English, and epic Tamil Memes. No boring lectures, only
-              memes & code!</p>
-            <button class="btn-primary" id="btn-start-now">Arambikalaama? (Let's Start!)</button>
+        
+        <div class="card hero-card flex-col items-center text-center py-8">
+          <div class="flex gap-2 mb-4 justify-center w-full">
+            <span class="badge badge-danger">🔥 100% Fun guaranteed</span>
+            <span class="badge badge-success">Vadivelu Approved</span>
           </div>
+          <h1 class="hero-title">Python Kadhai</h1>
+          <p class="text-muted mt-2 mb-6 text-lg max-w-2xl">Learn Python with Tanglish, English, and epic Tamil Memes. No boring lectures, only memes & code!</p>
+          <button class="btn btn-accent px-6 py-3" id="btn-start-now">Arambikalaama? (Let's Start!)</button>
         </div>
 
         <!-- Dashboard Analytics & Streak Row -->
-        <div class="analytics-dashboard-row">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6" style="display: grid; grid-template-columns: 1fr 1fr;">
           <!-- Daily Streak Motivation Card -->
           <div class="card streak-hero-card">
             <div class="streak-card-header">
               <div class="streak-badge-wrapper">
                 <span class="streak-fire-anim">🔥</span>
                 <div>
-                  <h3 class="streak-card-title"><span id="streak-count-display">1</span> Day Coding Streak!</h3>
-                  <p class="streak-card-sub" id="streak-status-text">Keep your streak alive by practicing Python daily!</p>
+                  <h3 class="font-bold text-xl"><span id="streak-count-display">1</span> Day Coding Streak!</h3>
+                  <p class="text-sm text-muted mt-1" id="streak-status-text">Keep your streak alive by practicing Python daily!</p>
                 </div>
               </div>
-              <button class="btn-claim-streak" id="btn-claim-streak">🔥 Claim Today's Streak</button>
+              <button class="btn btn-warning mt-4" style="background: var(--accent-warning); color: #fff; border:none;" id="btn-claim-streak">🔥 Claim Today's Streak</button>
             </div>
             
-            <!-- Dynamic Tamil Meme Reaction for Streak -->
             <div class="streak-meme-box" id="streak-meme-box">
               <!-- Populated dynamically via app.js -->
             </div>
 
-            <!-- Funny User Ranking & Badge Level System -->
             <div class="ranking-box" id="user-ranking-box">
               <!-- Populated dynamically via app.js -->
             </div>
@@ -93,32 +87,32 @@
           <!-- Monthly Streak Analytics Card -->
           <div class="card monthly-analytics-card">
             <div class="monthly-header">
-              <div class="monthly-title-group">
-                <h3 class="monthly-title">📅 Monthly Activity Analytics</h3>
-                <span class="monthly-month-badge" id="monthly-month-name">July 2026</span>
+              <div>
+                <h3 class="font-bold text-lg">📅 Monthly Activity Analytics</h3>
+                <span class="badge badge-accent mt-2 block w-max" id="monthly-month-name">July 2026</span>
               </div>
-              <span class="monthly-consistency-badge" id="monthly-consistency-badge">0% Consistency</span>
+              <span class="badge badge-warning" id="monthly-consistency-badge">0% Consistency</span>
             </div>
 
             <!-- Key Monthly Metrics Row -->
             <div class="monthly-stats-row">
               <div class="monthly-stat-item">
                 <span class="stat-icon">⚡</span>
-                <div class="stat-info">
+                <div>
                   <span class="stat-value" id="monthly-active-days">0 / 31</span>
                   <span class="stat-label">Days Active</span>
                 </div>
               </div>
               <div class="monthly-stat-item">
                 <span class="stat-icon">🎯</span>
-                <div class="stat-info">
+                <div>
                   <span class="stat-value" id="monthly-score-percent">0%</span>
                   <span class="stat-label">Consistency</span>
                 </div>
               </div>
               <div class="monthly-stat-item">
                 <span class="stat-icon">🏆</span>
-                <div class="stat-info">
+                <div>
                   <span class="stat-value" id="monthly-peak-streak">1 Day</span>
                   <span class="stat-label">Peak Streak</span>
                 </div>
@@ -135,31 +129,27 @@
               </div>
             </div>
 
-            <!-- Monthly Tamil Meme Evaluation Box -->
-            <div class="monthly-meme-box" id="monthly-meme-box">
+            <div class="streak-meme-box mt-4" id="monthly-meme-box">
               <!-- Populated dynamically via app.js -->
             </div>
           </div>
         </div>
 
         <div class="features-grid">
-          <div class="card feature-card">
+          <div class="card card-hover">
             <div class="feature-icon-wrapper">🤪</div>
-            <h3 class="feature-title">Tanglish + Memes</h3>
-            <p class="feature-desc">Read explanations that match how you speak with your friends. Code concepts mapped
-              directly to classic comedy scenes.</p>
+            <h3 class="font-bold mb-2">Tanglish + Memes</h3>
+            <p class="text-sm text-muted">Read explanations that match how you speak with your friends. Code concepts mapped directly to classic comedy scenes.</p>
           </div>
-          <div class="card feature-card">
+          <div class="card card-hover">
             <div class="feature-icon-wrapper">💻</div>
-            <h3 class="feature-title">Simple Lessons</h3>
-            <p class="feature-desc">Simple Python concepts illustrated visually. No complex environments to setup,
-              straight-to-the-point examples.</p>
+            <h3 class="font-bold mb-2">Simple Lessons</h3>
+            <p class="text-sm text-muted">Simple Python concepts illustrated visually. No complex environments to setup, straight-to-the-point examples.</p>
           </div>
-          <div class="card feature-card">
+          <div class="card card-hover">
             <div class="feature-icon-wrapper">🏆</div>
-            <h3 class="feature-title">Interactive Quizzes</h3>
-            <p class="feature-desc">Solve checkpoints to unlock meme reactions. Laugh while you learn, retry until you
-              get it perfect!</p>
+            <h3 class="font-bold mb-2">Interactive Quizzes</h3>
+            <p class="text-sm text-muted">Solve checkpoints to unlock meme reactions. Laugh while you learn, retry until you get it perfect!</p>
           </div>
         </div>
       </section>
@@ -168,23 +158,23 @@
       <section class="view-section" id="view-learn">
 
         <!-- Lesson Content Card -->
-        <div class="card lesson-card" id="lesson-content-card">
+        <div class="card" id="lesson-content-card">
           <!-- Populated dynamically via app.js -->
         </div>
 
         <!-- Interactive Pyodide Code Sandbox -->
-        <div class="card code-snippet-card">
+        <div class="card code-snippet-card flex-col">
           <div class="sandbox-header">
-            <div class="sandbox-title-group">
-              <h3 class="sandbox-title">⚡ Interactive Python Playground</h3>
-              <span class="pyodide-status-badge" id="pyodide-status">⏳ Loading Python Engine...</span>
+            <div class="flex items-center gap-2">
+              <h3 class="font-bold text-sm">⚡ Interactive Python Playground</h3>
+              <span class="badge" id="pyodide-status">⏳ Loading Python Engine...</span>
             </div>
-            <div class="sandbox-actions">
-              <button class="btn-editor reset-btn" id="btn-reset-code" title="Reset to initial lesson code">🔄 Reset</button>
-              <button class="btn-editor run-btn" id="btn-run-code" title="Execute Python code live">▶️ Run Code</button>
+            <div class="flex gap-2">
+              <button class="btn btn-secondary text-xs" id="btn-reset-code" title="Reset to initial lesson code">🔄 Reset</button>
+              <button class="btn btn-accent text-xs" id="btn-run-code" title="Execute Python code live">▶️ Run Code</button>
             </div>
           </div>
-          <div class="code-editor-container">
+          <div class="flex-col">
             <div class="editor-titlebar">
               <div class="window-dots">
                 <span class="dot red"></span>
@@ -199,17 +189,17 @@
           <!-- Live Terminal Output Window -->
           <div class="terminal-container">
             <div class="terminal-header">
-              <span class="terminal-title">🖥️ Live Terminal Output</span>
-              <button class="btn-clear-terminal" id="btn-clear-terminal">Clear</button>
+              <span>🖥️ Live Terminal Output</span>
+              <button class="btn btn-ghost text-xs py-1 px-2" id="btn-clear-terminal">Clear</button>
             </div>
             <div class="terminal-body" id="terminal-output">
-              <span class="terminal-placeholder">Click "▶️ Run Code" to execute Python code and view output here...</span>
+              <span style="color: var(--text-tertiary);">Click "▶️ Run Code" to execute Python code and view output here...</span>
             </div>
           </div>
         </div>
 
         <!-- Quiz Panel -->
-        <div class="card quiz-card" id="quiz-panel">
+        <div class="card" id="quiz-panel">
           <!-- Populated dynamically via app.js -->
         </div>
 
@@ -219,9 +209,9 @@
         </div>
 
         <!-- Navigation Next/Prev -->
-        <div class="navigation-row">
-          <button class="btn-secondary" id="btn-prev-lesson">← Previous Lesson</button>
-          <button class="btn-primary" id="btn-next-lesson">Next Lesson →</button>
+        <div class="flex justify-between items-center mt-4">
+          <button class="btn btn-secondary" id="btn-prev-lesson">← Previous Lesson</button>
+          <button class="btn btn-primary" id="btn-next-lesson">Next Lesson →</button>
         </div>
 
       </section>
@@ -240,8 +230,8 @@
     </button>
     <div class="chatbot-window" id="chatbot-window">
       <div class="chatbot-header">
-        <span class="chatbot-title">🤖 Chitti RAG 3.0 (AI Retrieval Engine)</span>
-        <button class="chatbot-close-btn" id="chatbot-close-btn">&times;</button>
+        <span class="chatbot-title">🤖 Chitti RAG 3.0</span>
+        <button class="btn btn-ghost px-2 py-1" id="chatbot-close-btn">&times;</button>
       </div>
       <div class="chatbot-messages" id="chatbot-messages">
         <div class="chat-message bot">
@@ -249,35 +239,34 @@
         </div>
       </div>
       <div class="chatbot-input-row">
-        <input type="text" class="chatbot-input" id="chatbot-input" placeholder="Ask Chitti something..."
-          autocomplete="off">
-        <button class="chatbot-send-btn" id="chatbot-send-btn">Send</button>
+        <input type="text" class="chatbot-input" id="chatbot-input" placeholder="Ask Chitti something..." autocomplete="off">
+        <button class="chatbot-send-btn btn btn-primary" id="chatbot-send-btn">Send</button>
       </div>
     </div>
   </div>
 
   <!-- Options & Settings Drawer Modal -->
-  <div class="options-modal-overlay" id="options-modal-overlay">
-    <div class="options-modal-card">
-      <div class="options-modal-header">
-        <h3 class="options-modal-title">⚙️ App Settings & Menu</h3>
-        <button class="options-modal-close" id="options-modal-close">&times;</button>
+  <div class="modal-overlay" id="options-modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">⚙️ App Settings</h3>
+        <button class="modal-close" id="options-modal-close">&times;</button>
       </div>
 
-      <div class="options-modal-body">
+      <div class="flex-col gap-6">
         <!-- Quick Jump Section -->
-        <div class="options-group">
-          <label class="options-label" for="quick-topic-select">📚 Quick Topic Jump</label>
-          <select class="options-select" id="quick-topic-select">
+        <div class="form-group">
+          <label class="form-label" for="quick-topic-select">📚 Quick Topic Jump</label>
+          <select class="input" id="quick-topic-select">
             <!-- Populated dynamically via app.js -->
           </select>
         </div>
 
         <!-- Sound FX Toggle Section -->
-        <div class="options-group row-group">
+        <div class="row-group">
           <div>
-            <div class="options-label">🔊 Meme Audio & Sound FX</div>
-            <div class="options-desc">Play audio effects for quiz answers & code completion</div>
+            <div class="font-medium text-sm">🔊 Meme Audio & Sound FX</div>
+            <div class="text-xs text-muted mt-1">Play audio effects for quiz answers</div>
           </div>
           <label class="toggle-switch">
             <input type="checkbox" id="toggle-sound-fx" checked>
@@ -286,22 +275,22 @@
         </div>
 
         <!-- Keyboard Shortcuts Help -->
-        <div class="options-group">
-          <div class="options-label">⌨️ Keyboard Shortcuts</div>
+        <div class="form-group">
+          <div class="font-medium text-sm">⌨️ Keyboard Shortcuts</div>
           <div class="shortcuts-list">
-            <div class="shortcut-item"><kbd>Tab</kbd> <span>Indent 4 spaces in Code Editor</span></div>
-            <div class="shortcut-item"><kbd>Ctrl</kbd> + <kbd>Enter</kbd> <span>Run Python Playground Code</span></div>
-            <div class="shortcut-item"><kbd>Esc</kbd> <span>Close Options Menu</span></div>
+            <div class="shortcut-item"><kbd>Tab</kbd> <span class="text-muted">Indent 4 spaces</span></div>
+            <div class="shortcut-item"><kbd>Ctrl</kbd> + <kbd>Enter</kbd> <span class="text-muted">Run Python Code</span></div>
+            <div class="shortcut-item"><kbd>Esc</kbd> <span class="text-muted">Close Menu</span></div>
           </div>
         </div>
 
         <!-- System & Admin Links -->
-        <div class="options-group">
-          <div class="options-label">🔗 System Actions</div>
-          <div class="actions-row">
-            <button class="btn-option-link" id="btn-preview-rank-unlock">🎉 Preview Rank Unlock Screen</button>
-            <a href="/admin" target="_blank" class="btn-option-link">🔑 Django Admin Panel</a>
-            <button class="btn-option-danger" id="btn-reset-progress">🗑️ Reset Progress Data</button>
+        <div class="form-group">
+          <div class="font-medium text-sm">🔗 System Actions</div>
+          <div class="actions-row mt-2">
+            <button class="btn btn-secondary w-full" id="btn-preview-rank-unlock">🎉 Preview Rank Unlock</button>
+            <a href="/admin" target="_blank" class="btn btn-secondary w-full" style="text-decoration:none;">🔑 Django Admin Panel</a>
+            <button class="btn btn-danger w-full mt-2" style="background:var(--accent-danger-bg); color:var(--accent-danger); border:1px solid var(--border-strong);" id="btn-reset-progress">🗑️ Reset Progress Data</button>
           </div>
         </div>
       </div>
@@ -314,24 +303,23 @@
   </footer>
 
   <!-- Full-Screen Rank Unlock Celebration Modal -->
-  <div class="rank-unlock-modal-overlay" id="rank-unlock-modal">
-    <canvas id="confetti-canvas"></canvas>
-    <div class="rank-unlock-card">
-      <div class="unlock-header-badge">🎉 NEW RANK UNLOCKED! 🎉</div>
+  <div class="rank-unlock-modal-overlay modal-overlay" id="rank-unlock-modal">
+    <canvas id="confetti-canvas" style="position:absolute; inset:0; z-index:-1;"></canvas>
+    <div class="rank-unlock-card modal-card text-center" style="position:relative; z-index:10;">
+      <div class="unlock-header-badge text-sm font-bold tracking-widest text-warning mb-4">🎉 NEW RANK UNLOCKED! 🎉</div>
       
-      <div class="unlock-img-wrapper">
-        <div class="unlock-badge-glow"></div>
-        <img src="" alt="Unlocked Rank" id="unlock-modal-img" class="unlock-modal-img" />
+      <div class="flex justify-center mb-6">
+        <img src="" alt="Unlocked Rank" id="unlock-modal-img" class="rank-img" style="width:100px; height:100px;" />
       </div>
 
-      <div class="unlock-level-tag" id="unlock-modal-level">Level 1 • Rank Title</div>
-      <h2 class="unlock-rank-title" id="unlock-modal-title">Code Kutty</h2>
+      <div class="badge badge-accent mb-2" id="unlock-modal-level">Level 1 • Rank Title</div>
+      <h2 class="unlock-modal-title text-3xl font-bold text-primary mb-4" id="unlock-modal-title">Code Kutty</h2>
 
-      <div class="unlock-meme-quote" id="unlock-modal-quote">
+      <div class="unlock-meme-quote text-sm italic text-muted p-4 bg-surface-elevated rounded-md border border-subtle mb-6" id="unlock-modal-quote">
         <!-- Populated dynamically via app.js -->
       </div>
 
-      <button class="btn-claim-congrats" id="btn-close-unlock-modal">🔥 Mass Bro! Continue Coding</button>
+      <button class="btn btn-accent w-full py-3" id="btn-close-unlock-modal">🔥 Mass Bro! Continue Coding</button>
     </div>
   </div>
 
@@ -339,7 +327,6 @@
   <script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
 
   <!-- Include App Logic -->
-  <script src="{% static 'app.js' %}?v=4.0"></script>
+  <script src="{% static 'app.js' %}?v=5.0"></script>
 </body>
-
 </html>
