@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600&display=swap');
 
 :root {
   /* Colors */
@@ -29,7 +28,15 @@
 
   /* Typography */
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-heading: 'Outfit', var(--font-sans);
   --font-mono: 'Space Grotesk', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Shadows & Gradients */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.6), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.7), 0 4px 6px -2px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 15px var(--accent-primary-glow);
+  --gradient-primary: linear-gradient(135deg, var(--accent-primary) 0%, #a855f7 100%);
 
   /* Fluid Typography Scale */
   --text-xs: clamp(0.75rem, 0.7vw + 0.1rem, 0.8rem);
@@ -88,7 +95,8 @@ html, body {
 
 h1, h2, h3, h4, h5, h6 {
   color: var(--text-primary);
-  font-weight: 600;
+  font-family: var(--font-heading);
+  font-weight: 700;
   letter-spacing: -0.03em;
   line-height: 1.2;
 }
@@ -429,6 +437,13 @@ main {
 .mobile-nav-overlay.active { display: flex; }
 @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
+/* Accessibility Focus */
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--bg-main), 0 0 0 4px var(--accent-primary);
+  border-radius: 2px;
+}
+
 /* Buttons */
 .btn {
   position: relative;
@@ -440,10 +455,12 @@ main {
   padding: 0.6rem 1.2rem;
   border-radius: var(--radius-md);
   font-size: var(--text-sm);
-  font-weight: 500;
+  font-family: var(--font-heading);
+  font-weight: 600;
   cursor: pointer;
   transition: all var(--transition-fast);
   border: 1px solid transparent;
+  box-shadow: var(--shadow-sm);
   background: transparent;
   color: var(--text-primary);
   outline: none;
@@ -451,8 +468,16 @@ main {
 .btn:focus-visible { box-shadow: 0 0 0 2px var(--bg-main), 0 0 0 4px var(--accent-primary); }
 .btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-.btn-primary { background: var(--text-primary); color: var(--bg-main); }
-.btn-primary:hover:not(:disabled) { background: #d4d4d8; transform: translateY(-1px); }
+.btn-primary { 
+  background: var(--gradient-primary); 
+  color: #fff; 
+  box-shadow: var(--shadow-md); 
+  border: none;
+}
+.btn-primary:hover:not(:disabled) { 
+  box-shadow: var(--shadow-glow); 
+  transform: translateY(-2px); 
+}
 
 .btn-secondary {
   background: var(--bg-surface-elevated);
@@ -791,7 +816,7 @@ main {
 
 .feature-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--shadow-lg);
 }
 
 .feature-card:hover::before {
@@ -1576,6 +1601,7 @@ main {
   padding: var(--space-8);
   display: flex;
   flex-direction: column;
+  box-shadow: var(--shadow-md);
 }
 
 /* Weekly Chart */

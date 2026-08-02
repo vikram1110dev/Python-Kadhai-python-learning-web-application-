@@ -7,6 +7,9 @@
   <title>Python Kadhai - Learn Python easily with Tamil Memes!</title>
   <meta name="description"
     content="Learn Python basics (variables, conditionals, loops, functions, lists) using Tamil memes, Tanglish explanations, and interactive quizzes.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'index.css' %}?v=6.0">
 </head>
 
@@ -38,23 +41,27 @@
       <div class="header-right">
         <div class="gamification-hud">
           <div class="hud-item streak-hud" title="Current Streak">
-            <span class="hud-icon">🔥</span>
+            <span class="hud-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg></span>
             <span class="hud-text" id="hud-streak">0</span>
           </div>
           <div class="hud-item coins-hud" title="Total Coins">
-            <span class="hud-icon">🪙</span>
+            <span class="hud-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="M16.71 13.88.49 10.2l1.31-3.61 16.22 3.68z"/></svg></span>
             <span class="hud-text" id="hud-coins">0</span>
           </div>
           <div class="hud-item xp-hud" title="XP to Next Level">
-            <span class="hud-icon" style="color: var(--accent-primary);">⚡</span>
-            <div class="xp-bar-container">
+            <span class="hud-icon" style="color: var(--accent-primary);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
+            <div class="xp-bar-container" aria-label="XP Progress Bar">
               <div class="xp-bar-fill" id="hud-xp-bar" style="width: 0%;"></div>
             </div>
           </div>
         </div>
-        <button class="btn btn-secondary" id="btn-open-menu" style="display: none;">⚙️ Options</button>
+        <button class="btn btn-secondary" id="btn-open-menu" style="display: none;" aria-label="Options Menu">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg> Options
+        </button>
         <div class="user-avatar" title="User Profile">VB</div>
-        <button class="mobile-menu-btn" id="btn-mobile-menu">☰</button>
+        <button class="mobile-menu-btn" id="btn-mobile-menu" aria-label="Mobile Navigation Menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
       </div>
     </div>
 
@@ -376,7 +383,7 @@
           </h3>
           <div class="missions-grid">
             <div class="mission-card hover-lift">
-              <div class="mission-icon">🎯</div>
+              <div class="mission-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
               <div class="mission-content">
                 <div class="mission-title">Perfect Score</div>
                 <div class="mission-desc">Get 100% on any quiz</div>
@@ -393,7 +400,7 @@
             </div>
             
             <div class="mission-card completed hover-lift">
-              <div class="mission-icon">📚</div>
+              <div class="mission-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg></div>
               <div class="mission-content">
                 <div class="mission-title">Avid Learner</div>
                 <div class="mission-desc">Complete 3 Lessons</div>
