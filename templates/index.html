@@ -272,7 +272,13 @@
               </div>
               <span class="editor-lang" id="sandbox-filename">main.py (Python 3.11 WASM)</span>
             </div>
-            <textarea class="code-editor-input" id="lesson-code-editor" spellcheck="false" placeholder="Write Python code here..."></textarea>
+            <div class="editor-wrapper">
+              <div class="sandbox-line-numbers" id="sandbox-line-numbers">1</div>
+              <div class="editor-layer">
+                <pre class="code-editor-highlight" id="lesson-code-highlight" aria-hidden="true"></pre>
+                <textarea class="code-editor-input" id="lesson-code-editor" spellcheck="false" placeholder="Write Python code here..."></textarea>
+              </div>
+            </div>
           </div>
 
           <!-- Live Terminal Output Window -->

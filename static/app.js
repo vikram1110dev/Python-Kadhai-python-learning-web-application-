@@ -83,10 +83,10 @@ function renderSidebar() {
     const item = document.createElement("div");
     item.className = `topic-item ${activeClass} ${completedClass}`;
     item.innerHTML = `
-      <div class="topic-icon">${isCompleted ? '✓' : index + 1}</div>
-      <div class="topic-details">
-        <div class="topic-title">${lesson.title}</div>
-        <div class="topic-subtitle">${lesson.indicator}</div>
+      <div style="font-weight: 800; width: 28px; text-align: center; color: var(--accent-primary); font-size: 1.1rem;">${isCompleted ? '✓' : index + 1}</div>
+      <div style="display: flex; flex-direction: column;">
+        <span style="font-size: 0.95rem; font-weight: ${index === currentLessonIndex ? '800' : '600'}; color: ${index === currentLessonIndex ? '#fff' : 'var(--text-secondary)'};">${lesson.title}</span>
+        <span style="font-size: 0.75rem; color: var(--text-tertiary); text-transform: uppercase; font-weight: 700;">${lesson.indicator}</span>
       </div>
     `;
     item.addEventListener("click", () => {
@@ -115,19 +115,26 @@ function renderLesson() {
   // Render Lesson Content Card
   const contentCard = document.getElementById("lesson-content-card");
   contentCard.innerHTML = `
-    <div class="lesson-header">
-      <span class="lesson-topic-indicator">${lesson.indicator}</span>
+    <div class="lesson-header-container">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+        <span class="lesson-topic-indicator">${lesson.indicator}</span>
+        <span class="difficulty-badge">Beginner 🟢</span>
+      </div>
       <h2 class="lesson-title-text">${lesson.title}</h2>
-      <p style="color: var(--text-muted); margin-top: 0.25rem;">${lesson.subtitle}</p>
+      <p style="color: #94a3b8; font-size: 1.1rem; max-width: 800px; margin-top: 12px; line-height: 1.6;">${lesson.subtitle}</p>
     </div>
     <div class="explanation-box">
       <div class="exp-panel tanglish">
-        <span class="exp-label">Tanglish Explanations</span>
-        <p class="exp-text">${lesson.tanglishExp}</p>
+        <span class="exp-label">
+          <span style="font-size: 1.2rem;">🎭</span> Tanglish
+        </span>
+        <div class="exp-text">${typeof formatCodeExamples === 'function' ? formatCodeExamples(lesson.tanglishExp) : lesson.tanglishExp}</div>
       </div>
       <div class="exp-panel english">
-        <span class="exp-label">English Explanations</span>
-        <p class="exp-text">${lesson.englishExp}</p>
+        <span class="exp-label">
+          <span style="font-size: 1.2rem;">📘</span> English
+        </span>
+        <div class="exp-text">${typeof formatCodeExamples === 'function' ? formatCodeExamples(lesson.englishExp) : lesson.englishExp}</div>
       </div>
     </div>
   `;
@@ -136,6 +143,7 @@ function renderLesson() {
   const codeEditor = document.getElementById("lesson-code-editor");
   if (codeEditor) {
     codeEditor.value = lesson.initialCode;
+    if (typeof updateSandboxHighlight === 'function') updateSandboxHighlight();
   }
   const filenameEl = document.getElementById("sandbox-filename");
   if (filenameEl) {
@@ -520,6 +528,7 @@ function resetPythonCode() {
   const codeEditor = document.getElementById("lesson-code-editor");
   if (codeEditor) {
     codeEditor.value = currentLesson.initialCode;
+    if (typeof updateSandboxHighlight === 'function') updateSandboxHighlight();
   }
 
   const terminalOutput = document.getElementById("terminal-output");
@@ -1314,6 +1323,83 @@ if (document.readyState === "loading") {
 } else {
   initDashboardWidgets();
 }
+
+// --- Syntax Highlighting & Code Examples Formatting ---
+function syntaxHighlight(code) {
+  if (!code) return "";
+  let hl = code.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  hl = hl.replace(/(\+|-|\*|\/|=|<|>|!)/g, '<span class="hl-operator">$1</span>');
+  hl = hl.replace(/(".*?"|'.*?')/g, '<span class="hl-string">$1</span>');
+  hl = hl.replace(/\b(\d+)\b/g, '<span class="hl-number">$1</span>');
+  hl = hl.replace(/\b(def|class|if|else|elif|for|while|import|from|return|print|and|or|not|in|True|False|None)\b/g, '<span class="hl-keyword">$1</span>');
+  hl = hl.replace(/\b([a-zA-Z_]\w*)\s*(?=\()/g, '<span class="hl-func">$1</span>');
+  hl = hl.replace(/(#.*)/g, '<span class="hl-comment">$1</span>');
+  return hl;
+}
+
+function formatCodeExamples(text) {
+  if (!text) return "";
+  return text.replace(/<code>(.*?)<\/code>/g, (match, code) => {
+    const lines = code.split('\\n');
+    let lineNums = '';
+    for(let i=1; i<=lines.length; i++) lineNums += i + '<br>';
+    const safeCode = code.replace(/'/g, "\\\\'").replace(/"/g, '&quot;');
+    return \`
+      <div class="premium-code-block">
+        <div class="premium-code-header">
+          <div class="window-dots">
+            <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+          </div>
+          <span class="lang-badge">Python</span>
+          <button class="btn-copy" onclick="navigator.clipboard.writeText('\${safeCode}')">Copy</button>
+        </div>
+        <div class="premium-code-body">
+          <div class="inline-line-numbers">\${lineNums}</div>
+          <div class="code-content">\${syntaxHighlight(code)}</div>
+        </div>
+      </div>
+    \`;
+  });
+}
+
+function updateSandboxHighlight() {
+  const editor = document.getElementById("lesson-code-editor");
+  const highlight = document.getElementById("lesson-code-highlight");
+  const lineNumbers = document.getElementById("sandbox-line-numbers");
+  if (!editor || !highlight || !lineNumbers) return;
+  const text = editor.value;
+  let hlText = syntaxHighlight(text);
+  if (text.length > 0 && text[text.length-1] === '\\n') {
+    hlText += '\\n';
+  }
+  highlight.innerHTML = hlText;
+  
+  const lines = text.split('\\n').length;
+  let lineNums = '';
+  for(let i=1; i<=lines; i++) lineNums += i + '<br>';
+  lineNumbers.innerHTML = lineNums;
+}
+
+// Attach event listeners for dual-layer sandbox syncing
+document.addEventListener("DOMContentLoaded", () => {
+  const sandboxEditor = document.getElementById("lesson-code-editor");
+  if (sandboxEditor) {
+    sandboxEditor.addEventListener("input", updateSandboxHighlight);
+    sandboxEditor.addEventListener("scroll", () => {
+      const highlight = document.getElementById("lesson-code-highlight");
+      const lineNumbers = document.getElementById("sandbox-line-numbers");
+      if (highlight) {
+        highlight.scrollTop = sandboxEditor.scrollTop;
+        highlight.scrollLeft = sandboxEditor.scrollLeft;
+      }
+      if (lineNumbers) {
+        lineNumbers.scrollTop = sandboxEditor.scrollTop;
+      }
+    });
+    // Init on load
+    updateSandboxHighlight();
+  }
+});
 
 
 
