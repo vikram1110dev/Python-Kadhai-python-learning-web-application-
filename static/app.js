@@ -1579,6 +1579,58 @@ function fireConfetti() {
   render();
 }
 
+/* ==================================================
+   Global Animation System Initialization
+   ================================================== */
+function initAnimations() {
+  // 1. Button Ripples
+  const buttons = document.querySelectorAll('.btn');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', function (e) {
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const circle = document.createElement('span');
+      circle.classList.add('ripple');
+      circle.style.left = `${x}px`;
+      circle.style.top = `${y}px`;
+
+      const radius = Math.max(btn.clientWidth, btn.clientHeight);
+      circle.style.width = circle.style.height = `${radius}px`;
+      circle.style.marginLeft = circle.style.marginTop = `-${radius / 2}px`;
+
+      this.appendChild(circle);
+      setTimeout(() => circle.remove(), 600);
+    });
+  });
+
+  // 2. Scroll Reveal Observer
+  const revealElements = document.querySelectorAll('.reveal');
+  const revealOptions = {
+    threshold: 0.1,
+    rootMargin: "0px 0px -50px 0px"
+  };
+
+  const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, revealOptions);
+
+  revealElements.forEach(el => {
+    revealObserver.observe(el);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", initAnimations);
+if (document.readyState === "complete" || document.readyState === "interactive") {
+  initAnimations();
+}
+
 
 
 
