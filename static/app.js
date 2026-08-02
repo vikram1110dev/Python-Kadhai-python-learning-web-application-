@@ -293,9 +293,11 @@ async function handleSendMessage() {
   chatbotInput.value = "";
 
   // Append typing indicator
+  // Append typing indicator
   const indicator = document.createElement("div");
   indicator.className = "chat-message bot typing-indicator-wrapper";
   indicator.innerHTML = `
+    <div class="chat-avatar bot-avatar">🤖</div>
     <div class="message-bubble">
       <div class="typing-indicator">
         <span class="typing-dot"></span>
@@ -305,7 +307,7 @@ async function handleSendMessage() {
     </div>
   `;
   chatbotMessages.appendChild(indicator);
-  chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+  chatbotMessages.scrollTo({ top: chatbotMessages.scrollHeight, behavior: 'smooth' });
 
   // Fetch response from Django chatbot API
   try {
@@ -324,21 +326,45 @@ async function handleSendMessage() {
   } catch (err) {
     console.error("Chat API error:", err);
     chatbotMessages.removeChild(indicator);
-    appendMessage("Aiyo! Chitti RAG memory error crash aayiduche! Python backend-a restart panni paarunga! 🤖🔴", "bot");
+    appendMessage("Aiyo! Chitti RAG memory error crash aayiduche! Python backend-a restart panni paarunga! ⚡", "bot");
+  }
+}
+
+function sendSuggested(text) {
+  const input = document.getElementById('chatbot-input');
+  if (input) {
+    input.value = text;
+    handleSendMessage();
+    const suggestions = document.getElementById('suggested-prompts');
+    if (suggestions) suggestions.style.display = 'none';
   }
 }
 
 function appendMessage(text, sender, source = null) {
   const msg = document.createElement("div");
   msg.className = `chat-message ${sender}`;
-  let content = `<div class="message-bubble">${text}`;
+  
+  let avatar = sender === 'bot' ? '<div class="chat-avatar bot-avatar">🤖</div>' : '<div class="chat-avatar user-avatar">👤</div>';
+  
+  // Basic markdown parsing for code blocks
+  let parsedText = text;
+  parsedText = parsedText.replace(/```python\\n([\\s\\S]*?)\\n```/g, '<code>$1</code>');
+  parsedText = parsedText.replace(/```([\\s\\S]*?)```/g, '<code>$1</code>');
+  parsedText = parsedText.replace(/\\*\\*(.*?)\\*\\*/g, '<b>$1</b>');
+
+  if (typeof formatCodeExamples === 'function') {
+    parsedText = formatCodeExamples(parsedText);
+  }
+
+  let content = `${avatar}<div class="message-bubble">${parsedText}`;
   if (source) {
-    content += `<div style="font-size: 0.72rem; color: #a78bfa; margin-top: 0.4rem; padding-top: 0.3rem; border-top: 1px solid rgba(255,255,255,0.1); font-weight: 600;">📚 Retrieved Context: ${source}</div>`;
+    content += `<div style="font-size: 0.72rem; color: #a78bfa; margin-top: 0.4rem; padding-top: 0.3rem; border-top: 1px solid rgba(255,255,255,0.1); font-weight: 600;">✨ Retrieved Context: ${source}</div>`;
   }
   content += `</div>`;
+  
   msg.innerHTML = content;
   chatbotMessages.appendChild(msg);
-  chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+  chatbotMessages.scrollTo({ top: chatbotMessages.scrollHeight, behavior: 'smooth' });
 }
 
 // Bind events
