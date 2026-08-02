@@ -34,8 +34,24 @@
         </nav>
       </div>
 
-      <!-- Right Actions -->
+      <!-- Right Actions (Gamification HUD) -->
       <div class="header-right">
+        <div class="gamification-hud hidden md:flex">
+          <div class="hud-item streak-hud" title="Current Streak">
+            <span class="hud-icon">🔥</span>
+            <span class="hud-text" id="hud-streak">0</span>
+          </div>
+          <div class="hud-item coins-hud" title="Total Coins">
+            <span class="hud-icon">🪙</span>
+            <span class="hud-text" id="hud-coins">0</span>
+          </div>
+          <div class="hud-item xp-hud" title="XP to Next Level">
+            <span class="hud-icon" style="color: var(--accent-primary);">⚡</span>
+            <div class="xp-bar-container">
+              <div class="xp-bar-fill" id="hud-xp-bar" style="width: 0%;"></div>
+            </div>
+          </div>
+        </div>
         <button class="btn btn-secondary" id="btn-open-menu" style="display: none;">⚙️ Options</button>
         <div class="user-avatar" title="User Profile">VB</div>
         <button class="mobile-menu-btn" id="btn-mobile-menu">☰</button>
@@ -352,6 +368,49 @@
           </div>
         </div>
 
+        <!-- Daily Missions Row -->
+        <div class="dashboard-card mb-12">
+          <h3 class="font-bold text-xl mb-6 flex justify-between items-center">
+            Daily Missions
+            <span class="badge badge-warning">Resets in 12h</span>
+          </h3>
+          <div class="missions-grid">
+            <div class="mission-card">
+              <div class="mission-icon">🎯</div>
+              <div class="mission-content">
+                <div class="mission-title">Perfect Score</div>
+                <div class="mission-desc">Get 100% on any quiz</div>
+              </div>
+              <div class="mission-progress">
+                <div class="progress-ring-container">
+                  <svg class="progress-ring" width="50" height="50">
+                    <circle class="progress-ring-bg" cx="25" cy="25" r="20"></circle>
+                    <circle class="progress-ring-circle" cx="25" cy="25" r="20" style="stroke-dasharray: 125.6; stroke-dashoffset: 125.6;"></circle>
+                  </svg>
+                  <span class="progress-ring-text">0/1</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="mission-card completed">
+              <div class="mission-icon">📚</div>
+              <div class="mission-content">
+                <div class="mission-title">Avid Learner</div>
+                <div class="mission-desc">Complete 3 Lessons</div>
+              </div>
+              <div class="mission-progress">
+                <div class="progress-ring-container">
+                  <svg class="progress-ring" width="50" height="50">
+                    <circle class="progress-ring-bg" cx="25" cy="25" r="20"></circle>
+                    <circle class="progress-ring-circle" cx="25" cy="25" r="20" style="stroke-dasharray: 125.6; stroke-dashoffset: 0;"></circle>
+                  </svg>
+                  <span class="progress-ring-text">3/3</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Middle Row: Charts and Achievements -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
           
@@ -515,6 +574,19 @@
 
   <!-- Pyodide WebAssembly Python Engine -->
   <script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
+
+  <!-- Level Up Modal Animation -->
+  <div class="level-up-overlay" id="level-up-modal">
+    <div class="level-up-content">
+      <div class="level-up-badge">
+        <span class="level-star">⭐</span>
+        <h2 id="new-level-text">Level 2</h2>
+      </div>
+      <h1 class="level-up-title">LEVEL UP!</h1>
+      <p class="level-up-desc">You're on fire! Keep learning Python to reach the next rank.</p>
+      <button class="btn btn-primary mt-6 px-8 py-3" onclick="document.getElementById('level-up-modal').classList.remove('active')">Continue</button>
+    </div>
+  </div>
 
   <!-- Include App Logic -->
   <script src="{% static 'app.js' %}?v=6.0"></script>

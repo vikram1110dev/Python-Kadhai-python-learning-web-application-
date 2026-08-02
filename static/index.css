@@ -1673,3 +1673,204 @@ main {
   color: var(--text-muted);
   line-height: 1.2;
 }
+
+/* ==================================================
+   Gamification Additions
+   ================================================== */
+
+/* Navbar Gamification HUD */
+.gamification-hud {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-right: var(--space-4);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 0.3rem 0.8rem;
+  border-radius: var(--radius-full);
+}
+.hud-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+.hud-icon {
+  font-size: 1.1rem;
+}
+.streak-hud .hud-text { color: var(--accent-warning); }
+.coins-hud .hud-text { color: #fbbf24; }
+.xp-bar-container {
+  width: 60px;
+  height: 8px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-left: 0.2rem;
+}
+.xp-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-primary), #818cf8);
+  border-radius: 4px;
+  transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Daily Missions Grid */
+.missions-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+.mission-card {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-xl);
+  padding: var(--space-4);
+  gap: var(--space-4);
+  transition: all 0.2s;
+}
+.mission-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  transform: translateX(4px);
+}
+.mission-card.completed {
+  border-color: rgba(23, 201, 100, 0.3);
+  background: rgba(23, 201, 100, 0.03);
+}
+.mission-icon {
+  font-size: 2rem;
+  background: rgba(255,255,255,0.05);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mission-card.completed .mission-icon {
+  background: rgba(23, 201, 100, 0.1);
+}
+.mission-content {
+  flex: 1;
+}
+.mission-title {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--text-primary);
+}
+.mission-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.mission-progress {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Progress Rings */
+.progress-ring-container {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.progress-ring {
+  transform: rotate(-90deg);
+}
+.progress-ring-bg {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.1);
+  stroke-width: 4;
+}
+.progress-ring-circle {
+  fill: none;
+  stroke: var(--accent-primary);
+  stroke-width: 4;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.mission-card.completed .progress-ring-circle {
+  stroke: var(--accent-success);
+}
+.progress-ring-text {
+  position: absolute;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Level Up Modal Animation */
+.level-up-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(10px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+.level-up-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+.level-up-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transform: scale(0.8) translateY(30px);
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.level-up-overlay.active .level-up-content {
+  transform: scale(1) translateY(0);
+}
+.level-up-badge {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 40px rgba(245, 158, 11, 0.5);
+  margin-bottom: var(--space-6);
+  border: 4px solid #fff;
+}
+.level-star {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  font-size: 2.5rem;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
+  animation: float 2s infinite ease-in-out;
+}
+.level-up-badge h2 {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+.level-up-title {
+  font-size: 3rem;
+  font-weight: 900;
+  background: linear-gradient(to right, #fde68a, #f59e0b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: var(--space-2);
+}
+.level-up-desc {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  max-width: 300px;
+}

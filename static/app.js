@@ -1381,7 +1381,10 @@ function renderDashboardStats() {
   const streakEl = document.getElementById("dash-streak");
   const lessonsEl = document.getElementById("dash-lessons");
   
-  if (!xpEl) return;
+  // Gamification HUD elements
+  const hudStreak = document.getElementById("hud-streak");
+  const hudCoins = document.getElementById("hud-coins");
+  const hudXpBar = document.getElementById("hud-xp-bar");
   
   loadStreakData();
   const currentStreak = streakData.count || 0;
@@ -1396,10 +1399,44 @@ function renderDashboardStats() {
   }
   
   const totalXp = completedTopics * 100 + currentStreak * 50;
+  const totalCoins = completedTopics * 10 + currentStreak * 5;
+  
+  // Level Calculation (500 XP per level)
+  const currentLevel = Math.floor(totalXp / 500) + 1;
+  const xpIntoLevel = totalXp % 500;
+  const xpPercent = (xpIntoLevel / 500) * 100;
+  
+  // Check for level up
+  const savedLevel = localStorage.getItem('python_kadhai_level') || 1;
+  if (currentLevel > parseInt(savedLevel)) {
+    localStorage.setItem('python_kadhai_level', currentLevel);
+    triggerLevelUp(currentLevel);
+  } else if (!localStorage.getItem('python_kadhai_level')) {
+    localStorage.setItem('python_kadhai_level', currentLevel);
+  }
+  
+  // Update HUD
+  if (hudStreak) hudStreak.textContent = currentStreak;
+  if (hudCoins) hudCoins.textContent = totalCoins;
+  if (hudXpBar) hudXpBar.style.width = `${xpPercent}%`;
+
+  if (!xpEl) return;
   
   xpEl.textContent = totalXp;
   streakEl.textContent = `${currentStreak} Days`;
   lessonsEl.textContent = `${completedTopics} / ${totalTopics}`;
+}
+
+function triggerLevelUp(level) {
+  const modal = document.getElementById('level-up-modal');
+  const levelText = document.getElementById('new-level-text');
+  if (modal && levelText) {
+    levelText.textContent = `Level ${level}`;
+    modal.classList.add('active');
+    setTimeout(() => {
+      if(typeof fireConfetti === 'function') fireConfetti();
+    }, 300);
+  }
 }
 
 if (document.readyState === "loading") {
