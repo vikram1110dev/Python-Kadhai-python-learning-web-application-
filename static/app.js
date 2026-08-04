@@ -1391,7 +1391,7 @@ function renderDashboardStats() {
   
   let completedTopics = 0;
   let totalTopics = 0;
-  for (const t of topicsData) {
+  for (const t of lessons) {
     if (t.type === 'lesson') {
       totalTopics++;
       if (userProgress[t.id]) completedTopics++;
@@ -1465,21 +1465,21 @@ function formatCodeExamples(text) {
     let lineNums = '';
     for(let i=1; i<=lines.length; i++) lineNums += i + '<br>';
     const safeCode = code.replace(/'/g, "\\\\'").replace(/"/g, '&quot;');
-    return \`
+    return `
       <div class="premium-code-block">
         <div class="premium-code-header">
           <div class="window-dots">
             <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
           </div>
           <span class="lang-badge">Python</span>
-          <button class="btn-copy" onclick="navigator.clipboard.writeText('\${safeCode}')">Copy</button>
+          <button class="btn-copy" onclick="navigator.clipboard.writeText('${safeCode}')">Copy</button>
         </div>
         <div class="premium-code-body">
-          <div class="inline-line-numbers">\${lineNums}</div>
-          <div class="code-content">\${syntaxHighlight(code)}</div>
+          <div class="inline-line-numbers">${lineNums}</div>
+          <div class="code-content">${syntaxHighlight(code)}</div>
         </div>
       </div>
-    \`;
+    `;
   });
 }
 
