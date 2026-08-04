@@ -128,13 +128,13 @@ function renderLesson() {
         <span class="exp-label">
           <span style="font-size: 1.2rem;">🎭</span> Tanglish
         </span>
-        <div class="exp-text">${typeof formatCodeExamples === 'function' ? formatCodeExamples(lesson.tanglishExp) : lesson.tanglishExp}</div>
+        <div class="exp-text">${window.DOMPurify ? DOMPurify.sanitize(typeof formatCodeExamples === 'function' ? formatCodeExamples(lesson.tanglishExp) : lesson.tanglishExp) : (typeof formatCodeExamples === 'function' ? formatCodeExamples(lesson.tanglishExp) : lesson.tanglishExp)}</div>
       </div>
       <div class="exp-panel english">
         <span class="exp-label">
           <span style="font-size: 1.2rem;">📘</span> English
         </span>
-        <div class="exp-text">${typeof formatCodeExamples === 'function' ? formatCodeExamples(lesson.englishExp) : lesson.englishExp}</div>
+        <div class="exp-text">${window.DOMPurify ? DOMPurify.sanitize(typeof formatCodeExamples === 'function' ? formatCodeExamples(lesson.englishExp) : lesson.englishExp) : (typeof formatCodeExamples === 'function' ? formatCodeExamples(lesson.englishExp) : lesson.englishExp)}</div>
       </div>
     </div>
   `;
@@ -226,7 +226,7 @@ function handleQuizSubmission(selectedIndex, event) {
 
   feedbackContainer.innerHTML = `
     <div class="result-headline ${isCorrect ? 'success' : 'error'}">${memeInfo.headline}</div>
-    <div style="margin: 0.5rem 0 1.5rem 0; font-size: 1.1rem; color: #94a3b8; max-width: 600px;">${memeInfo.text}</div>
+    <div style="margin: 0.5rem 0 1.5rem 0; font-size: 1.1rem; color: #94a3b8; max-width: 600px;">${window.DOMPurify ? DOMPurify.sanitize(memeInfo.text) : memeInfo.text}</div>
     <div style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: var(--radius-lg); margin-bottom: 1.5rem;">
       ${memeInfo.svg}
     </div>
@@ -987,33 +987,69 @@ function renderMonthlyAnalytics() {
   const peakStreakEl = document.getElementById("monthly-peak-streak");
   if (peakStreakEl) peakStreakEl.textContent = `${Math.max(streakData.count || 1, activeDaysCount)} Days`;
 
-  // Populate Calendar Grid
-  const calendarGrid = document.getElementById("monthly-calendar-grid");
-  if (calendarGrid) {
-    calendarGrid.innerHTML = "";
+  // Populate Heatmap Grid (Last 365 Days)
+  const heatmapGrid = document.getElementById("heatmap-grid");
+  if (heatmapGrid) {
+    heatmapGrid.innerHTML = "";
 
-    // Empty offset padding cells
-    for (let i = 0; i < firstDayOfWeek; i++) {
-      const emptyCell = document.createElement("div");
-      emptyCell.className = "calendar-day-cell empty";
-      calendarGrid.appendChild(emptyCell);
+    const daysToRender = 365;
+    const endDate = new Date();
+    // Calculate start date and align to Sunday (start of column)
+    const startDate = new Date(endDate);
+    startDate.setDate(endDate.getDate() - daysToRender + 1);
+    while (startDate.getDay() !== 0) {
+      startDate.setDate(startDate.getDate() - 1);
+    }
+    
+    const timeDiff = endDate.getTime() - startDate.getTime();
+    const totalGridDays = Math.floor(timeDiff / (1000 * 3600 * 24)) + 1;
+
+    for (let i = 0; i < totalGridDays; i++) {
+      const d = new Date(startDate.getTime());
+      d.setDate(startDate.getDate() + i);
+      const dayStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+      const isActive = activityLog[dayStr] === true;
+      
+      const cell = document.createElement("div");
+      cell.className = `heatmap-cell ${isActive ? 'level-4' : 'level-0'}`;
+      cell.setAttribute("title", `${monthNames[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()} ${isActive ? '(Active 🔥)' : '(No Activity)'}`);
+      heatmapGrid.appendChild(cell);
     }
 
-    // Day cells (1..N)
-    for (let day = 1; day <= daysInMonth; day++) {
-      const dayStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-      const isActive = activityLog[dayStr] === true;
-      const isToday = day === todayDateNum;
+    // Populate Month Labels (X-axis)
+    const heatmapLabelsX = document.getElementById("heatmap-labels-x");
+    if (heatmapLabelsX) {
+      heatmapLabelsX.innerHTML = "";
+      const shortMonthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      let lastMonth = -1;
 
-      const dayCell = document.createElement("div");
-      dayCell.className = `calendar-day-cell ${isActive ? 'active-day' : ''} ${isToday ? 'today' : ''}`;
-      dayCell.setAttribute("title", `${monthNames[month]} ${day}, ${year} ${isActive ? '(Active 🔥)' : ''}`);
+      for (let i = 0; i < totalGridDays; i += 7) {
+        const d = new Date(startDate.getTime());
+        d.setDate(startDate.getDate() + i);
+        
+        // Check Wednesday to determine the column's primary month
+        const midWeek = new Date(d.getTime());
+        midWeek.setDate(d.getDate() + 3);
+        const colMonth = midWeek.getMonth();
+        
+        if (colMonth !== lastMonth) {
+          lastMonth = colMonth;
+          const colIndex = i / 7;
+          const label = document.createElement("span");
+          label.className = "heatmap-month-label";
+          label.textContent = shortMonthNames[colMonth];
+          label.style.left = `${colIndex * 16}px`; // 12px width + 4px gap = 16px per column
+          heatmapLabelsX.appendChild(label);
+        }
+      }
+    }
 
-      dayCell.innerHTML = `
-        <span>${day}</span>
-        ${isActive ? '<span class="calendar-day-icon">🔥</span>' : ''}
-      `;
-      calendarGrid.appendChild(dayCell);
+    // Auto-scroll to the right to see the latest days
+    const scrollContainer = document.querySelector('.heatmap-scroll-container');
+    if (scrollContainer) {
+      setTimeout(() => {
+        scrollContainer.scrollLeft = scrollContainer.scrollWidth;
+      }, 100);
     }
   }
 
@@ -1374,6 +1410,7 @@ function initDashboardWidgets() {
   renderStreakWidget();
   updateUserRank();
   renderDashboardStats();
+  renderMonthlyAnalytics();
 }
 
 function renderDashboardStats() {

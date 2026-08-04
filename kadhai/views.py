@@ -4,6 +4,7 @@ import random
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.core.cache import cache
 from .models import Lesson, Quiz, ChatbotResponse
 from .rag_engine import RAGEngine
 
@@ -54,6 +55,15 @@ def get_lessons_api(request):
 def chat_api(request):
     if request.method != 'POST':
         return JsonResponse({"error": "POST method required"}, status=405)
+
+    client_ip = request.META.get('REMOTE_ADDR', 'unknown')
+    cache_key = f"rate_limit_chat_{client_ip}"
+    requests_count = cache.get(cache_key, 0)
+    
+    if requests_count >= 10:
+        return JsonResponse({"reply": "Too many requests. Please wait a minute boss! ⏳", "source": None}, status=429)
+        
+    cache.set(cache_key, requests_count + 1, timeout=60)
 
     try:
         data = json.loads(request.body.decode('utf-8'))

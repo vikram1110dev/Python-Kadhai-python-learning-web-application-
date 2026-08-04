@@ -9,7 +9,7 @@ class Lesson(models.Model):
     english_exp = models.TextField(help_text="English explanation with HTML formatting")
     initial_code = models.TextField(blank=True, default='')
     expected_output = models.TextField(blank=True, default='')
-    order = models.PositiveIntegerField(default=1)
+    order = models.PositiveIntegerField(default=1, db_index=True)
 
     class Meta:
         ordering = ['order', 'id']

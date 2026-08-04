@@ -1441,23 +1441,26 @@ main {
 .streak-meme-headline { font-weight: 700; font-size: var(--text-lg); color: var(--accent-warning); margin-bottom: var(--space-1); }
 .streak-meme-text { color: var(--text-secondary); font-size: var(--text-sm); }
 
-/* Calendar */
-.calendar-wrapper { margin-top: var(--space-6); }
-.calendar-days-header {
-  display: grid; grid-template-columns: repeat(7, 1fr); text-align: center;
-  font-size: var(--text-xs); color: var(--text-tertiary); margin-bottom: var(--space-2);
-}
-.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
-.calendar-day-cell {
-  aspect-ratio: 1; background: var(--bg-main); border: 1px solid transparent;
-  border-radius: var(--radius-sm); display: flex; flex-direction: column;
-  align-items: center; justify-content: center; font-size: var(--text-xs); color: var(--text-secondary);
-  position: relative; transition: all var(--transition-fast);
-}
-.calendar-day-cell:hover:not(.empty) { background: var(--bg-surface-elevated); border-color: var(--border-subtle); }
-.calendar-day-cell.active-day { background: rgba(23, 201, 100, 0.05); color: var(--accent-success); border: 1px solid rgba(23, 201, 100, 0.2); }
-.calendar-day-cell.today { border: 1px solid var(--accent-warning); color: #fff; }
-.calendar-day-icon { font-size: 0.6rem; position: absolute; bottom: 2px; }
+/* GitHub Style Heatmap */
+.heatmap-wrapper { margin-top: var(--space-6); display: flex; flex-direction: column; gap: 8px; }
+.heatmap-scroll-container { display: flex; gap: 4px; overflow-x: auto; padding-bottom: 8px; }
+.heatmap-scroll-container::-webkit-scrollbar { height: 6px; }
+.heatmap-scroll-container::-webkit-scrollbar-thumb { background: var(--border-subtle); border-radius: 4px; }
+.heatmap-labels-y { display: grid; grid-template-rows: repeat(7, 12px); gap: 4px; font-size: 10px; color: var(--text-tertiary); text-align: right; padding-right: 4px; line-height: 12px; }
+.heatmap-labels-x { font-size: 10px; color: var(--text-tertiary); margin-bottom: 4px; }
+.heatmap-month-label { position: absolute; top: 0; }
+.heatmap-labels-y span:nth-child(1) { grid-row: 2; } /* Mon */
+.heatmap-labels-y span:nth-child(2) { grid-row: 4; } /* Wed */
+.heatmap-labels-y span:nth-child(3) { grid-row: 6; } /* Fri */
+.heatmap-grid { display: grid; grid-auto-flow: column; grid-template-rows: repeat(7, 12px); gap: 4px; }
+.heatmap-cell { width: 12px; height: 12px; background: var(--bg-surface-elevated); border-radius: 2px; transition: all 0.2s; border: 1px solid rgba(255, 255, 255, 0.02); }
+.heatmap-cell:hover { opacity: 0.8; border-color: var(--border-subtle); cursor: pointer; }
+.heatmap-cell.level-0 { background: var(--bg-surface-elevated); }
+.heatmap-cell.level-1 { background: #0e4429; border-color: rgba(255,255,255,0.05); }
+.heatmap-cell.level-2 { background: #006d32; border-color: rgba(255,255,255,0.05); }
+.heatmap-cell.level-3 { background: #26a641; border-color: rgba(255,255,255,0.05); }
+.heatmap-cell.level-4 { background: #39d353; border-color: rgba(255,255,255,0.05); }
+.heatmap-legend { display: flex; align-items: center; justify-content: flex-end; gap: 4px; font-size: 11px; color: var(--text-tertiary); margin-top: 4px; }
 
 /* Sections */
 .section-divider {

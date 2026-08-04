@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{% static 'index.css' %}?v=8.0">
+  <link rel="stylesheet" href="{% static 'index.css' %}?v=8.2">
 </head>
 
 <body>
@@ -223,13 +223,27 @@
               </div>
             </div>
 
-            <!-- Monthly Activity Calendar Grid -->
-            <div class="calendar-wrapper">
-              <div class="calendar-days-header">
-                <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
+            <!-- GitHub Style Heatmap Grid -->
+            <div class="heatmap-wrapper">
+              <div class="heatmap-scroll-container">
+                <div class="heatmap-labels-y" style="margin-top: 18px;">
+                  <span>Mon</span><span>Wed</span><span>Fri</span>
+                </div>
+                <div style="display: flex; flex-direction: column;">
+                  <div class="heatmap-labels-x" id="heatmap-labels-x" style="position: relative; height: 18px; width: 100%;"></div>
+                  <div class="heatmap-grid" id="heatmap-grid">
+                    <!-- Populated dynamically via app.js -->
+                  </div>
+                </div>
               </div>
-              <div class="calendar-grid" id="monthly-calendar-grid">
-                <!-- Populated dynamically via app.js -->
+              <div class="heatmap-legend">
+                <span>Less</span>
+                <div class="heatmap-cell level-0"></div>
+                <div class="heatmap-cell level-1"></div>
+                <div class="heatmap-cell level-2"></div>
+                <div class="heatmap-cell level-3"></div>
+                <div class="heatmap-cell level-4"></div>
+                <span>More</span>
               </div>
             </div>
 
@@ -627,6 +641,9 @@
     </div>
   </footer>
 
+  <!-- DOMPurify for XSS Protection -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
+
   <!-- Pyodide WebAssembly Python Engine -->
   <script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
 
@@ -644,6 +661,6 @@
   </div>
 
   <!-- Include App Logic -->
-  <script src="{% static 'app.js' %}?v=8.0"></script>
+  <script src="{% static 'app.js' %}?v=8.2"></script>
 </body>
 </html>
