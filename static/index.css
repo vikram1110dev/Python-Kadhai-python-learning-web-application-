@@ -2276,3 +2276,9 @@ main {
   .modern-footer { padding: var(--space-8) var(--space-4) var(--space-4); }
   .footer-logo .logo-text { font-size: 1.25rem; }
 }
+
+/* Language Toggle Buttons */
+.lang-toggle-group { display: flex; gap: 4px; background: var(--bg-surface-elevated); padding: 4px; border-radius: 8px; border: 1px solid var(--border-subtle); }
+.lang-btn { background: transparent; color: var(--text-secondary); border: none; padding: 4px 12px; font-size: 0.9rem; font-weight: 500; border-radius: 6px; cursor: pointer; transition: all 0.2s ease; }
+.lang-btn:hover { color: var(--text-primary); background: rgba(255, 255, 255, 0.05); }
+.lang-btn.active { background: var(--color-primary); color: #fff; box-shadow: 0 0 10px rgba(16, 185, 129, 0.3); }

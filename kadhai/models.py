@@ -4,10 +4,11 @@ class Lesson(models.Model):
     topic_id = models.CharField(max_length=50, unique=True, help_text="Unique identifier e.g. 'variables'")
     title = models.CharField(max_length=200)
     subtitle = models.CharField(max_length=200)
-    indicator = models.CharField(max_length=50, help_text="e.g. 'Topic 1'")
+    indicator = models.CharField(max_length=20, default="BEGINNER", help_text="e.g., BEGINNER, INTERMEDIATE")
     tanglish_exp = models.TextField(help_text="Tanglish explanation with HTML formatting")
     english_exp = models.TextField(help_text="English explanation with HTML formatting")
-    initial_code = models.TextField(blank=True, default='')
+    tamil_exp = models.TextField(default="", blank=True, help_text="Pure Tamil explanation with HTML formatting")
+    initial_code = models.TextField(blank=True, default='', help_text="Starting Python code snippet")
     expected_output = models.TextField(blank=True, default='')
     order = models.PositiveIntegerField(default=1, db_index=True)
 

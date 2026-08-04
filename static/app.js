@@ -123,20 +123,23 @@ function renderLesson() {
       <h2 class="lesson-title-text">${lesson.title}</h2>
       <p style="color: #94a3b8; font-size: 1.1rem; max-width: 800px; margin-top: 12px; line-height: 1.6;">${lesson.subtitle}</p>
     </div>
-    <div class="explanation-box">
-      <div class="exp-panel tanglish">
-        <span class="exp-label">
-          <span style="font-size: 1.2rem;">🎭</span> Tanglish
-        </span>
-        <div class="exp-text">${window.DOMPurify ? DOMPurify.sanitize(typeof formatCodeExamples === 'function' ? formatCodeExamples(lesson.tanglishExp) : lesson.tanglishExp) : (typeof formatCodeExamples === 'function' ? formatCodeExamples(lesson.tanglishExp) : lesson.tanglishExp)}</div>
+      <div class="explanation-box" style="display: block;">
+        <div class="exp-panel" style="width: 100%;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 10px;">
+            <span class="exp-label" id="active-lang-icon" style="margin-bottom: 0;">
+              <span style="font-size: 1.2rem;">🎭</span> Tanglish
+            </span>
+            <div class="lang-toggle-group">
+              <button class="lang-btn active" onclick="switchLanguage('tanglish')">Tanglish</button>
+              <button class="lang-btn" onclick="switchLanguage('english')">English</button>
+              <button class="lang-btn" onclick="switchLanguage('tamil')">தமிழ்</button>
+            </div>
+          </div>
+          <div class="exp-text" id="active-lang-content">
+            ${window.DOMPurify ? DOMPurify.sanitize(typeof formatCodeExamples === 'function' ? formatCodeExamples(lesson.tanglishExp) : lesson.tanglishExp) : (typeof formatCodeExamples === 'function' ? formatCodeExamples(lesson.tanglishExp) : lesson.tanglishExp)}
+          </div>
+        </div>
       </div>
-      <div class="exp-panel english">
-        <span class="exp-label">
-          <span style="font-size: 1.2rem;">📘</span> English
-        </span>
-        <div class="exp-text">${window.DOMPurify ? DOMPurify.sanitize(typeof formatCodeExamples === 'function' ? formatCodeExamples(lesson.englishExp) : lesson.englishExp) : (typeof formatCodeExamples === 'function' ? formatCodeExamples(lesson.englishExp) : lesson.englishExp)}</div>
-      </div>
-    </div>
   `;
 
   // Set Code Editor values
@@ -1671,3 +1674,34 @@ if (document.readyState === "complete" || document.readyState === "interactive")
 
 
 
+
+/* ==================================================
+   Language Toggle System
+   ================================================== */
+window.switchLanguage = function(lang) {
+  if (lessons.length === 0) return;
+  const lesson = lessons[currentLessonIndex];
+  
+  const contentEl = document.getElementById('active-lang-content');
+  const iconEl = document.getElementById('active-lang-icon');
+  const buttons = document.querySelectorAll('.lang-btn');
+  
+  buttons.forEach(btn => btn.classList.remove('active'));
+  
+  let rawHtml = '';
+  if (lang === 'tanglish') {
+    rawHtml = lesson.tanglishExp;
+    iconEl.innerHTML = '<span style="font-size: 1.2rem;">🎭</span> Tanglish';
+    buttons[0].classList.add('active');
+  } else if (lang === 'english') {
+    rawHtml = lesson.englishExp;
+    iconEl.innerHTML = '<span style="font-size: 1.2rem;">📘</span> English';
+    buttons[1].classList.add('active');
+  } else if (lang === 'tamil') {
+    rawHtml = lesson.tamilExp || '<em>(தமிழ் விளக்கம் விரைவில் புதுப்பிக்கப்படும்)</em>';
+    iconEl.innerHTML = '<span style="font-size: 1.2rem;">🏛️</span> தமிழ்';
+    buttons[2].classList.add('active');
+  }
+
+  contentEl.innerHTML = window.DOMPurify ? DOMPurify.sanitize(typeof formatCodeExamples === 'function' ? formatCodeExamples(rawHtml) : rawHtml) : (typeof formatCodeExamples === 'function' ? formatCodeExamples(rawHtml) : rawHtml);
+}

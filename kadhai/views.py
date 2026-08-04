@@ -23,6 +23,7 @@ def get_lessons_api(request):
             "indicator": lesson.indicator,
             "tanglishExp": lesson.tanglish_exp,
             "englishExp": lesson.english_exp,
+            "tamilExp": lesson.tamil_exp,
             "initialCode": lesson.initial_code,
             "expectedOutput": lesson.expected_output,
         }
