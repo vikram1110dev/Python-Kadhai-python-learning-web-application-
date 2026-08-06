@@ -1,0 +1,176 @@
+      <!-- View Section: Home / Dashboard -->
+      <section class="view-section active" id="view-home">
+
+        <div class="hero-wrapper mb-12">
+          <!-- Left Text Content -->
+          <div class="hero-text-content">
+            
+            <h1 class="text-gradient-vibrant mb-4" style="font-size: clamp(2.5rem, 5vw, 4.5rem);">Code like a Pro.<br>Laugh like a Boss.</h1>
+            <p class="text-muted text-lg max-w-2xl mb-6">
+              Learn Python using Tanglish, English, and epic Tamil Memes. 
+              No boring lectures—just pure comedy and real coding skills.
+            </p>
+            
+            <div class="flex flex-col md:flex-row gap-6 items-start md:items-center">
+              <button class="btn btn-accent text-lg py-4 px-8" id="btn-start-now">Arambikalaama? (Start Now)</button>
+              
+              <div class="hero-stats">
+                <div class="hero-avatars">
+                  <div class="hero-avatar">👨‍💻</div>
+                  <div class="hero-avatar">👩‍🎓</div>
+                  <div class="hero-avatar">👨‍🔧</div>
+                  <div class="hero-avatar">🚀</div>
+                </div>
+                <div class="text-xs text-muted">
+                  <span class="font-bold text-primary">10,000+</span><br>
+                  Tamil Developers
+                </div>
+              </div>
+            </div>
+            
+            <div class="scroll-indicator">
+              <span>Scroll to explore</span>
+              <span>↓</span>
+            </div>
+          </div>
+
+          <!-- Right Illustration Area -->
+          <div class="hero-illustration float-animation hidden lg:flex" style="display: flex;">
+            <div class="hero-bg-mesh"></div>
+            
+            <div class="floating-shape shape-1"></div>
+            <div class="floating-shape shape-2"></div>
+            <div class="floating-shape shape-3"></div>
+
+            <div class="mock-editor">
+              <div class="mock-header">
+                <div class="window-dots">
+                  <span class="dot red"></span>
+                  <span class="dot yellow"></span>
+                  <span class="dot green"></span>
+                </div>
+                <span class="text-xs text-tertiary font-mono">main.py</span>
+              </div>
+              <div class="mock-body">
+                <div><span class="code-keyword">def</span> <span class="code-func">hello_world</span>():</div>
+                <div class="ml-4"><span class="code-keyword">print</span>(<span class="code-string">"Thalapathy entry da!"</span>)</div>
+                <div class="mt-4"><span class="code-keyword">if</span> __name__ == <span class="code-string">"__main__"</span>:</div>
+                <div class="ml-4"><span class="code-func">hello_world</span>()</div>
+              </div>
+              
+              <!-- Overlapping Meme Mock -->
+              <div class="mock-meme">
+                <div class="mock-meme-img">😎</div>
+                <div class="text-xs text-center font-bold mt-2">Code executed!</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dashboard Analytics & Streak Row -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+          <!-- Daily Streak Motivation Card -->
+          <div class="card">
+            <div class="flex justify-between items-start mb-6">
+              <div class="flex gap-4 items-center">
+                <span class="text-4xl">🔥</span>
+                <div>
+                  <h3 class="font-bold text-2xl"><span id="streak-count-display">1</span> Day Streak!</h3>
+                  <p class="text-sm text-muted mt-1" id="streak-status-text">Keep your streak alive by practicing Python daily!</p>
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-warning w-full py-4 mt-2 font-bold" style="background: var(--accent-warning); color: #fff; border:none;" id="btn-claim-streak">🔥 Claim Today's Streak</button>
+            
+            <div class="streak-meme-box" id="streak-meme-box">
+              <!-- Populated dynamically via app.js -->
+            </div>
+
+            <div class="ranking-box" id="user-ranking-box">
+              <!-- Populated dynamically via app.js -->
+            </div>
+          </div>
+
+          <!-- Monthly Streak Analytics Card -->
+          <div class="card">
+            <div class="flex justify-between items-start mb-6">
+              <div>
+                <h3 class="font-bold text-xl mb-2">📅 Monthly Activity</h3>
+                <span class="badge badge-accent" id="monthly-month-name">July 2026</span>
+              </div>
+              <span class="badge badge-warning" id="monthly-consistency-badge">0% Consistency</span>
+            </div>
+
+            <!-- Key Monthly Metrics Row -->
+            <div class="grid grid-cols-3 gap-4 p-4 bg-surface-elevated rounded-md border border-subtle mb-6" style="background: var(--bg-surface-elevated); border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+              <div class="flex-col text-center">
+                <span class="text-xl mb-1">⚡</span>
+                <span class="font-bold text-lg" id="monthly-active-days">0 / 31</span>
+                <span class="text-xs text-muted">Active</span>
+              </div>
+              <div class="flex-col text-center">
+                <span class="text-xl mb-1">🎯</span>
+                <span class="font-bold text-lg" id="monthly-score-percent">0%</span>
+                <span class="text-xs text-muted">Consistency</span>
+              </div>
+              <div class="flex-col text-center">
+                <span class="text-xl mb-1">🏆</span>
+                <span class="font-bold text-lg" id="monthly-peak-streak">1 Day</span>
+                <span class="text-xs text-muted">Peak</span>
+              </div>
+            </div>
+
+            <!-- GitHub Style Heatmap Grid -->
+            <div class="heatmap-wrapper">
+              <div class="heatmap-scroll-container">
+                <div class="heatmap-labels-y" style="margin-top: 18px;">
+                  <span>Mon</span><span>Wed</span><span>Fri</span>
+                </div>
+                <div style="display: flex; flex-direction: column;">
+                  <div class="heatmap-labels-x" id="heatmap-labels-x" style="position: relative; height: 18px; width: 100%;"></div>
+                  <div class="heatmap-grid" id="heatmap-grid">
+                    <!-- Populated dynamically via app.js -->
+                  </div>
+                </div>
+              </div>
+              <div class="heatmap-legend">
+                <span>Less</span>
+                <div class="heatmap-cell level-0"></div>
+                <div class="heatmap-cell level-1"></div>
+                <div class="heatmap-cell level-2"></div>
+                <div class="heatmap-cell level-3"></div>
+                <div class="heatmap-cell level-4"></div>
+                <span>More</span>
+              </div>
+            </div>
+
+            <div class="streak-meme-box mt-6" id="monthly-meme-box">
+              <!-- Populated dynamically via app.js -->
+            </div>
+          </div>
+        </div>
+
+        <div class="section-divider">
+          <div class="text-center mb-12">
+            <span class="badge badge-accent mb-2">Platform Features</span>
+            <h2 class="text-3xl md:text-4xl font-bold">Why Learn With Us?</h2>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="feature-card reveal slide-up hover-lift">
+              <div class="feature-icon-wrapper">🚀</div>
+              <h3 class="font-bold text-xl mb-3">Tanglish + Memes</h3>
+              <p class="text-sm text-muted">Read explanations that match how you speak with your friends. Code concepts mapped directly to classic comedy scenes.</p>
+            </div>
+            <div class="feature-card reveal slide-up hover-lift" style="transition-delay: 0.1s;">
+              <div class="feature-icon-wrapper">💡</div>
+              <h3 class="font-bold text-xl mb-3">Simple Lessons</h3>
+              <p class="text-sm text-muted">Simple Python concepts illustrated visually. No complex environments to setup, straight-to-the-point examples.</p>
+            </div>
+            <div class="feature-card reveal slide-up hover-lift" style="transition-delay: 0.2s;">
+              <div class="feature-icon-wrapper">✨</div>
+              <h3 class="font-bold text-xl mb-3">Interactive Quizzes</h3>
+              <p class="text-sm text-muted">Solve checkpoints to unlock meme reactions. Laugh while you learn, retry until you get it perfect!</p>
+            </div>
+          </div>
+        </div>
+      </section>

@@ -1,0 +1,31 @@
+  <!-- Floating Chatbot Widget (Chitti) -->
+  <div class="chatbot-container" id="chatbot-container">
+    <button class="chatbot-toggle-btn" id="chatbot-toggle-btn">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
+    </button>
+    <div class="chatbot-window" id="chatbot-window">
+      <div class="chatbot-header">
+        <span class="chatbot-title">Chitti RAG 3.0</span>
+        <button class="btn btn-ghost px-2 py-1" id="chatbot-close-btn">&times;</button>
+      </div>
+      <div class="chatbot-messages" id="chatbot-messages">
+        <div class="chat-message bot">
+          <div class="chat-avatar bot-avatar">🤖</div>
+          <div class="message-bubble">
+            Vanakkam! Naan thaan <b>Chitti RAG 3.0, Speed 1 Terahertz!</b> ⚡ Python curriculum documents-a RAG retrieval model-la search panni, memes mood-la instant-a response solidaren! Ask me anything!
+            <div class="suggested-prompts" id="suggested-prompts">
+              <div class="prompt-pill" onclick="sendSuggested('Ennaku Python dictionary pathi sollu')">Ennaku Python dictionary pathi sollu</div>
+              <div class="prompt-pill" onclick="sendSuggested('How do I run a Python script?')">How do I run a Python script?</div>
+              <div class="prompt-pill" onclick="sendSuggested('Python lists vs tuples?')">Python lists vs tuples?</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="chatbot-input-row">
+        <input type="text" class="chatbot-input" id="chatbot-input" placeholder="Ask Chitti something..." autocomplete="off">
+        <button class="chatbot-send-btn" id="chatbot-send-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+        </button>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,67 @@
+      <!-- View Section: Interactive Learning -->
+      <section class="view-section" id="view-learn">
+
+        <!-- Lesson Content Card -->
+        <div class="card mb-8" id="lesson-content-card">
+          <!-- Populated dynamically via app.js -->
+        </div>
+
+        <!-- Interactive Pyodide Code Sandbox -->
+        <div class="card code-snippet-card flex-col mb-8">
+          <div class="sandbox-header">
+            <div class="flex items-center gap-4">
+              <h3 class="font-bold text-sm">⚡ Interactive Python Playground</h3>
+              <span class="badge" id="pyodide-status">⏳ Loading Engine...</span>
+            </div>
+            <div class="flex gap-2">
+              <button class="btn btn-secondary text-xs" id="btn-reset-code" title="Reset to initial lesson code">🔄 Reset</button>
+              <button class="btn btn-accent text-xs" id="btn-run-code" title="Execute Python code live">▶️ Run Code</button>
+            </div>
+          </div>
+          <div class="flex-col">
+            <div class="editor-titlebar">
+              <div class="window-dots">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+              </div>
+              <span class="editor-lang" id="sandbox-filename">main.py (Python 3.11 WASM)</span>
+            </div>
+            <div class="editor-wrapper">
+              <div class="sandbox-line-numbers" id="sandbox-line-numbers">1</div>
+              <div class="editor-layer">
+                <pre class="code-editor-highlight" id="lesson-code-highlight" aria-hidden="true"></pre>
+                <textarea class="code-editor-input" id="lesson-code-editor" spellcheck="false" placeholder="Write Python code here..."></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Live Terminal Output Window -->
+          <div class="terminal-container">
+            <div class="terminal-header">
+              <span>🖥️ Live Terminal Output</span>
+              <button class="btn btn-ghost text-xs py-1 px-2" id="btn-clear-terminal">Clear</button>
+            </div>
+            <div class="terminal-body" id="terminal-output">
+              <span style="color: var(--text-tertiary);">Click "▶️ Run Code" to execute Python code and view output here...</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Panel -->
+        <div class="card mb-8" id="quiz-panel">
+          <!-- Populated dynamically via app.js -->
+        </div>
+
+        <!-- Meme Feedback Panel -->
+        <div class="meme-feedback-box mb-8" id="meme-feedback-container">
+          <!-- Populated dynamically via app.js -->
+        </div>
+
+        <!-- Navigation Next/Prev -->
+        <div class="flex justify-between items-center mt-8">
+          <button class="btn btn-secondary py-3 px-6" id="btn-prev-lesson">← Previous Lesson</button>
+          <button class="btn btn-primary py-3 px-6" id="btn-next-lesson">Next Lesson →</button>
+        </div>
+
+      </section>

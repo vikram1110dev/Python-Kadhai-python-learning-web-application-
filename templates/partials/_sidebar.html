@@ -1,0 +1,17 @@
+    <!-- Sidebar Progress Tracker (Visible on Learn screen) -->
+    <aside class="sidebar" id="sidebar-tracker" style="display: none;">
+      <div class="sidebar-sticky">
+        <div class="card flex-col gap-6">
+          <div class="flex justify-between items-center">
+            <span class="font-bold text-sm">Your Progress</span>
+            <span class="font-mono font-bold text-accent" id="overall-progress-text" style="color: var(--accent-primary);">0%</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="overall-progress-bar"></div>
+          </div>
+          <div class="flex-col gap-2 mt-4" id="topic-navigation-list">
+            <!-- Populated dynamically via app.js -->
+          </div>
+        </div>
+      </div>
+    </aside>

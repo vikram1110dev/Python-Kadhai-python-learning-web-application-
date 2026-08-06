@@ -1,0 +1,128 @@
+      <!-- View Section: Premium Dashboard -->
+      <section class="view-section" id="view-dashboard">
+        <div class="dashboard-header mb-8">
+          <h2 class="text-3xl font-bold mb-2">My Learning Dashboard</h2>
+          <p class="text-muted text-lg">Track your progress, claim XP, and view your stats.</p>
+        </div>
+        
+        <!-- Stats Row -->
+        <div class="dashboard-stats-grid mb-12">
+          <div class="stat-card">
+            <div class="stat-icon" style="background: rgba(99, 102, 241, 0.1); color: var(--accent-primary);">⭐</div>
+            <div class="stat-content">
+              <div class="stat-title">Total XP</div>
+              <div class="stat-value" id="dash-xp">0</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background: rgba(245, 158, 11, 0.1); color: var(--accent-warning);">🔥</div>
+            <div class="stat-content">
+              <div class="stat-title">Current Streak</div>
+              <div class="stat-value" id="dash-streak">0 Days</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background: rgba(23, 201, 100, 0.1); color: var(--accent-success);">📚</div>
+            <div class="stat-content">
+              <div class="stat-title">Lessons Done</div>
+              <div class="stat-value" id="dash-lessons">0 / 0</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background: rgba(236, 72, 153, 0.1); color: #ec4899;">🎯</div>
+            <div class="stat-content">
+              <div class="stat-title">Quiz Accuracy</div>
+              <div class="stat-value" id="dash-accuracy">100%</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Daily Missions Row -->
+        <div class="dashboard-card reveal slide-up mb-12">
+          <h3 class="font-bold text-xl mb-6 flex justify-between items-center">
+            Daily Missions
+            <span class="badge badge-warning">Resets in 12h</span>
+          </h3>
+          <div class="missions-grid">
+            <div class="mission-card hover-lift">
+              <div class="mission-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+              <div class="mission-content">
+                <div class="mission-title">Perfect Score</div>
+                <div class="mission-desc">Get 100% on any quiz</div>
+              </div>
+              <div class="mission-progress">
+                <div class="progress-ring-container">
+                  <svg class="progress-ring" width="50" height="50">
+                    <circle class="progress-ring-bg" cx="25" cy="25" r="20"></circle>
+                    <circle class="progress-ring-circle" cx="25" cy="25" r="20" style="stroke-dasharray: 125.6; stroke-dashoffset: 125.6;"></circle>
+                  </svg>
+                  <span class="progress-ring-text">0/1</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="mission-card completed hover-lift">
+              <div class="mission-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg></div>
+              <div class="mission-content">
+                <div class="mission-title">Avid Learner</div>
+                <div class="mission-desc">Complete 3 Lessons</div>
+              </div>
+              <div class="mission-progress">
+                <div class="progress-ring-container">
+                  <svg class="progress-ring" width="50" height="50">
+                    <circle class="progress-ring-bg" cx="25" cy="25" r="20"></circle>
+                    <circle class="progress-ring-circle" cx="25" cy="25" r="20" style="stroke-dasharray: 125.6; stroke-dashoffset: 0;"></circle>
+                  </svg>
+                  <span class="progress-ring-text">3/3</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Middle Row: Charts and Achievements -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+          
+          <!-- Weekly Activity Chart (CSS only) -->
+          <div class="dashboard-card reveal slide-up hover-lift">
+            <h3 class="font-bold text-xl mb-6">Weekly Activity</h3>
+            <div class="weekly-chart">
+              <div class="chart-bar-container"><div class="chart-bar" style="height: 20%;"></div><span class="chart-label">Mon</span></div>
+              <div class="chart-bar-container"><div class="chart-bar" style="height: 50%;"></div><span class="chart-label">Tue</span></div>
+              <div class="chart-bar-container"><div class="chart-bar" style="height: 90%;"></div><span class="chart-label">Wed</span></div>
+              <div class="chart-bar-container"><div class="chart-bar" style="height: 30%;"></div><span class="chart-label">Thu</span></div>
+              <div class="chart-bar-container"><div class="chart-bar active-day" style="height: 100%;"></div><span class="chart-label">Fri</span></div>
+              <div class="chart-bar-container"><div class="chart-bar" style="height: 10%;"></div><span class="chart-label">Sat</span></div>
+              <div class="chart-bar-container"><div class="chart-bar" style="height: 5%;"></div><span class="chart-label">Sun</span></div>
+            </div>
+          </div>
+
+          <!-- Achievements Section -->
+          <div class="dashboard-card reveal slide-up hover-lift" style="transition-delay: 0.1s;">
+            <h3 class="font-bold text-xl mb-6">Recent Achievements</h3>
+            <div class="achievements-grid">
+              <div class="achievement-badge unlocked">
+                <div class="badge-icon">👶</div>
+                <div class="badge-title">First Steps</div>
+                <div class="badge-desc">Complete Lesson 1</div>
+              </div>
+              <div class="achievement-badge unlocked">
+                <div class="badge-icon">🔥</div>
+                <div class="badge-title">On Fire</div>
+                <div class="badge-desc">3 Day Streak</div>
+              </div>
+              <div class="achievement-badge locked">
+                <div class="badge-icon">🤓</div>
+                <div class="badge-title">Nerd Alert</div>
+                <div class="badge-desc">Complete 10 Lessons</div>
+              </div>
+              <div class="achievement-badge locked">
+                <div class="badge-icon">👑</div>
+                <div class="badge-title">Python King</div>
+                <div class="badge-desc">100% Curriculum</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
