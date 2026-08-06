@@ -1,137 +1,122 @@
-import re
 import os
-import math
-import json
 import random
-import urllib.request
-import urllib.parse
+import numpy as np
+import google.generativeai as genai
 from django.conf import settings
 from .models import Lesson, ChatbotResponse
 
 class RAGEngine:
     """
-    Retrieval-Augmented Generation (RAG) Engine for Chitti 3.0.
-    1. Retrieves relevant curriculum context (Lessons & Meme DB) via semantic vector term scoring.
-    2. Augments prompt with retrieved context & Chitti Tanglish persona.
-    3. Generates response via Gemini LLM API (if key available) or Offline RAG Synthesizer.
+    Modern Retrieval-Augmented Generation (RAG) Engine for Chitti 3.0.
+    1. Generates text embeddings using Google's models/text-embedding-004.
+    2. Retrieves relevant curriculum context via cosine similarity.
+    3. Generates response using Gemini 1.5 Flash SDK.
     """
+    
+    _document_cache = None
+    _embeddings_cache = None
 
-    @staticmethod
-    def _tokenize(text):
-        if not text:
-            return []
-        # Clean HTML tags and strip non-alphanumeric chars
-        clean_text = re.sub(r'<[^>]+>', ' ', text)
-        words = re.findall(r'\w+', clean_text.lower())
-        # Filter tiny stopwords
-        stopwords = {'the', 'a', 'an', 'in', 'on', 'of', 'for', 'to', 'and', 'or', 'is', 'it', 'naan', 'thaan'}
-        return [w for w in words if w not in stopwords and len(w) > 1]
+    @classmethod
+    def _init_genai(cls):
+        api_key = getattr(settings, 'GEMINI_API_KEY', None) or os.environ.get('GEMINI_API_KEY')
+        if not api_key:
+            return False
+        genai.configure(api_key=api_key)
+        return True
+
+    @classmethod
+    def _get_embedding(cls, text):
+        if not cls._init_genai():
+            return None
+        try:
+            result = genai.embed_content(
+                model="models/text-embedding-004",
+                content=text,
+                task_type="retrieval_document"
+            )
+            return np.array(result['embedding'])
+        except Exception as e:
+            print(f"Embedding error: {e}")
+            return None
+
+    @classmethod
+    def _build_cache(cls):
+        if cls._document_cache is not None:
+            return
+
+        documents = []
+        embeddings = []
+
+        if not cls._init_genai():
+            return
+
+        print("Building RAG Vector Embeddings Cache...")
+        
+        # Index Lessons
+        for lesson in Lesson.objects.all():
+            doc_text = f"{lesson.title}. {lesson.subtitle}. {lesson.tanglish_exp} {lesson.english_exp}"
+            emb = cls._get_embedding(doc_text)
+            if emb is not None:
+                documents.append({
+                    "type": "lesson",
+                    "title": f"{lesson.indicator}: {lesson.title}",
+                    "subtitle": lesson.subtitle,
+                    "tanglish_exp": lesson.tanglish_exp,
+                    "initial_code": lesson.initial_code,
+                    "raw_text": doc_text
+                })
+                embeddings.append(emb)
+
+        # Index Memes
+        for resp in ChatbotResponse.objects.filter(is_default_fallback=False):
+            kw_str = " ".join(resp.keywords) if isinstance(resp.keywords, list) else str(resp.keywords)
+            doc_text = f"{kw_str}. {resp.response_text}"
+            emb = cls._get_embedding(doc_text)
+            if emb is not None:
+                documents.append({
+                    "type": "meme_response",
+                    "title": "Meme Response DB",
+                    "response_text": resp.response_text,
+                    "raw_text": doc_text
+                })
+                embeddings.append(emb)
+
+        cls._document_cache = documents
+        cls._embeddings_cache = embeddings
 
     @classmethod
     def retrieve_context(cls, user_query, top_k=2):
-        query_tokens = cls._tokenize(user_query)
-        if not query_tokens:
+        if not cls._init_genai():
+            return [], None
+            
+        cls._build_cache()
+        if not cls._document_cache:
             return [], None
 
-        documents = []
+        query_emb = cls._get_embedding(user_query)
+        if query_emb is None:
+            return [], None
 
-        # Index Lesson database records
-        lessons = Lesson.objects.all()
-        for lesson in lessons:
-            doc_text = f"{lesson.title} {lesson.subtitle} {lesson.tanglish_exp} {lesson.english_exp} {lesson.initial_code}"
-            doc_tokens = cls._tokenize(doc_text)
-            documents.append({
-                "type": "lesson",
-                "id": lesson.topic_id,
-                "title": f"{lesson.indicator}: {lesson.title}",
-                "subtitle": lesson.subtitle,
-                "tanglish_exp": lesson.tanglish_exp,
-                "english_exp": lesson.english_exp,
-                "initial_code": lesson.initial_code,
-                "tokens": doc_tokens,
-                "raw_text": doc_text
-            })
-
-        # Index Chatbot Meme database records
-        responses = ChatbotResponse.objects.filter(is_default_fallback=False)
-        for resp in responses:
-            kw_str = " ".join(resp.keywords) if isinstance(resp.keywords, list) else str(resp.keywords)
-            doc_text = f"{kw_str} {resp.response_text}"
-            doc_tokens = cls._tokenize(doc_text)
-            documents.append({
-                "type": "meme_response",
-                "id": f"resp_{resp.id}",
-                "title": "Meme Response DB",
-                "response_text": resp.response_text,
-                "tokens": doc_tokens,
-                "raw_text": doc_text
-            })
-
-        # Score documents based on TF-IDF term overlap & match boost
-        scored_docs = []
-        for doc in documents:
-            score = 0.0
-            doc_tokens_set = set(doc["tokens"])
-            for q_tok in query_tokens:
-                if q_tok in doc_tokens_set:
-                    # Term frequency score
-                    tf = doc["tokens"].count(q_tok)
-                    score += (1.0 + math.log(tf)) * 2.0
-                # Direct substring match boost
-                if q_tok in doc["raw_text"].lower():
-                    score += 1.5
-
-            if score > 0:
-                scored_docs.append((score, doc))
+        # Calculate Cosine Similarity
+        scores = []
+        for i, doc_emb in enumerate(cls._embeddings_cache):
+            dot_product = np.dot(query_emb, doc_emb)
+            norm_q = np.linalg.norm(query_emb)
+            norm_d = np.linalg.norm(doc_emb)
+            if norm_q > 0 and norm_d > 0:
+                similarity = dot_product / (norm_q * norm_d)
+            else:
+                similarity = 0.0
+            scores.append((similarity, cls._document_cache[i]))
 
         # Sort by relevance score descending
-        scored_docs.sort(key=lambda x: x[0], reverse=True)
-
-        retrieved_items = [item[1] for item in scored_docs[:top_k]]
+        scores.sort(key=lambda x: x[0], reverse=True)
+        
+        # Filter docs with a reasonable threshold to prevent hallucinated matches
+        retrieved_items = [item[1] for item in scores[:top_k] if item[0] > 0.4]
+        
         primary_source = retrieved_items[0]["title"] if retrieved_items and retrieved_items[0]["type"] == "lesson" else None
-
         return retrieved_items, primary_source
-
-    @classmethod
-    def _call_gemini_api(cls, prompt):
-        api_key = getattr(settings, 'GEMINI_API_KEY', None) or os.environ.get('GEMINI_API_KEY')
-        if not api_key:
-            return None
-
-        models = ["gemini-2.0-flash", "gemini-1.5-flash"]
-        for model_name in models:
-            try:
-                url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent?key={api_key}"
-                payload = {
-                    "contents": [
-                        {
-                            "parts": [{"text": prompt}]
-                        }
-                    ],
-                    "generationConfig": {
-                        "temperature": 0.7,
-                        "maxOutputTokens": 450
-                    }
-                }
-                req = urllib.request.Request(
-                    url,
-                    data=json.dumps(payload).encode('utf-8'),
-                    headers={'Content-Type': 'application/json'}
-                )
-                with urllib.request.urlopen(req, timeout=6) as response:
-                    res_data = json.loads(response.read().decode('utf-8'))
-                    candidates = res_data.get('candidates', [])
-                    if candidates:
-                        parts = candidates[0].get('content', {}).get('parts', [])
-                        if parts:
-                            text_out = parts[0].get('text', '').strip()
-                            if text_out:
-                                return text_out
-            except Exception as e:
-                print(f"Gemini API model {model_name} call failed: {e}")
-                continue
-
-        return None
 
     @classmethod
     def generate_rag_response(cls, user_query):
@@ -158,16 +143,20 @@ class RAGEngine:
             "Keep your responses concise, clear, and humorous with HTML formatting like <b>, <i>, <code>."
         )
 
-        prompt = f"{system_persona}\n\nRetrieved Knowledge Context:\n{context_str if context_str else 'No specific lesson matched.'}\n\nUser Question: {user_query}\n\nChitti RAG Response:"
+        prompt = f"{system_persona}\n\nRetrieved Knowledge Context:\n{context_str if context_str else 'No specific lesson matched. Rely on your general knowledge but keep it strictly about Python programming and use the Tanglish persona.'}\n\nUser Question: {user_query}\n\nChitti RAG Response:"
 
-        # Attempt Gemini API Generation
-        ai_reply = cls._call_gemini_api(prompt)
-        if ai_reply:
-            return {
-                "reply": ai_reply,
-                "source": primary_source
-            }
-
+        if cls._init_genai():
+            try:
+                model = genai.GenerativeModel("gemini-1.5-flash")
+                response = model.generate_content(prompt)
+                if response and response.text:
+                    return {
+                        "reply": response.text,
+                        "source": primary_source
+                    }
+            except Exception as e:
+                print(f"Gemini API generation failed: {e}")
+        
         # Offline RAG Synthesizer (Zero External Dependencies Fallback)
         if retrieved_context:
             doc = retrieved_context[0]
@@ -185,7 +174,7 @@ class RAGEngine:
                 chosen = random.choice(fallbacks)
                 reply = chosen.response_text
             else:
-                reply = "Building-u strong-u, basement-u weak-u! Kelvi thappu nu nenaikaren. Python variables, loops, conditionals or functions pathi kelunga boss! 😅"
+                reply = "Building-u strong-u, basement-u weak-u! Kelvi thappu nu nenaikaren. API Key offline-la irukku!"
 
         return {
             "reply": reply,
