@@ -230,3 +230,176 @@ function showToast() {
     toast.style.display = "none";
   }, 3500);
 }
+
+// Event Listeners Setup
+const bindNav = (id, target) => {
+  const el = document.getElementById(id);
+  if(el) el.addEventListener("click", () => {
+    showView(target);
+    const mobileNavOverlay = document.getElementById("mobile-nav");
+    if (mobileNavOverlay) mobileNavOverlay.classList.remove("active");
+    if (target === "view-dashboard") renderDashboardStats();
+  });
+};
+bindNav("nav-home", "view-home");
+bindNav("nav-home-mobile", "view-home");
+bindNav("nav-dashboard", "view-dashboard");
+bindNav("nav-dashboard-mobile", "view-dashboard");
+bindNav("nav-learn", "view-learn");
+bindNav("nav-learn-mobile", "view-learn");
+bindNav("nav-playground", "view-playground");
+bindNav("nav-playground-mobile", "view-playground");
+
+document.getElementById("btn-start-now").addEventListener("click", () => showView("view-learn"));
+
+// Navbar Scroll Effect
+window.addEventListener("scroll", () => {
+  const header = document.getElementById("main-header");
+  if (header) {
+    if (window.scrollY > 20) {
+      header.classList.add("header-scrolled");
+    } else {
+      header.classList.remove("header-scrolled");
+    }
+  }
+});
+
+// Mobile Menu Toggle
+const btnMobileMenu = document.getElementById("btn-mobile-menu");
+const mobileNavOverlay = document.getElementById("mobile-nav");
+if (btnMobileMenu && mobileNavOverlay) {
+  btnMobileMenu.addEventListener("click", () => {
+    mobileNavOverlay.classList.toggle("active");
+  });
+}
+
+document.getElementById("btn-prev-lesson").addEventListener("click", () => {
+  if (currentLessonIndex > 0) {
+    currentLessonIndex--;
+    renderLesson();
+  }
+});
+
+document.getElementById("btn-next-lesson").addEventListener("click", () => {
+  if (currentLessonIndex < lessons.length - 1) {
+    currentLessonIndex++;
+    renderLesson();
+  }
+});
+
+// Initialize App
+loadProgress();
+fetchLessons();
+showView("view-home");
+
+// Theme Toggle Logic
+const themeToggleBtn = document.getElementById("theme-toggle-btn");
+
+function initTheme() {
+  const savedTheme = localStorage.getItem("theme") || "dark";
+  document.documentElement.setAttribute("data-theme", savedTheme);
+  if (themeToggleBtn) {
+    themeToggleBtn.textContent = savedTheme === "light" ? "☀️" : "🌙";
+  }
+}
+
+if (themeToggleBtn) {
+  themeToggleBtn.addEventListener("click", () => {
+    const currentTheme = document.documentElement.getAttribute("data-theme");
+    const newTheme = currentTheme === "light" ? "dark" : "light";
+    document.documentElement.setAttribute("data-theme", newTheme);
+    localStorage.setItem("theme", newTheme);
+    themeToggleBtn.textContent = newTheme === "light" ? "☀️" : "🌙";
+  });
+}
+
+// Initialize Theme on startup
+initTheme();
+
+
+/* ==========================================================================
+   Options & Settings Modal Logic
+   ========================================================================== */
+
+function populateQuickTopicSelect() {
+  const select = document.getElementById("quick-topic-select");
+  if (!select) return;
+  select.innerHTML = "";
+  lessons.forEach((l, idx) => {
+    const opt = document.createElement("option");
+    opt.value = idx;
+    opt.textContent = `${l.indicator}: ${l.title}`;
+    select.appendChild(opt);
+  });
+}
+
+const optionsOverlay = document.getElementById("options-modal-overlay");
+const btnOpenMenu = document.getElementById("btn-open-menu");
+const btnOpenMenuMobile = document.getElementById("btn-open-menu-mobile");
+const btnCloseMenu = document.getElementById("options-modal-close");
+
+function openOptionsModal() {
+  populateQuickTopicSelect();
+  const select = document.getElementById("quick-topic-select");
+  if (select) select.value = currentLessonIndex;
+  if (optionsOverlay) optionsOverlay.classList.add("active");
+  const mobileNavOverlay = document.getElementById("mobile-nav");
+  if (mobileNavOverlay) mobileNavOverlay.classList.remove("active");
+}
+
+function closeOptionsModal() {
+  if (optionsOverlay) optionsOverlay.classList.remove("active");
+}
+
+if (btnOpenMenu) btnOpenMenu.addEventListener("click", openOptionsModal);
+if (btnOpenMenuMobile) btnOpenMenuMobile.addEventListener("click", openOptionsModal);
+if (btnCloseMenu) btnCloseMenu.addEventListener("click", closeOptionsModal);
+
+if (optionsOverlay) {
+  optionsOverlay.addEventListener("click", (e) => {
+    if (e.target === optionsOverlay) closeOptionsModal();
+  });
+}
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && optionsOverlay && optionsOverlay.classList.contains("active")) {
+    closeOptionsModal();
+  }
+});
+
+const quickSelect = document.getElementById("quick-topic-select");
+if (quickSelect) {
+  quickSelect.addEventListener("change", (e) => {
+    const idx = parseInt(e.target.value, 10);
+    if (!isNaN(idx) && idx >= 0 && idx < lessons.length) {
+      currentLessonIndex = idx;
+      renderLesson();
+      showView("view-learn");
+      closeOptionsModal();
+    }
+  });
+}
+
+const btnResetProgress = document.getElementById("btn-reset-progress");
+if (btnResetProgress) {
+  btnResetProgress.addEventListener("click", () => {
+    if (confirm("Reset all your learning progress? This will clear completion checkmarks for all topics.")) {
+      userProgress = {};
+      saveProgress();
+      renderSidebar();
+      showToast("Progress reset cleanly! Start fresh! 🔄");
+      closeOptionsModal();
+    }
+  });
+}
+
+// Add Ctrl + Enter shortcut to Code Editor
+if (codeEditorInput) {
+  codeEditorInput.addEventListener("keydown", (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
+      e.preventDefault();
+      runPythonCode();
+    }
+  });
+}
+

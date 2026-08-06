@@ -1,0 +1,41 @@
+<!-- Playground View -->
+<section id="view-playground" class="view-section" style="display: none; padding-top: 100px;">
+  <div class="glass-panel" style="margin-bottom: 2rem;">
+    <div class="panel-header">
+      <h2 class="panel-title">🐍 Python Playground</h2>
+      <p style="color: var(--text-secondary); margin-top: 0.5rem;">Write and test Python code freely. There are no lessons here, just pure creativity! 🚀</p>
+    </div>
+    
+    <div class="premium-sandbox w-full" style="height: 60vh; display: flex; flex-direction: column;">
+      <!-- Sandbox Header -->
+      <div class="sandbox-header" style="flex-shrink: 0;">
+        <div class="window-dots">
+          <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+        </div>
+        <span class="lang-badge">main.py</span>
+        <div class="sandbox-actions">
+          <button class="btn-run" id="btn-run-playground">▶️ Run Code</button>
+          <button class="btn-reset" id="btn-clear-playground-editor">🗑️ Clear Editor</button>
+        </div>
+      </div>
+      
+      <div style="display: flex; flex: 1; min-height: 0; flex-direction: column; md:flex-direction: row;">
+        <!-- Code Editor Area -->
+        <div class="code-area" style="flex: 1; position: relative;">
+          <div class="line-numbers" id="playground-line-numbers">1<br></div>
+          <textarea id="playground-code-editor" spellcheck="false" placeholder="Write your Python code here..."></textarea>
+          <pre id="playground-code-highlight" aria-hidden="true"></pre>
+        </div>
+
+        <!-- Terminal Output Area -->
+        <div class="terminal-area" style="flex: 1; border-top: 1px solid var(--border-color); md:border-top: none; md:border-left: 1px solid var(--border-color);">
+          <div class="terminal-header">
+            <span>Terminal Output</span>
+            <button class="btn-clear" id="btn-clear-playground-terminal" title="Clear Terminal">🗑️</button>
+          </div>
+          <pre class="terminal-output" id="playground-terminal-output"><span class="terminal-placeholder">Ready! Click "▶️ Run Code" to execute your script.</span></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
