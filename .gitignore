@@ -11,7 +11,8 @@ env.bak/
 venv.bak/
 
 # Django local database & static collect
-# db.sqlite3
+db.sqlite3
+*.sqlite3
 *.log
 
 # Environment variables
